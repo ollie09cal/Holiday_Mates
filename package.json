@@ -1,0 +1,19 @@
+{
+  "name": "Holiday_Mates",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:ollie09cal/Holiday_Mates.git",
+  "author": "Oliver Calvey <ollie.calvey@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "express": "^4.17.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.2.1",
+    "mongoose-unique-validator": "2.0.3"
+  },
+  "scripts": {
+    "serve": "npx nodemon index.js",
+    "seed": "node seeds/seeds.js"
+  }
+}
