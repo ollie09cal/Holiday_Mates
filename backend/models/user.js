@@ -13,11 +13,6 @@ const userSchema = new Schema({
 })
 
 //fields for tying holiday cards to user 
-userSchema.virtual('ownedHolidays', {
-  ref: 'Holiday',
-  localField: '_id',
-  foreignField: 'owner'
-})
 
 userSchema.set('toJSON', {
   virtuals: true,

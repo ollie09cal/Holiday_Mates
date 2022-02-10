@@ -3,8 +3,8 @@ import { secureRoute } from './secureRoute.js'
 
 //controllers
 import { registerUser, loginUser } from './../controllers/auth.js'
-import { addHoliday, showAllHolidays, getHolidayById, addHolidayCard, updateHoliday, updateHolidayCard, deleteHoliday } from './../controllers/holidays.js'
-import { getProfile } from './../controllers/users.js'
+import { addHoliday, showAllHolidays, getHolidayById, addHolidayCard } from './../controllers/holidays.js'
+
 
 const router = express.Router()
 
