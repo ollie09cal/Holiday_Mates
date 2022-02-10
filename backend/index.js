@@ -1,6 +1,6 @@
 import express from 'express'
 import mongoose from 'mongoose'
-//import router after routes are setup
+import router from './config/routes.js'
 import { port, dbURI } from './config/enviroment.js'
 
 const app = express()
@@ -21,7 +21,7 @@ const startServer = async () => {
       next()
     })
     //routes //add this in once routes are made
-    // app.use(router)
+    app.use(router)
 
     //CATCH all
     app.use((_req, res) => {
