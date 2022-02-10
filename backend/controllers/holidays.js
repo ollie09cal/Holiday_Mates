@@ -31,9 +31,3 @@ export const getHolidayById = async (req, res) => {
     return res.status(404).json(err)
   }
 }
-
-// export const addHolidayCard = async (req, res) => {
-//   const { id } = req.params
-//   const holidayCardToAdd = await HolidayType.create({ ...req.body })
-//   Holiday.findOneAndUpdate(id, { holidayTypes})
-// }
