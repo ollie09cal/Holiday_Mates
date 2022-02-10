@@ -25,6 +25,6 @@ router.route('/holidays')
 //holiday card
 router.route('/holidays/:id')
   .get(secureRoute, getHolidayById)
-  // .post(secureRoute, addHolidayCard)
+  .post(secureRoute, addHolidayCard)
 
 export default router
