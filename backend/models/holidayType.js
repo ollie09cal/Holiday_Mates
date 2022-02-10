@@ -6,13 +6,13 @@ const { Schema } = mongoose
 
 const commentsSchema = new Schema({
   text: { type: String, required: true, maxlength: 300 },
-  owner: { type: mongoose.Schema.ObjectId, ref: 'User', required: true },
+  owner: { type: mongoose.Schema.ObjectId, ref: 'User', required: true }
 }, {
-  timestamps: true,
+  timestamps: true
 })
 
 const holidayTypeCardSchema = new Schema({
-  type: { type: String, required: true },
+  type: { type: String, required: true},
   location: { type: String, required: true },
   longitude: { type: Number, required: true },
   latitude: { type: Number, required: true },
@@ -23,7 +23,7 @@ const holidayTypeCardSchema = new Schema({
   vibeTag: [{ type: String }],
   rating: { type: Number, required: true, min: 1, max: 5 },
   private: { type: Boolean },
-  comments: [commentsSchema],
+  comments: [commentsSchema]
 })
 
 holidayTypeCardSchema.plugin(uniqueValidator)

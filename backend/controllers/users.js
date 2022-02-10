@@ -1,11 +1,11 @@
-export const addfriend = async (req, res) => {
+import User from './../models/user.js'
+
+export const getProfile = async (req, res) => {
   try {
-    const user = await User.findById(req.currentUser._id)
-    const newMate = User.findOne({ personalToken: req.body.token })
-    if (!newMate) throw new Error('mate not found')
-    user.mates.push(newMate._id)
-    return res.status(201).json({ message: 'friend added', friend: newMate }) 
-  } catch (error) {
-    console.log(error)
+    const user = await User.findById(req.currentUser._id).populate({path: 'ownedHolidays', populate: { path: 'holidayTypes' }})
+    if (!user) throw new Error('user not found')
+    return res.status(200).json(user)
+  } catch (err) {
+    return res.status(404).json({ message: err.message })
   }
 }
