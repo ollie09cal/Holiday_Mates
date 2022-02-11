@@ -21,7 +21,7 @@ const startServer = async () => {
       next()
     })
     //routes //add this in once routes are made
-    app.use(router)
+    app.use('/api', router)
 
     //CATCH all
     app.use((_req, res) => {
