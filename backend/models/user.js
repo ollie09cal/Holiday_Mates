@@ -2,6 +2,7 @@ import mongoose from 'mongoose'
 import uniqueValidator from 'mongoose-unique-validator'
 import bcrypt from 'bcrypt'
 
+
 const { Schema } = mongoose
 const userSchema = new Schema({
   username: { type: String, required: true, unique: true, maxlength: 30 },
@@ -9,6 +10,7 @@ const userSchema = new Schema({
   password: { type: String, required: true },
   profilePhoto: { type: String },
   matesToken: [{ type: String }],
+  mates: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
   personalToken: { type: String, required: true, unique: true, minLength: 10, maxlength: 20 }
 })
 
@@ -16,7 +18,7 @@ const userSchema = new Schema({
 userSchema.virtual('ownedHolidays', {
   ref: 'Holiday',
   localField: '_id',
-  foreignField: 'owner'
+  foreignField: 'owner',
 })
 
 userSchema.set('toJSON', {
@@ -51,9 +53,12 @@ userSchema
 
 userSchema.plugin(uniqueValidator)
 
+
+
 userSchema.methods.validatePassword = function(password){
   console.log(password, this.password)
   return bcrypt.compareSync(password, this.password)
 }
+
 
 export default mongoose.model('User', userSchema)

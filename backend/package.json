@@ -8,8 +8,10 @@
   "dependencies": {
     "bcrypt": "^5.0.1",
     "express": "^4.17.2",
+    "i": "^0.3.7",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.1",
+    "mongoose-friends": "^0.2.5",
     "mongoose-unique-validator": "2.0.3",
     "uuid": "^8.3.2"
   },
