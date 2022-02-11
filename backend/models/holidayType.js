@@ -23,7 +23,8 @@ const holidayTypeCardSchema = new Schema({
   vibeTag: [{ type: String }],
   rating: { type: Number, required: true, min: 1, max: 5 },
   private: { type: Boolean },
-  comments: [commentsSchema]
+  comments: [commentsSchema],
+  holidayId: { type: mongoose.Schema.ObjectId, ref: 'Holiday', required: true }
 })
 
 holidayTypeCardSchema.plugin(uniqueValidator)
