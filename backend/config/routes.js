@@ -3,7 +3,7 @@ import { secureRoute } from './secureRoute.js'
 
 //controllers
 import { registerUser, loginUser } from './../controllers/auth.js'
-import { addHoliday, showAllHolidays, getHolidayById, addHolidayCard, updateHoliday, updateHolidayCard, deleteHolidayTypeCard } from './../controllers/holidays.js'
+import { addHoliday, showAllHolidays, getHolidayById, addHolidayCard, updateHoliday, updateHolidayCard, deleteHolidayTypeCard, deleteHoliday, showHolidayTypeCards, showHolidayCard } from './../controllers/holidays.js'
 import { getProfile, addMate } from './../controllers/users.js'
 
 const router = express.Router()
@@ -27,18 +27,18 @@ router.route('/holidays/:id')
   .get(secureRoute, getHolidayById)
   .post(secureRoute, addHolidayCard)
   .put(secureRoute, updateHoliday)
-  //delete holiday
-  
+  .delete(secureRoute, deleteHoliday)
 
 router.route('/holidays/:id/:cardId')
   .put(secureRoute, updateHolidayCard)
   
 //show all holiday type cards
+router.route('/holidaytypes')
+  .get(secureRoute, showHolidayTypeCards)
 
-//delete
-router.route('/holidays/holidaytypes/:cardId')
+router.route('/holidaytypes/:cardId')
   .delete(secureRoute, deleteHolidayTypeCard)
-  //get single card by id
+  .get(secureRoute, showHolidayCard)
 
 //profile route
 router.route('/profile')

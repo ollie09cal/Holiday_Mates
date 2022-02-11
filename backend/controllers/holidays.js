@@ -80,16 +80,79 @@ export const deleteHolidayTypeCard = async (req, res) => {
   try {
     const { cardId } = req.params
     const holidayTypeCardToDelete = await HolidayType.findById(cardId)
+    console.log(holidayTypeCardToDelete)
+    if (!holidayTypeCardToDelete) throw new Error('Holiday Card Not Found!')
+    console.log(holidayTypeCardToDelete.holidayId)
     const holiday = await Holiday.findById(holidayTypeCardToDelete.holidayId)
+    console.log(holiday)
+    if (!holiday) throw new Error('Holiday not found')
+    if (!holiday.owner.equals(req.currentUser._id)) throw new Error('Unauthorised')
     if (!holidayTypeCardToDelete.owner.equals(req.currentUser._id)) throw new Error('Unauthorised')
+
     const indexOfHolidayCard = holiday.holidayTypes.indexOf(holidayTypeCardToDelete._id)
     holiday.holidayTypes.splice(indexOfHolidayCard, 1)
 
     await holidayTypeCardToDelete.remove()
+    
     await holiday.save()
 
     return res.sendStatus(204) 
   } catch (err) {
     return res.status(404).json(err)
+  }
+}
+
+export const deleteHoliday = async (req, res) => {
+  try {
+    const { id } = req.params
+    const holidayToDelete = await Holiday.findById(id)
+    if (!holidayToDelete) throw new Error('Holiday not found')
+    if (!holidayToDelete.owner.equals(req.currentUser._id)) throw new Error('Unauthorised')
+    if (holidayToDelete.holidayTypes) {
+      console.log('holiday type ids ---> ', holidayToDelete.holidayTypes)
+      holidayToDelete.holidayTypes.forEach((holidayTypeId) => {
+        console.log(holidayTypeId)
+        clearHolidayTypes(holidayTypeId)
+      })
+    }
+    await holidayToDelete.save()
+    await holidayToDelete.remove()
+    return res.sendStatus(204)
+  } catch (err) {
+    return res.status(404).json(err)
+  }
+}
+
+export const showHolidayTypeCards = async (_req, res) => {
+  // console.log('I am trying to show all the holiday types')
+  try {
+    const holidayTypes = await HolidayType.find()
+    console.log(holidayTypes)
+    return res.status(200).json(holidayTypes) 
+  } catch (err) {
+    return res.status(404).json(err)
+  }
+}
+
+export const showHolidayCard = async (req, res) => {
+  try {
+    const { cardId } = req.params
+    const holidayType = await HolidayType.findById(cardId)
+    console.log(holidayType)
+    return res.status(200).json(holidayType) 
+  } catch (err) {
+    return res.status(404).json(err)
+  }
+}
+
+
+//FUNCTIONS
+//remove holiday card function
+const clearHolidayTypes = async (id) => {
+  try {
+    const holidayTypeCardToDelete = await HolidayType.findById(id)
+    holidayTypeCardToDelete.remove()
+  } catch (err) {
+    console.log(err)
   }
 }
