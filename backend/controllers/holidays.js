@@ -35,10 +35,8 @@ export const addHolidayCard = async (req, res) => {
     const holiday = await Holiday.findById(id)
 
     if (!holiday.owner.equals(req.currentUser._id)) throw new Error('Unauthorised')
-
-    const holidayCardToAdd = await HolidayType.create({ ...req.body, owner: req.currentUser._id })
+    const holidayCardToAdd = await HolidayType.create({ ...req.body, owner: req.currentUser._id, holidayId: id })
     // console.log('holiday card ---> ', holidayCardToAdd)
-    
     holiday.holidayTypes.push(holidayCardToAdd._id)
     await holiday.save()
     // console.log(holiday)
@@ -78,10 +76,20 @@ export const updateHolidayCard = async (req, res) => {
   }
 }
 
-// export const deleteHoliday = async (req, res) => {
-//   try {
-    
-//   } catch (err) {
-    
-//   }
-// }
+export const deleteHolidayTypeCard = async (req, res) => {
+  try {
+    const { cardId } = req.params
+    const holidayTypeCardToDelete = await HolidayType.findById(cardId)
+    const holiday = await Holiday.findById(holidayTypeCardToDelete.holidayId)
+    if (!holidayTypeCardToDelete.owner.equals(req.currentUser._id)) throw new Error('Unauthorised')
+    const indexOfHolidayCard = holiday.holidayTypes.indexOf(holidayTypeCardToDelete._id)
+    holiday.holidayTypes.splice(indexOfHolidayCard, 1)
+
+    await holidayTypeCardToDelete.remove()
+    await holiday.save()
+
+    return res.sendStatus(204) 
+  } catch (err) {
+    return res.status(404).json(err)
+  }
+}
