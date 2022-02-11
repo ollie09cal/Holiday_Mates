@@ -43,3 +43,14 @@ export const getMate = async (req, res) => {
     return res.status(404).json({ message: err.message })
   }
 }
+
+export const getAllMates = async (req, res) => {
+  try {
+    const user = await User.findById(req.currentUser._id).populate({ path: 'mates', populate: { path: 'ownedHolidays', populate: { path: 'holidayTypes' } } })
+    console.log(user)
+    return res.status(200).json(user)
+  } catch (err) {
+    console.log(err)
+    return res.status(404).json({ message: err.message })
+  }
+}
