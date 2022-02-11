@@ -1,9 +1,6 @@
 import User from './../models/user.js'
 // import { requestFriend } from 'mongoose-friends'
 
-
-
-
 export const getProfile = async (req, res) => {
   try {
     const user = await User.findById(req.currentUser._id).populate({ path: 'ownedHolidays', populate: { path: 'holidayTypes' } })
@@ -32,5 +29,17 @@ export const addMate = async (req, res) => {
   } catch (error) {
     console.log(error)
     return res.status(404).json({ message: error.message })
+  }
+}
+
+export const getMate = async (req, res) => {
+  try {
+    const { mateId } = req.params
+    const mate = await User.findById(mateId).populate({ path: 'ownedHolidays', populate: { path: 'holidayTypes' } })
+    if (!mate.mates.includes(req.currentUser._id)) throw new Error('not authorised')
+    return res.status(200).json(mate)
+  } catch (err) {
+    console.log(err)
+    return res.status(404).json({ message: err.message })
   }
 }

@@ -18,7 +18,7 @@ const userSchema = new Schema({
 userSchema.virtual('ownedHolidays', {
   ref: 'Holiday',
   localField: '_id',
-  foreignField: 'owner'
+  foreignField: 'owner',
 })
 
 userSchema.set('toJSON', {

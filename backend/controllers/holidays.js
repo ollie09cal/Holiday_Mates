@@ -63,7 +63,7 @@ export const updateHoliday = async (req, res) => {
 
 export const updateHolidayCard = async (req, res) => {
   try {
-    const { id, cardId } = req.params
+    const { cardId } = req.params
     const holidayCardToUpdate = await HolidayType.findById(cardId)
 
     if (!holidayCardToUpdate.owner.equals(req.currentUser._id)) throw new Error('Unauthorised')
