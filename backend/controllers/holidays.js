@@ -12,7 +12,7 @@ export const addHoliday = async (req, res) => {
 
 export const showAllHolidays = async (_req, res) => {
   try {
-    const holidays = await Holiday.find()
+    const holidays = await Holiday.find().populate('owner').populate({ path: 'holidayTypes' })
     return res.status(200).json(holidays) 
   } catch (err) {
     return res.status(404).json(err)
