@@ -78,10 +78,10 @@ export const updateHolidayCard = async (req, res) => {
   }
 }
 
-export const deleteHoliday = async (req, res) => {
-  try {
+// export const deleteHoliday = async (req, res) => {
+//   try {
     
-  } catch (err) {
+//   } catch (err) {
     
-  }
-}
+//   }
+// }

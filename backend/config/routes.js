@@ -3,7 +3,7 @@ import { secureRoute } from './secureRoute.js'
 
 //controllers
 import { registerUser, loginUser } from './../controllers/auth.js'
-import { addHoliday, showAllHolidays, getHolidayById, addHolidayCard, updateHoliday, updateHolidayCard, deleteHoliday } from './../controllers/holidays.js'
+import { addHoliday, showAllHolidays, getHolidayById, addHolidayCard, updateHoliday, updateHolidayCard } from './../controllers/holidays.js'
 import { getProfile } from './../controllers/users.js'
 
 const router = express.Router()
@@ -27,7 +27,7 @@ router.route('/holidays/:id')
   .get(secureRoute, getHolidayById)
   .post(secureRoute, addHolidayCard)
   .put(secureRoute, updateHoliday)
-  .delete(secureRoute, deleteHoliday)
+  // .delete(secureRoute, deleteHoliday)
 
 router.route('/holidays/:id/:cardId')
   .put(secureRoute, updateHolidayCard)
