@@ -4,7 +4,7 @@ import { secureRoute } from './secureRoute.js'
 //controllers
 import { registerUser, loginUser } from './../controllers/auth.js'
 import { addHoliday, showAllHolidays, getHolidayById, addHolidayCard, updateHoliday, updateHolidayCard, deleteHolidayTypeCard } from './../controllers/holidays.js'
-import { getProfile } from './../controllers/users.js'
+import { getProfile, addMate } from './../controllers/users.js'
 
 const router = express.Router()
 
@@ -43,5 +43,10 @@ router.route('/holidays/holidaytypes/:cardId')
 //profile route
 router.route('/profile')
   .get(secureRoute, getProfile)
+
+
+//add mates
+router.route('/mates')
+  .post(secureRoute, addMate)
 
 export default router

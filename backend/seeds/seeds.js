@@ -32,4 +32,4 @@ const seedDB = async () => {
     await mongoose.connection.close()
   }
 }
-//seedDB()
+seedDB()
