@@ -2,8 +2,10 @@ import mongoose from 'mongoose'
 import { dbURI } from '../config/enviroment.js'
 import userData from './data/users.js'
 import User from './../models/user.js'
-// import Holiday from '../models/holiday.js'
-// import holidayData from './data/holidays'
+import Holiday from '../models/holiday.js'
+import holidayData from './data/holidays.js'
+import HolidayType from '../models/holidayType.js'
+import holidayTypeData from './data/holidayTypes.js'
 
 const seedDB = async () => {
   try {
@@ -15,16 +17,31 @@ const seedDB = async () => {
 
     const users = await User.create(userData)
     console.log(`${users.length} users added to database!`)
+    //add owners to holiday, each get three
+    const holidaysWithOwners = holidayData.map((holiday, i) => {
+      return { ...holiday, owner: users[Math.floor(i / 3)] }
+    })
 
-    // const holidaysWithOwners = holidayData.map(holiday => {
-    //   return { ...holiday, owner: users[0]._id }
-    // })
+    const holidaysAdded = await Holiday.create(holidaysWithOwners)
+    console.log(`${holidaysAdded.length} holidays added to database!`)
 
-    // await Holiday.create(holidayData)
-    // console.log(`${holidayData.length} holidays added to database!`)
+    const holidayTypesWithOwners = holidayTypeData.map((holidayType, i) => {
+      //linking owner and holiday main card with holiday card. 3 types per holiday, 3 holidays per owner
+      return { ...holidayType, owner: users[Math.floor(i / 9)]._id, holidayId: holidaysAdded[Math.floor(i / 3)]._id }
+    })
 
-    //const holidaysAdded = await Holiday.create(holidayData)
-    //const holidayTypesAdded = await HolidayType.create(holidayTypeData)
+    const holidayTypesAdded = await HolidayType.create(holidayTypesWithOwners)
+
+    //pushing holiday types to holidays
+    holidayTypesAdded.forEach(async (holidayType, i) => {
+      holidaysAdded[Math.floor(i / 3)].holidayTypes.push(holidayType._id)
+    })
+
+    //save each main holiday
+    for (let i = 0; i < holidaysAdded.length; i++) {
+      await holidaysAdded[i].save()
+    }
+    console.log(`${holidayTypesAdded.length} holiday types added to database!`)
 
     await mongoose.connection.close()
   } catch (err) {
