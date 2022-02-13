@@ -29,7 +29,7 @@ export default [
     location: 'Cornwall, UK',
     latitude: 50.083970105779,
     longitude: -5.538887629142345,
-    holidayTypes: [],
+    // holidayTypes: [],
     date: 'July 2021',
     description: 'a quick weekend on the beaches of Cornwall',
     image: 'https://i.imgur.com/RjsV9qM.jpg',
