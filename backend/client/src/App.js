@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react'
 import axios from 'axios'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import NavigationBar from './components/NavigationBar'
 
 function App() {
   useEffect(() => {
@@ -10,7 +12,17 @@ function App() {
     getData()
   })
 
-  return <h1>Hello World</h1>
+  return (
+    <>
+      <BrowserRouter>
+        <NavigationBar />
+
+        <Routes>
+          <Route />
+        </Routes>
+      </BrowserRouter>
+    </>
+  )
 }
 
 export default App
