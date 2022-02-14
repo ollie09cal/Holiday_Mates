@@ -9,14 +9,24 @@ import {
 } from '@chakra-ui/react'
 import { useState } from 'react'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
 
+  const navigate = useNavigate()
+
+  //setting local token
+  const setTokenFromLocal = (token) => {
+    window.localStorage.setItem('holiday-token', token)
+  }
+
+  //Login details
   const [loginInfo, setLoginInfo] = useState({
     email: '',
     password: '',
   })
 
+  //Error messages
   const [isError, setIsError] = useState({
     error: false, message: '',
   })
@@ -24,7 +34,9 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      await axios.post('/api/login', loginInfo)
+      const { data } = await axios.post('/api/login', loginInfo)
+      setTokenFromLocal(data.token)
+      navigate('/profile')
     } catch (err) {
       console.log(err)
       setIsError({ error: true, message: 'Username and password does not match.' })
