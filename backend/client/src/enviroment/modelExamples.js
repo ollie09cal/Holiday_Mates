@@ -6,7 +6,6 @@ const user = {
   password: '',
   passwordConfirmation: '',
   profilePhoto: '',
-  matesToken: '',
   mates: [],
   personalToken: ''
 }

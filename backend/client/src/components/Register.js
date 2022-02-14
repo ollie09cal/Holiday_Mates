@@ -1,50 +1,131 @@
 import React from 'react'
-import Form from 'react-bootstrap/Form'
+import {
+  FormControl,
+  FormLabel,
+  FormHelperText,
+  FormErrorMessage,
+  Input,
+  Button,
+  Box,
+} from '@chakra-ui/react'
+import { SmallAddIcon } from '@chakra-ui/icons'
+import { useState } from 'react'
+import axios from 'axios'
+
 
 const Register = () => {
 
-  const handleSubmit = () => {
+  const [registerInfo, setRegisterInfo] = useState({
+    username: '',
+    email: '',
+    password: '',
+    passwordConfirmation: '',
+    profilePhoto: '',
+    personalToken: ''
+  })
 
+  const [formError, setFormError] = useState({
+    username: '',
+    email: '',
+    password: '',
+    passwordConfirmation: '',
+    profilePhoto: '',
+    personalToken: ''
+  })
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    try {
+      await axios.post('/api/register', registerInfo)
+    } catch (err) {
+      console.log(err.response.data.errors)
+      setFormError({ ...formError, ...err.response.data.errors })
+      console.log(formError)
+    }
+  }
+
+  const handleChange = (e) => {
+    setFormError({ ...formError, [e.target.id]: '' })
+    const newObj = { ...registerInfo, [e.target.id]: e.target.value }
+    setRegisterInfo(newObj)
   }
 
   return (
     <div className="register-container">
       <div className="register-form-container">
-        <Form onSubmit={handleSubmit}>
-          <Form.Group>
-            <Form.Label>Username:</Form.Label>
-            <Form.Control type='text' placeholder='Username' />
-          </Form.Group>
+        <Box p={3} m={2} borderWidth='1px' borderRadius={10} shadow='md'>
+          <form onSubmit={handleSubmit}>
+            <FormControl isRequired isInvalid={formError.username}>
+              <FormLabel htmlFor='username'>Username</FormLabel>
+              <Input
+                id='username'
+                type='text'
+                placeholder='Username'
+                defaultValue={registerInfo.username}
+                onChange={handleChange}
+              />
+              {formError.username && <FormErrorMessage>Username is already in use.</FormErrorMessage>}
+            </FormControl>
 
-          <Form.Group>
-            <Form.Label>Email address:</Form.Label>
-            <Form.Control type='email' placeholder='Email' />
-          </Form.Group>
+            <FormControl isRequired isInvalid={formError.email}>
+              <FormLabel htmlFor='email'>Email</FormLabel>
+              <Input
+                id='email'
+                type='email'
+                placeholder='Email'
+                defaultValue={registerInfo.email}
+                onChange={handleChange}
+              />
+              {formError.email && <FormErrorMessage>Email is already in use.</FormErrorMessage>}
+            </FormControl>
 
-          <Form.Group>
-            <Form.Label>Password:</Form.Label>
-            <Form.Control type='password' placeholder='Password' />
-          </Form.Group>
+            <FormControl isRequired>
+              <FormLabel htmlFor='password'>Password</FormLabel>
+              <Input
+                id='password'
+                type='password'
+                placeholder='Password'
+                defaultValue={registerInfo.password}
+                onChange={handleChange}
+              />
+            </FormControl>
 
-          <Form.Group>
-            <Form.Label>Confirm your password:</Form.Label>
-            <Form.Control type='password' placeholder='Password' />
-          </Form.Group>
+            <FormControl isRequired isInvalid={formError.passwordConfirmation}>
+              <FormLabel htmlFor='passwordConfirmation'>Confirm your password</FormLabel>
+              <Input
+                id='passwordConfirmation'
+                type='password'
+                placeholder='Password'
+                defaultValue={registerInfo.passwordConfirmation}
+                onChange={handleChange}
+              />
+              {formError.passwordConfirmation && <FormErrorMessage>Password does not match</FormErrorMessage>}
+            </FormControl>
 
-          <Form.Group>
-            <Form.Label>Your Mates code:</Form.Label>
-            <Form.Text>Choose your code to connect with your friends. 10-20 characters</Form.Text>
-            <Form.Control type='text' placeholder='Mates Code' />
-          </Form.Group>
+            <FormControl isRequired isInvalid={formError.personalToken}>
+              <FormLabel htmlFor='personalToken'>MatesCode</FormLabel>
+              <Input
+                id='personalToken'
+                type='text'
+                placeholder='myUniqueCode1'
+                defaultValue={registerInfo.personalToken}
+                onChange={handleChange}
+                minLength='10'
+                maxLength='20'
+              />
+              {formError.personalToken && <FormErrorMessage>MatesCode is invalid. Try again.</FormErrorMessage>}
+              <FormHelperText>MatesCode is what you connect with your mates. Choose a code 10-20 characters long.</FormHelperText>
+            </FormControl>
 
-          <Form.Group>
-            <Form.Label>Upload your profile picture:</Form.Label>
-            <Form.Control type="file" />
-          </Form.Group>
+            <FormControl>
+              <FormLabel htmlFor='profileImage'>Profile Image</FormLabel>
+              <Input id='profileImage' type='file' />
+            </FormControl>
 
-          <button onSubmit={handleSubmit}>Log me in</button>
+            <Button type='submit' rightIcon={<SmallAddIcon />} onSubmit={handleSubmit}>Register</Button>
 
-        </Form>
+          </form>
+        </Box>
       </div>
     </div>
   )
