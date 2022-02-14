@@ -1,27 +1,22 @@
-import React, { useEffect } from 'react'
-import axios from 'axios'
+import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { ChakraProvider } from '@chakra-ui/react'
 import NavigationBar from './components/NavigationBar'
+import Register from './components/Register'
+import Login from './components/Login'
 
 function App() {
-  useEffect(() => {
-    const getData = async () => {
-      const { data } = await axios.get('/api/holidays/') // * <-- replace with your endpoint
-      console.log(data)
-    }
-    getData()
-  })
 
   return (
-    <>
+    <ChakraProvider>
       <BrowserRouter>
         <NavigationBar />
-
         <Routes>
-          <Route />
+          <Route path='/register' element={<Register />} />
+          <Route path='/login' element={<Login />} />
         </Routes>
       </BrowserRouter>
-    </>
+    </ChakraProvider>
   )
 }
 
