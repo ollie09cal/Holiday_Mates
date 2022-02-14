@@ -137,7 +137,7 @@ export const showHolidayTypeCards = async (_req, res) => {
 export const showHolidayCard = async (req, res) => {
   try {
     const { cardId } = req.params
-    const holidayType = await HolidayType.findById(cardId)
+    const holidayType = await HolidayType.findById(cardId).populate('owner')
     console.log(holidayType)
     return res.status(200).json(holidayType) 
   } catch (err) {
