@@ -11,7 +11,7 @@ const ViewHoliday = () => {
 
   const [ hasError, setHasError ] = useState({ error: false, message: '' })
 
-  
+  //set holiday id to be what ever is passed to viewHoliday
   useEffect(() => {
     setHolidayId('620a36b9a2e01d28c0440090')
   },[])
@@ -79,16 +79,16 @@ const ViewHoliday = () => {
                   📍 {holidayCard.location}
                   </Heading>
                   <Box p={3} m={3} borderWidth='1px' shadow='md'>
-                  <HStack spacing={4}>
-                    {holidayCard.vibeTag.map((vibe, i) => {
-                      return (
-                        <Tag size='md' key={i} variant='solid' colorScheme='green'>
-                          {vibe}
-                        </Tag>
-                      )
-                    })
-                    }
-                  </HStack>
+                    <HStack spacing={4}>
+                      {holidayCard.vibeTag.map((vibe, i) => {
+                        return (
+                          <Tag size='md' key={i} variant='solid' colorScheme='green'>
+                            {vibe}
+                          </Tag>
+                        )
+                      })
+                      }
+                    </HStack>
                   </Box>
                   <Heading as='h4' size='m'>
                     {holidayCard.description}

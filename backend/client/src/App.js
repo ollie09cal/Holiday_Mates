@@ -1,12 +1,15 @@
 import React, { Profiler } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { ChakraProvider } from '@chakra-ui/react'
 import NavigationBar from './components/NavigationBar'
+import { ChakraProvider } from '@chakra-ui/react'
+
+//Pages --->
 import Register from './components/auth/Register'
 import Login from './components/auth/Login'
 import PracticeMap from './components/practicemap'
-import Search from './components/Search'
 import ViewHoliday from './components/ViewHoliday'
+import ViewHolidayCard from './components/ViewHolidayCard'
+import Search from './components/Search'
 import Profile from './components/Profile'
 
 function App() {
@@ -16,15 +19,18 @@ function App() {
       <BrowserRouter>
         <NavigationBar />
         <Routes>
+          <Route path='/practicemap' element={<PracticeMap />} />
+          <Route path='/viewholiday' element={<ViewHoliday />} />
+          <Route path='/viewholidaycard' element={<ViewHolidayCard />} />
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
           <Route path='/practicemap' element={<PracticeMap />} />
-          <Route path='/Search' element={<Search />} />
+          <Route path='/search' element={<Search />} />
           <Route path='/viewholiday' element={<ViewHoliday />} />
           <Route path='/profile' element={<Profile />} />
-        </Routes>
-      </BrowserRouter>
-    </ChakraProvider>
+        </Routes >
+      </BrowserRouter >
+    </ChakraProvider >
   )
 }
 

@@ -31,11 +31,11 @@ router.route('/holidays/:id')
 
 //show all holiday type cards
 router.route('/holidaytypes')
-  .get(secureRoute, showHolidayTypeCards)
+  .get(showHolidayTypeCards)
 
 router.route('/holidaytypes/:cardId')
   .delete(secureRoute, deleteHolidayTypeCard)
-  .get(secureRoute, showHolidayCard)
+  .get(showHolidayCard)
   .put(secureRoute, updateHolidayCard)
 
 //profile route
