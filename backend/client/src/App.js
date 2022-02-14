@@ -7,12 +7,9 @@ import ViewHoliday from './components/ViewHoliday'
 import ViewHolidayCard from './components/ViewHolidayCard'
 
 import { ChakraProvider } from '@chakra-ui/react'
-import NavigationBar from './components/NavigationBar'
 import Register from './components/Register'
 import Login from './components/Login'
-import PracticeMap from './components/practicemap'
 import Search from './components/Search'
-import ViewHoliday from './components/ViewHoliday'
 import Profile from './components/Profile'
 
 function App() {
@@ -27,9 +24,7 @@ function App() {
           <Route path='/viewholidaycard' element={<ViewHolidayCard />} />
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
-          <Route path='/practicemap' element={<PracticeMap />} />
-          <Route path='/Search' element={<Search />}/>
-          <Route path='/viewholiday' element={<ViewHoliday />} />
+          <Route path='/search' element={<Search />}/>
           <Route path='/profile' element={<Profile />} />
         </Routes>
       </BrowserRouter>
