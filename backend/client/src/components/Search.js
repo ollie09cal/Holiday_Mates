@@ -3,7 +3,7 @@ import ReactMapGl, { Marker } from 'react-map-gl'
 import { REACT_APP_MAPBOX_ACCESS_TOKEN } from '../enviroment/env'
 import axios from 'axios'
 import 'mapbox-gl/dist/mapbox-gl.css'
-import { Input, Button, FormControl, Box, VStack } from '@chakra-ui/react'
+import { useDisclosure, Input, Button, FormControl, Select, FormLabel, Box, VStack, Menu,  Modal, ModalFooter, ModalBody, ModalHeader, ModalOverlay, ModalContent, ModalCloseButton, Heading, Checkbox } from '@chakra-ui/react'
 
 const Search = () => {
 
@@ -12,8 +12,13 @@ const Search = () => {
     longitude: -0.1,
     zoom: 10
   })
+  const [searchValues, setSearchValues] = useState({
+    search: '',
+    holidayType: '',
+    showMates: true,
+  })
+
   const [currentLocation, setCurrentLocation] = useState(null)
-  const [searchValues, setSearchValues] = useState({search: ''})
   const [resultsOptions, setResultsOptions] = useState([])
 
   
@@ -48,16 +53,53 @@ const Search = () => {
     setResultsOptions([])
     setSearchValues({search: ''})
   }
-  
+  const { isOpen, onOpen, onClose } = useDisclosure()
+
+  const toggleShowMates = (e) => {
+    e.preventDefault()
+    setSearchValues({...searchValues, showMates: e.target.checked})
+  }
+
+  const filterResults = () => {
+    console.log('filter')
+  }
   return (
     <>
-      <h1>Search</h1>
+      <Heading>Search</Heading>
       <Box>
         <form onSubmit={handleSubmit}>
-          <FormControl >
             <Input placeholder='search' size='md' name='search' value={searchValues.search} onChange={handleChange}/>
+            <Menu>
+              <Button onClick={onOpen}>Filters</Button>
+              <Modal isOpen={isOpen} onClose={onClose}>
+                <ModalOverlay />
+                <ModalContent>
+                  <ModalHeader>Filters</ModalHeader>
+                  <ModalCloseButton />
+                  <ModalBody>
+                    <form>
+                      <FormControl>
+                        <FormLabel htmlFor='holiday-type'>Holiday Type</FormLabel>
+                        <Select id='holiday-type' placeholder='select holiday type' name='holidayType'onChange={handleChange}>
+                          <option>Landmark</option>
+                          <option>Restaurant</option>
+                          <option>Event</option>
+                          <option>Stay</option>
+                          <option>Activity</option>
+                        </Select>
+                      </FormControl>
+                      <Checkbox defaultIsChecked name='showMates' onChange={toggleShowMates}>Show Mates Holidays</Checkbox>
+                    </form>
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button onClick={filterResults, onClose}>Show Results</Button>
+                  </ModalFooter>
+                </ModalContent>
+                  
+              </Modal>
+            </Menu>
             <Button type='Submit'>Search</Button>
-          </FormControl>
+          
           {!!resultsOptions.length && 
             <VStack spacing={4}>
               {resultsOptions.map((option, i) => {
