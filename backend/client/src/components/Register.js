@@ -10,10 +10,13 @@ import {
 } from '@chakra-ui/react'
 import { SmallAddIcon } from '@chakra-ui/icons'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 
 const Register = () => {
+
+  const navigate = useNavigate()
 
   const [registerInfo, setRegisterInfo] = useState({
     username: '',
@@ -37,6 +40,7 @@ const Register = () => {
     e.preventDefault()
     try {
       await axios.post('/api/register', registerInfo)
+      navigate('/login')
     } catch (err) {
       console.log(err.response.data.errors)
       setFormError({ ...formError, ...err.response.data.errors })

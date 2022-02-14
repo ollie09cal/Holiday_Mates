@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Profiler } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { ChakraProvider } from '@chakra-ui/react'
 import NavigationBar from './components/NavigationBar'
@@ -6,6 +6,7 @@ import Register from './components/Register'
 import Login from './components/Login'
 import PracticeMap from './components/practicemap'
 import ViewHoliday from './components/ViewHoliday'
+import Profile from './components/Profile'
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/practicemap' element={<PracticeMap />} />
           <Route path='/viewholiday' element={<ViewHoliday />} />
+          <Route path='/profile' element={<Profile />} />
         </Routes>
       </BrowserRouter>
     </ChakraProvider>
