@@ -1,58 +1,53 @@
 import React, { useEffect, useState } from 'react'
 import ReactMapGL, { Marker } from 'react-map-gl'
-import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { REACT_APP_MAPBOX_ACCESS_TOKEN } from '../enviroment/env'
+
 const PracticeMap = () => {
 
-  //const Map = ReactMapGl({ accessToken: REACT_APP_MAPBOX_ACCESS_TOKEN, attributionControl: false })
-
-  const [isPopup, setIsPopup] = useState(null)
-
-  // const [viewPort, setViewPort] = useState({
-  //   latitude: 51.515,
-  //   longitude: -0.078,
-  //   zoom: 4
-  // })
-
-  // useEffect(() => {
-  //   window.navigator.geolocation.getCurrentPosition(position => {
-  //     const { latitude, longitude } = position.coords
-  //     setViewPort({ latitude, longitude})
-  //   })
-  // }, [])
+//   const [viewPort, setViewPort] = useState(null)
+//   useEffect(() => {
+//     window.navigator.geolocation.getCurrentPosition(position => {
+//       // console.log(position.coords)
+//       const { latitude, longitude } = position.coords
+//       console.log('position', latitude, longitude)
+//       setViewPort({ latitude: latitude, longitude: longitude })
+//     })
+//   }, [])
+//   // const Map = ReactMapGl({ accessToken: REACT_APP_MAPBOX_ACCESS_TOKEN, attributionControl: false })
   
-  return (
-    <div className="practice-map-container" >
-      {/* <h1>Practice Map</h1>
-      <Map
-        height='100%'
-        width='100%'
-        style='mapbox://styles/mapbox/streets-v11'
-        zoom= {[11]}
-        center= {[-0.0541846, 51.5399592]}
-			>
-        <Marker  key="London" longitude={0.1276} latitude={51.5072}><span>🎈</span></Marker>
-      </Map> */}
-      <ReactMapGL
-      initialViewState={{
-        latitude: 37.8,
-        longitude: -122.4,
-        zoom: 14
-      }}
-        mapboxAccessToken={REACT_APP_MAPBOX_ACCESS_TOKEN}
-        height='100%'
-        width='100%'
-        mapStyle='mapbox://styles/mapbox/streets-v11'
-        
-        // {...viewPort}
-        // onViewStateChange={viewport => setViewPort(viewport)}
+//   const [isPopup, setIsPopup] = useState(null)
 
-      >
-        <Marker  key="London" longitude={0.1276} latitude={51.5072}><span>🎈</span></Marker>
-      </ReactMapGL>
-    </div>
-  )
+//   // const [viewPort, setViewPort] = useState({
+//   //   latitude: 51.515,
+//   //   longitude: -0.078,
+//   //   zoom: 4
+//   // })
+
+//   // useEffect(() => {
+//   //   window.navigator.geolocation.getCurrentPosition(position => {
+//   //     const { latitude, longitude } = position.coords
+//   //     setViewPort({ latitude, longitude})
+//   //   })
+//   // }, [])
+  
+//   return (
+//     <div className="map-container" >
+//       <h1>Practice Map</h1>
+//       {viewPort ?
+//         <ReactMapGL
+//           initialViewState={{ ...viewPort, zoom: 10 }}
+
+//           style={{ width: '100%', height: '100%' }}
+//           mapStyle="mapbox://styles/mapbox/streets-v9"
+//           mapboxAccessToken={REACT_APP_MAPBOX_ACCESS_TOKEN}
+//         >
+//           <Marker longitude={viewPort.longitude} latitude={viewPort.latitude} color="green" />
+//         </ReactMapGl>
+//         :
+//         <p>loading your location</p>}
+//     </div>
+//   )
 }
 
 export default PracticeMap
