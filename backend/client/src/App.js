@@ -3,6 +3,8 @@ import axios from 'axios'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import NavigationBar from './components/NavigationBar'
 import PracticeMap from './components/practicemap'
+import { ChakraProvider } from '@chakra-ui/react'
+import Search from './components/Search'
 
 function App() {
   // useEffect(() => {
@@ -14,16 +16,18 @@ function App() {
   // })
 
   return (
-    <>
+    <ChakraProvider>
       <BrowserRouter>
         <NavigationBar />
 
         <Routes>
           <Route path='/practicemap' element={<PracticeMap />}/>
+          <Route path='/Search' element={<Search />}/>
+
           <Route />
         </Routes>
       </BrowserRouter>
-    </>
+    </ChakraProvider>
   )
 }
 
