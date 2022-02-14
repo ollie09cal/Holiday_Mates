@@ -3,6 +3,9 @@ import axios from 'axios'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import NavigationBar from './components/NavigationBar'
 import PracticeMap from './components/practicemap'
+import ViewHoliday from './components/ViewHoliday'
+
+import { ChakraProvider } from '@chakra-ui/react'
 
 function App() {
   // useEffect(() => {
@@ -14,16 +17,16 @@ function App() {
   // })
 
   return (
-    <>
+    <ChakraProvider>
       <BrowserRouter>
         <NavigationBar />
 
         <Routes>
           <Route path='/practicemap' element={<PracticeMap />}/>
-          <Route />
+          <Route path='/viewholiday' element={<ViewHoliday />}/>
         </Routes>
       </BrowserRouter>
-    </>
+    </ChakraProvider>
   )
 }
 
