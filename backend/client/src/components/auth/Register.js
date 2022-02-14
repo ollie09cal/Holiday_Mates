@@ -7,7 +7,9 @@ import {
   Input,
   Button,
   Box,
+  useToast
 } from '@chakra-ui/react'
+import { ImageUpload } from '../subComponents/ImageUpload'
 import { SmallAddIcon } from '@chakra-ui/icons'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -17,6 +19,7 @@ import axios from 'axios'
 const Register = () => {
 
   const navigate = useNavigate()
+  const toast = useToast()
 
   const [registerInfo, setRegisterInfo] = useState({
     username: '',
@@ -40,10 +43,24 @@ const Register = () => {
     e.preventDefault()
     try {
       await axios.post('/api/register', registerInfo)
+      toast({
+        title: 'Registered.',
+        description: "Your account is ready to be logged in.",
+        status: 'success',
+        duration: 9000,
+        isClosable: true,
+      })
       navigate('/login')
     } catch (err) {
       console.log(err.response.data.errors)
       setFormError({ ...formError, ...err.response.data.errors })
+      toast({
+        title: 'Error',
+        description: "Registration failed.",
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      })
       console.log(formError)
     }
   }
@@ -52,6 +69,10 @@ const Register = () => {
     setFormError({ ...formError, [e.target.id]: '' })
     const newObj = { ...registerInfo, [e.target.id]: e.target.value }
     setRegisterInfo(newObj)
+  }
+
+  const handleImageURL = (url) => {
+    setRegisterInfo({ ...registerInfo, profilePhoto: url })
   }
 
   return (
@@ -121,12 +142,14 @@ const Register = () => {
               <FormHelperText>MatesCode is what you connect with your mates. Choose a code 10-20 characters long.</FormHelperText>
             </FormControl>
 
-            <FormControl>
-              <FormLabel htmlFor='profileImage'>Profile Image</FormLabel>
-              <Input id='profileImage' type='file' />
-            </FormControl>
+            <ImageUpload value={registerInfo.profilePhoto} name="profileImage" handleImageURL={handleImageURL} />
 
-            <Button type='submit' rightIcon={<SmallAddIcon />} onSubmit={handleSubmit}>Register</Button>
+            <Button
+              type='submit'
+              rightIcon={<SmallAddIcon />}
+              onSubmit={() => {
+                handleSubmit()
+              }}>Register</Button>
 
           </form>
         </Box>
