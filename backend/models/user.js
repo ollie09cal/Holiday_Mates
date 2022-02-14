@@ -4,12 +4,16 @@ import bcrypt from 'bcrypt'
 
 
 const { Schema } = mongoose
+
+
 const userSchema = new Schema({
   username: { type: String, required: true, unique: true, maxlength: 30 },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   profilePhoto: { type: String },
   matesToken: [{ type: String }],
+  matesRequests: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
+  requestsSent: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
   mates: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
   personalToken: { type: String, required: true, unique: true, minLength: 10, maxlength: 20 }
 })
