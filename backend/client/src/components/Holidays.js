@@ -4,7 +4,7 @@ const Holidays = () => {
 
   return (
     <div className="holidays-container">
-
+      
     </div>
   )
 }

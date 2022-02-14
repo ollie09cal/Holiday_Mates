@@ -24,7 +24,7 @@ router.route('/holidays')
 
 //holiday card
 router.route('/holidays/:id')
-  .get(secureRoute, getHolidayById)
+  .get(getHolidayById) //dont forget to add in secure route card
   .post(secureRoute, addHolidayCard)
   .put(secureRoute, updateHoliday)
   .delete(secureRoute, deleteHoliday)
