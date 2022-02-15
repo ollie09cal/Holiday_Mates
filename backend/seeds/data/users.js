@@ -5,6 +5,14 @@ export default [
     password: 'pass',
     passwordConfirmation: 'pass',
     personalToken: 'jonnystoken',
+    profilePhoto: 'https://i.imgur.com/WI1didT.jpg',
+  },
+  {
+    username: 'essi',
+    email: 'essi@email.com',
+    password: 'pass',
+    passwordConfirmation: 'pass',
+    personalToken: 'essistoken',
   },
   {
     username: 'ollie',
@@ -12,13 +20,5 @@ export default [
     password: 'pass',
     passwordConfirmation: 'pass',
     personalToken: 'iammorethan10',
-  },
-  
-  {
-    username: 'essi',
-    email: 'essi@email.com',
-    password: 'pass',
-    passwordConfirmation: 'pass',
-    personalToken: 'essistoken',
   }
 ]

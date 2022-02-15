@@ -12,6 +12,8 @@ import ViewHoliday from './components/ViewHoliday'
 import ViewHolidayCard from './components/ViewHolidayCard'
 import Search from './components/Search'
 import Profile from './components/Profile'
+import AddHoliday from './components/AddHoliday'
+import AddHolidayCard from './components/AddHolidayCard'
 
 function App() {
 
@@ -28,6 +30,8 @@ function App() {
           <Route path='/practicemap' element={<PracticeMap />} />
           <Route path='/search' element={<Search />} />
           <Route path='/profile' element={<Profile />} />
+          <Route path='/addholiday' element={<AddHoliday />} />
+          <Route path='/addholidaycard/:holidayid' element={<AddHolidayCard />} />
         </Routes >
       </BrowserRouter >
     </ChakraProvider >
