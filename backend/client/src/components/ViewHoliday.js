@@ -13,7 +13,7 @@ const ViewHoliday = () => {
 
   //set holiday id to be what ever is passed to viewHoliday
   useEffect(() => {
-    setHolidayId('620a36b9a2e01d28c0440090')
+    setHolidayId('620b83fe2d00e74637cbc239')
   },[])
 
   useEffect(() => {

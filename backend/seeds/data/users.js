@@ -5,6 +5,7 @@ export default [
     password: 'pass',
     passwordConfirmation: 'pass',
     personalToken: 'jonnystoken',
+    profilePhoto: 'https://i.imgur.com/WI1didT.jpg',
   },
   {
     username: 'essi',
