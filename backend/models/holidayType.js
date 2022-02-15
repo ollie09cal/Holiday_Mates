@@ -14,8 +14,8 @@ const commentsSchema = new Schema({
 const holidayTypeCardSchema = new Schema({
   type: { type: String, required: true },
   location: { type: String, required: true },
-  longitude: { type: Number, required: true },
   latitude: { type: Number, required: true },
+  longitude: { type: Number, required: true },
   owner: { type: mongoose.Schema.ObjectId, ref: 'User', required: true },
   link: { type: String },
   photo: [{ type: String }],

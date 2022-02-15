@@ -1,10 +1,10 @@
-import { Buffer } from 'jsonwebtoken'
+import { Buffer } from 'buffer'
 
-export const getTokenFromLocal = () => {
-  window.localStorage.getItem('holiday-token')
+const getTokenFromLocal = () => {
+  return window.localStorage.getItem('holiday-token')
 }
 
-export const getPayload = () => {
+const getPayload = () => {
   const token = getTokenFromLocal()
   if (!token) return
   const splitToken = token.split('.')
@@ -16,5 +16,6 @@ export const userAuth = () => {
   const payload = getPayload()
   if (!payload) return
   const currentTime = Math.round(Date.now() / 1000)
+  console.log('userAuth firing up', currentTime, 'payload-->', payload.exp)
   return currentTime < payload.exp
 }
