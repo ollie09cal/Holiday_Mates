@@ -19,7 +19,7 @@ export const ImageUpload = (props) => {  //needs value = url, name = htmlFor&id,
 
   return (
     <FormControl>
-      <FormLabel htmlFor={name}>Profile Image</FormLabel>
+      <FormLabel htmlFor={name}>Upload Image</FormLabel>
       <Input id={name} type='file' onChange={handleUpload} />
       {value ? <img src={value} alt={name} /> : <></>}
     </FormControl>

@@ -1,6 +1,6 @@
 import React from 'react'
 
-const AddHolidayTypes = () => {
+const AddHolidayCard = () => {
 
   return (
     <div className="holidaytype-input-container">
@@ -9,4 +9,4 @@ const AddHolidayTypes = () => {
   )
 }
 
-export default AddHolidayTypes
+export default AddHolidayCard
