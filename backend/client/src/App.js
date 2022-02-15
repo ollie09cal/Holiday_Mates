@@ -24,9 +24,7 @@ function App() {
           <Route path='/viewholidaycard' element={<ViewHolidayCard />} />
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
-          <Route path='/practicemap' element={<PracticeMap />} />
           <Route path='/search' element={<Search />} />
-          <Route path='/viewholiday' element={<ViewHoliday />} />
           <Route path='/profile' element={<Profile />} />
         </Routes >
       </BrowserRouter >

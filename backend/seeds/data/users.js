@@ -7,18 +7,17 @@ export default [
     personalToken: 'jonnystoken',
   },
   {
-    username: 'ollie',
-    email: 'ollie@email.com',
-    password: 'pass',
-    passwordConfirmation: 'pass',
-    personalToken: 'iammorethan10',
-  },
-  
-  {
     username: 'essi',
     email: 'essi@email.com',
     password: 'pass',
     passwordConfirmation: 'pass',
     personalToken: 'essistoken',
+  },
+  {
+    username: 'ollie',
+    email: 'ollie@email.com',
+    password: 'pass',
+    passwordConfirmation: 'pass',
+    personalToken: 'iammorethan10',
   }
 ]
