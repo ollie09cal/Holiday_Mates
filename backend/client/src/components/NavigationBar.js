@@ -1,21 +1,14 @@
 import React from 'react'
 //import { Link } from 'react-router-dom'
-import Navbar from 'react-bootstrap/Navbar'
-import Nav from 'react-bootstrap/Nav'
-//import NavDropdown from 'react-bootstrap/NavDropdown'
+import { Menu, MenuButton, IconButton, MenuList, MenuItem, Heading } from '@chakra-ui/react'
+import { AddIcon, AtSignIcon, HamburgerIcon, LockIcon, StarIcon, SunIcon } from '@chakra-ui/icons'
 
 const NavigationBar = () => {
 
   return (
-    <Navbar>
-      <div className="navbar-container w-100">
-        <Navbar.Brand href=''>Holiday Mates</Navbar.Brand>
-        <Nav>
-          <Nav.Link href=''></Nav.Link>
-          <Nav.Link href=''></Nav.Link>
-        </Nav>
-      </div>
-    </Navbar>
+    <div className="navbar-container">
+      <Heading as='h1' size='lg'>Holiday Mates</Heading>
+    </div>
   )
 }
 

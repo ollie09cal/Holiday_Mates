@@ -10,6 +10,7 @@
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
     "bcrypt": "^5.0.1",
+    "crypto": "^1.0.1",
     "express": "^4.17.2",
     "framer-motion": "^6",
     "i": "^0.3.7",
@@ -18,11 +19,15 @@
     "mongoose-friends": "^0.2.5",
     "mongoose-unique-validator": "2.0.3",
     "react-map-gl": "^7.0.6",
+    "util": "^0.12.4",
     "uuid": "^8.3.2"
   },
   "scripts": {
     "serve": "npx nodemon index.js",
     "seed": "node seeds/seeds.js"
   },
-  "type": "module"
+  "type": "module",
+  "browser": {
+    "crypto": false
+  }
 }
