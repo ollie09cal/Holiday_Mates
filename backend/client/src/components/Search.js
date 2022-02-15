@@ -3,11 +3,12 @@ import ReactMapGl, { Marker, Popup } from 'react-map-gl'
 import { REACT_APP_MAPBOX_ACCESS_TOKEN } from '../enviroment/env'
 import axios from 'axios'
 import 'mapbox-gl/dist/mapbox-gl.css'
-import { Avatar, useDisclosure, Input, Button, FormControl, Select, FormLabel, Box, VStack, Menu,  Modal, ModalFooter, ModalBody, ModalHeader, ModalOverlay, ModalContent, ModalCloseButton, Heading, Checkbox } from '@chakra-ui/react'
+import { Avatar, Image, useDisclosure, Input, Button, Text, FormControl, Select, FormLabel, Box, VStack, Menu,  Modal, ModalFooter, ModalBody, ModalHeader, ModalOverlay, ModalContent, ModalCloseButton, Heading, Checkbox } from '@chakra-ui/react'
 // import { getTokenFromLocal } from '../enviroment/helpers/auth'
+import { useNavigate } from 'react-router-dom'
 
 const Search = () => {
-
+  const navigate = useNavigate()
   const [viewPort, setViewPort] = useState({
     latitude: 51,
     longitude: -0.1,
@@ -22,8 +23,24 @@ const Search = () => {
   const [currentLocation, setCurrentLocation] = useState(null)
   const [resultsOptions, setResultsOptions] = useState([])
   const [data, setData] = useState([])
+  const [filteredData, setFilteredData] = useState([])
   const [showPopup, setShowPopup] = useState(null)
-
+  const [user, setUser] = useState(null)
+  //get user
+  useEffect(() => {
+    const getUser = async () =>  {
+      try {
+      const token = window.localStorage.getItem('holiday-token')
+      const { data } = await axios.get('api/profile', {
+        headers: {Authorization: `Bearer ${token}`}
+      })
+      setUser(data)
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    getUser()
+  },[])
     const handleChange = (e) => setSearchValues({...searchValues, [e.target.name]: e.target.value })
 
     const handleSubmit = async (e) => {
@@ -77,10 +94,38 @@ const Search = () => {
     console.log('filter')
   }
 
-  const togglePopup = (e) => {
-    console.log('clicked')
-    console.log(e)
+  const handleClick =  (e) => {
+    const holidayId = e.currentTarget.id
+    const holiday = data[data.findIndex(item => item._id === holidayId)]
+    console.log(holiday)
+    setShowPopup(holiday)
   }
+
+  const closePopup = () => {
+    console.log('close')
+    setShowPopup(null)
+  }
+
+  useEffect(() =>{
+    const { showMatesHolidays, showMyHolidays } = searchValues
+    console.log(showMatesHolidays, showMyHolidays)
+    
+    if (!showMatesHolidays) {
+      const filterResults = data.filter(holiday => holiday.owner._id === user._id)
+      setFilteredData(filterResults)
+    }
+    if (!showMyHolidays) {
+      const filterResults = data.filter(holiday => holiday.owner._id !== user._id)
+      setFilteredData(filterResults)
+    }
+    if(!showMatesHolidays && !showMyHolidays) {
+      setFilteredData(['noResults'])
+    }
+    if(showMatesHolidays && showMyHolidays) {
+      setFilteredData([])
+    }
+    
+  },[searchValues])
   return (
     <>
       <Heading>Search</Heading>
@@ -143,15 +188,24 @@ const Search = () => {
             mapStyle="mapbox://styles/mapbox/streets-v9"
             mapboxAccessToken={REACT_APP_MAPBOX_ACCESS_TOKEN}
           >
-            {!!data.length && 
-              data.map((holiday) => (
-                  <Marker key={holiday._id} latitude={holiday.latitude} longitude={holiday.longitude} color='red' onClick={togglePopup}>
+            {!!data.length & filteredData[0] !== 'noResults' && 
+              (filteredData.length ? filteredData : data).map((holiday) => (
+                <Marker key={holiday._id} latitude={holiday.latitude} longitude={holiday.longitude} >
+                  <div id={holiday._id} onClick={handleClick} >
                     <Avatar src={holiday.image} name={holiday.title} showBorder size='sm' />
-                  </Marker>
+                  </div>
+                </Marker>
               ))}
               {!!showPopup && 
-                <Popup latitude={showPopup.latitude} longitude={showPopup.longitude} anchor='bottom' onClose={() => setShowPopup(null)}>
-                </Popup>}
+                <div onClick={() => navigate(`/viewholiday/${showPopup._id}`)}>
+                  <Popup closeOnMove={false}  closeOnClick={false} latitude={showPopup.latitude} longitude={showPopup.longitude} anchor='bottom' onClose={closePopup}>
+                    <Heading as='h3' size='sm'>{showPopup.title}</Heading>
+                    <Text>{showPopup.location}</Text>
+                    <Image src={showPopup.image} alt={showPopup.title}/>
+                    <Text>{showPopup.description}</Text>
+                  </Popup>
+                </div>}
+                
             <Marker className='current-location-marker'longitude={currentLocation.longitude} latitude={currentLocation.latitude} color="green" />
           </ReactMapGl>
           :
