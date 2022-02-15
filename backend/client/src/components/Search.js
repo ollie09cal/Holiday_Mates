@@ -3,7 +3,7 @@ import ReactMapGl, { Marker, Popup } from 'react-map-gl'
 import { REACT_APP_MAPBOX_ACCESS_TOKEN } from '../enviroment/env'
 import axios from 'axios'
 import 'mapbox-gl/dist/mapbox-gl.css'
-import { Avatar, useDisclosure, Input, Button, FormControl, Select, FormLabel, Box, VStack, Menu,  Modal, ModalFooter, ModalBody, ModalHeader, ModalOverlay, ModalContent, ModalCloseButton, Heading, Checkbox } from '@chakra-ui/react'
+import { Avatar, Image, useDisclosure, Input, Button, Text, FormControl, Select, FormLabel, Box, VStack, Menu,  Modal, ModalFooter, ModalBody, ModalHeader, ModalOverlay, ModalContent, ModalCloseButton, Heading, Checkbox } from '@chakra-ui/react'
 // import { getTokenFromLocal } from '../enviroment/helpers/auth'
 
 const Search = () => {
@@ -77,9 +77,16 @@ const Search = () => {
     console.log('filter')
   }
 
-  const togglePopup = (e) => {
-    console.log('clicked')
-    console.log(e)
+  const handleClick =  (e) => {
+    const holidayId = e.currentTarget.id
+    const holiday = data[data.findIndex(item => item._id === holidayId)]
+    console.log(holiday)
+    setShowPopup(holiday)
+  }
+
+  const closePopup = () => {
+    console.log('close')
+    setShowPopup(null)
   }
   return (
     <>
@@ -145,13 +152,20 @@ const Search = () => {
           >
             {!!data.length && 
               data.map((holiday) => (
-                  <Marker key={holiday._id} latitude={holiday.latitude} longitude={holiday.longitude} color='red' onClick={togglePopup}>
+                <Marker key={holiday._id} latitude={holiday.latitude} longitude={holiday.longitude} >
+                  <div id={holiday._id} onClick={handleClick} >
                     <Avatar src={holiday.image} name={holiday.title} showBorder size='sm' />
-                  </Marker>
+                  </div>
+                </Marker>
               ))}
               {!!showPopup && 
-                <Popup latitude={showPopup.latitude} longitude={showPopup.longitude} anchor='bottom' onClose={() => setShowPopup(null)}>
-                </Popup>}
+                  <Popup closeOnMove={false} closeOnClick={false} latitude={showPopup.latitude} longitude={showPopup.longitude} anchor='bottom' onClose={closePopup}>
+                    <Heading as='h3' size='sm'>{showPopup.title}</Heading>
+                    <Text>{showPopup.location}</Text>
+                    <Image src={showPopup.image} alt={showPopup.title}/>
+                    <Text>{showPopup.description}</Text>
+                  </Popup>}
+                
             <Marker className='current-location-marker'longitude={currentLocation.longitude} latitude={currentLocation.latitude} color="green" />
           </ReactMapGl>
           :
