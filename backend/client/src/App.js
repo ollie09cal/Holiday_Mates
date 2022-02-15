@@ -19,12 +19,12 @@ function App() {
       <BrowserRouter>
         <NavigationBar />
         <Routes>
-          <Route path='/practicemap' element={<PracticeMap />} />
-          <Route path='/viewholiday' element={<ViewHoliday />} />
+          <Route path='/viewholiday' element={<ViewHoliday />}/>
           <Route path='/viewholidaycard' element={<ViewHolidayCard />} />
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
-          <Route path='/search' element={<Search />} />
+          <Route path='/practicemap' element={<PracticeMap />} />
+          <Route path='/search' element={<Search />}/>
           <Route path='/profile' element={<Profile />} />
         </Routes >
       </BrowserRouter >
