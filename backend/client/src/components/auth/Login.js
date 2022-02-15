@@ -6,6 +6,7 @@ import {
   Input,
   Button,
   Box,
+  useToast
 } from '@chakra-ui/react'
 import { useState } from 'react'
 import axios from 'axios'
@@ -14,6 +15,7 @@ import { useNavigate } from 'react-router-dom'
 const Login = () => {
 
   const navigate = useNavigate()
+  const toast = useToast()
 
   //setting local token
   const setTokenFromLocal = (token) => {
@@ -40,12 +42,18 @@ const Login = () => {
     } catch (err) {
       console.log(err)
       setIsError({ error: true, message: 'Username and password does not match.' })
+      toast({
+        title: 'Error',
+        description: "Failed to login.",
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      })
     }
   }
 
   const handleChange = (e) => {
     const newObj = { ...loginInfo, [e.target.id]: e.target.value }
-    console.log(newObj)
     setLoginInfo(newObj)
   }
 
