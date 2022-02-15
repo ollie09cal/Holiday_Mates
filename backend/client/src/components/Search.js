@@ -5,9 +5,10 @@ import axios from 'axios'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { Avatar, Image, useDisclosure, Input, Button, Text, FormControl, Select, FormLabel, Box, VStack, Menu,  Modal, ModalFooter, ModalBody, ModalHeader, ModalOverlay, ModalContent, ModalCloseButton, Heading, Checkbox } from '@chakra-ui/react'
 // import { getTokenFromLocal } from '../enviroment/helpers/auth'
+import { useNavigate } from 'react-router-dom'
 
 const Search = () => {
-
+  const navigate = useNavigate()
   const [viewPort, setViewPort] = useState({
     latitude: 51,
     longitude: -0.1,
@@ -159,12 +160,14 @@ const Search = () => {
                 </Marker>
               ))}
               {!!showPopup && 
-                  <Popup closeOnMove={false} closeOnClick={false} latitude={showPopup.latitude} longitude={showPopup.longitude} anchor='bottom' onClose={closePopup}>
+                <div onClick={() => navigate(`/viewholiday/${showPopup._id}`)}>
+                  <Popup closeOnMove={false}  closeOnClick={false} latitude={showPopup.latitude} longitude={showPopup.longitude} anchor='bottom' onClose={closePopup}>
                     <Heading as='h3' size='sm'>{showPopup.title}</Heading>
                     <Text>{showPopup.location}</Text>
                     <Image src={showPopup.image} alt={showPopup.title}/>
                     <Text>{showPopup.description}</Text>
-                  </Popup>}
+                  </Popup>
+                </div>}
                 
             <Marker className='current-location-marker'longitude={currentLocation.longitude} latitude={currentLocation.latitude} color="green" />
           </ReactMapGl>
