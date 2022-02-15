@@ -23,8 +23,24 @@ const Search = () => {
   const [currentLocation, setCurrentLocation] = useState(null)
   const [resultsOptions, setResultsOptions] = useState([])
   const [data, setData] = useState([])
+  const [filteredData, setFilteredData] = useState([])
   const [showPopup, setShowPopup] = useState(null)
-
+  const [user, setUser] = useState(null)
+  //get user
+  useEffect(() => {
+    const getUser = async () =>  {
+      try {
+      const token = window.localStorage.getItem('holiday-token')
+      const { data } = await axios.get('api/profile', {
+        headers: {Authorization: `Bearer ${token}`}
+      })
+      setUser(data)
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    getUser()
+  },[])
     const handleChange = (e) => setSearchValues({...searchValues, [e.target.name]: e.target.value })
 
     const handleSubmit = async (e) => {
@@ -89,6 +105,27 @@ const Search = () => {
     console.log('close')
     setShowPopup(null)
   }
+
+  useEffect(() =>{
+    const { showMatesHolidays, showMyHolidays } = searchValues
+    console.log(showMatesHolidays, showMyHolidays)
+    
+    if (!showMatesHolidays) {
+      const filterResults = data.filter(holiday => holiday.owner._id === user._id)
+      setFilteredData(filterResults)
+    }
+    if (!showMyHolidays) {
+      const filterResults = data.filter(holiday => holiday.owner._id !== user._id)
+      setFilteredData(filterResults)
+    }
+    if(!showMatesHolidays && !showMyHolidays) {
+      setFilteredData(['noResults'])
+    }
+    if(showMatesHolidays && showMyHolidays) {
+      setFilteredData([])
+    }
+    
+  },[searchValues])
   return (
     <>
       <Heading>Search</Heading>
@@ -151,8 +188,8 @@ const Search = () => {
             mapStyle="mapbox://styles/mapbox/streets-v9"
             mapboxAccessToken={REACT_APP_MAPBOX_ACCESS_TOKEN}
           >
-            {!!data.length && 
-              data.map((holiday) => (
+            {!!data.length & filteredData[0] !== 'noResults' && 
+              (filteredData.length ? filteredData : data).map((holiday) => (
                 <Marker key={holiday._id} latitude={holiday.latitude} longitude={holiday.longitude} >
                   <div id={holiday._id} onClick={handleClick} >
                     <Avatar src={holiday.image} name={holiday.title} showBorder size='sm' />
