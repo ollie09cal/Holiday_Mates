@@ -20,7 +20,6 @@ const MatesTiles = () => {
         console.log(err.message)
       }
     }
-    console.log('happening')
     getMates()
   }, [])
   return (
