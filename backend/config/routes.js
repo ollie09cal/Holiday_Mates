@@ -31,7 +31,7 @@ router.route('/holidays/:id')
 
 //show all holiday type cards
 router.route('/holidaytypes')
-  .get(showHolidayTypeCards)
+  .get(secureRoute, showHolidayTypeCards)
 
 router.route('/holidaytypes/:cardId')
   .delete(secureRoute, deleteHolidayTypeCard)

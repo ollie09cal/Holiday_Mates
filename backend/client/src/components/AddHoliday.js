@@ -20,10 +20,11 @@ import { useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import 'mapbox-gl/dist/mapbox-gl.css'
-import ReactMapGl, { Marker, Popup } from 'react-map-gl'
-import { REACT_APP_MAPBOX_ACCESS_TOKEN } from '../enviroment/env'
+// import ReactMapGl, { Marker, Popup } from 'react-map-gl'
+// import { REACT_APP_MAPBOX_ACCESS_TOKEN } from '../enviroment/env'
 import { SmallAddIcon } from '@chakra-ui/icons'
 import { ImageUpload } from '../components/subComponents/ImageUpload'
+import { getTokenFromLocal } from './../enviroment/helpers/auth'
 
 const currentYear = new Date().getFullYear()
 
@@ -45,25 +46,29 @@ const AddHoliday = () => {
     year: ''
   })
   const [formError, setFormError] = useState({
-    title: '', 
-    location: '', 
-    longitude: '', 
-    latitude: '', 
-    date: '', 
-    description: '', 
-    image: '' 
+    title: '',
+    location: '',
+    longitude: '',
+    latitude: '',
+    date: '',
+    description: '',
+    image: ''
   })
   const [searchValues, setSearchValues] = useState({
     search: ''
   })
   const [resultsOptions, setResultsOptions] = useState([])
- 
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     setHolidayInfo({ ...holidayInfo, date: `${holidayDate.month} ${holidayDate.year}` })
     try {
-      setHolidayInfo({ ...holidayInfo, date: `${holidayDate.month} ${holidayDate.year}` })
-      const { data } = await axios.post('/api/holidays', holidayInfo)
+      // setHolidayInfo({ ...holidayInfo, date: `${holidayDate.month} ${holidayDate.year}` })
+      const token = getTokenFromLocal()
+      const { data } = await axios.post('/api/holidays', holidayInfo, {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+      console.log(data)
       toast({
         title: 'Holiday Added!',
         description: 'Now add some Holiday cards to complete the Trip!',
@@ -71,9 +76,10 @@ const AddHoliday = () => {
         duration: 9000,
         isClosable: true
       })
-      navigate(`/addholidaycard/${data._id}`)
+      await navigate(`/addholidaycard/${data._id}`)
+      // console.log(holidayInfo)
     } catch (err) {
-      console.log(err.response.data.errors)
+      console.log(err)
       setFormError({ ...formError, ...err.response.data.errors })
       console.log(formError)
     }
@@ -85,7 +91,7 @@ const AddHoliday = () => {
     setHolidayInfo(newObj)
   }
   const handleMonth = (e) => {
-    setHolidayDate({ ...holidayDate, month: e.target.value})
+    setHolidayDate({ ...holidayDate, month: e.target.value })
     setHolidayInfo({ ...holidayInfo, date: `${holidayDate.month} ${holidayDate.year}` })
     console.log(holidayDate)
   }
@@ -97,16 +103,16 @@ const AddHoliday = () => {
   const handleImageURL = (url) => {
     setHolidayInfo({ ...holidayInfo, image: url })
   }
-  const handleSearch = (e) => setSearchValues({...searchValues, [e.target.name]: e.target.value })
-  
+  const handleSearch = (e) => setSearchValues({ ...searchValues, [e.target.name]: e.target.value })
+
   const search = (e) => {
     const { center } = resultsOptions[resultsOptions.findIndex(result => result.place_name === e.target.innerText)]
     setHolidayInfo({ ...holidayInfo, longitude: center[0], latitude: center[1], location: e.target.innerText })
     console.log(holidayInfo)
-    setSearchValues({search: e.target.innerText })
+    setSearchValues({ search: e.target.innerText })
     setResultsOptions([])
   }
-  
+
   const searchSubmit = async (e) => {
     e.preventDefault()
     try {
@@ -137,28 +143,28 @@ const AddHoliday = () => {
 
           <FormControl isRequired isInvalid={formError.location}>
             <FormLabel htmlFor='location'>Location, Location, Location!</FormLabel>
-            <Input 
-              placeholder='search' 
-              size='md' 
-              name='search' 
-              value={searchValues.search} 
-              onChange={handleSearch}/>
-              <Button spacing={2} onClick={searchSubmit}>search</Button>
-            {!!resultsOptions.length && 
-            <VStack spacing={4}>
-              {resultsOptions.map((option, i) => {
-                console.log(option)
-                return(
-                  <Box h='40px' key={i} onClick={search}>
-                    <p>{option.place_name}</p>
-                  </Box>
-                )
-              })}
-            </VStack>
+            <Input
+              placeholder='search'
+              size='md'
+              name='search'
+              value={searchValues.search}
+              onChange={handleSearch} />
+            <Button spacing={2} onClick={searchSubmit}>search</Button>
+            {!!resultsOptions.length &&
+              <VStack spacing={4}>
+                {resultsOptions.map((option, i) => {
+                  console.log(option)
+                  return (
+                    <Box h='40px' key={i} onClick={search}>
+                      <p>{option.place_name}</p>
+                    </Box>
+                  )
+                })}
+              </VStack>
             }
             {formError.location && <FormErrorMessage>Invalid location (try chosing somewhere near)</FormErrorMessage>}
           </FormControl>
-          
+
           <FormControl>
             <FormLabel htmlFor='date'>Tell us the month and year of your trip!</FormLabel>
             <HStack>
@@ -188,7 +194,8 @@ const AddHoliday = () => {
           </FormControl>
 
           <FormControl>
-          <Input
+            <FormLabel htmlFor="description">Give us a short Description</FormLabel>
+            <Input
               id='description'
               type='text'
               placeholder='Give us a short description of ya trip!'
@@ -197,14 +204,17 @@ const AddHoliday = () => {
             />
             {formError.description && <FormErrorMessage>try keeping the text below 500 characters! we dont want your life story</FormErrorMessage>}
           </FormControl>
+          <FormControl>
+            <FormLabel htmlFor='image'>Upload an image</FormLabel>
+            <ImageUpload value={holidayInfo.image} name="image" handleImageURL={handleImageURL} />
+          </FormControl>
 
-          <ImageUpload value={holidayInfo.image} name="profileImage" handleImageURL={handleImageURL} />
           <Button
-              type='submit'
-              rightIcon={<SmallAddIcon />}
-              onSubmit={() => {
-                handleSubmit()
-              }}>Create Holiday</Button>
+            type='submit'
+            rightIcon={<SmallAddIcon />}
+            onSubmit={() => {
+              handleSubmit()
+            }}>Create Holiday</Button>
         </form>
       </Box>
     </div>

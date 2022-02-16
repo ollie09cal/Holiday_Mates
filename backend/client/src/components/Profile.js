@@ -8,6 +8,7 @@ import AddMate from './subComponents/AddMate'
 const Profile = () => {
   //state
   const [profileData, setProfileData] = useState(null)
+  
   useEffect(() => {
     const getData = async () => {
       try {
@@ -16,12 +17,13 @@ const Profile = () => {
           headers: {Authorization: `Bearer ${token}`}
         })
         setProfileData(data)
+        console.log('hello')
       } catch (err) {
         console.log(err)
       }
     }
     getData()
-  }, [])
+  },[])
   
 
   return (
