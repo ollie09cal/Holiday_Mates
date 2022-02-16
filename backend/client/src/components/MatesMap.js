@@ -53,9 +53,10 @@ const MatesMap = () => {
       // const payload = getPayload()
       const token = window.localStorage.getItem('holiday-token')
       // const payload = 'hello'
-      const { data } = await axios.get('api/holidays', {
+      const { data } = await axios.get('api/mates', {
         headers: { Authorization: `Bearer ${token}` }
       })
+      console.log(data)
       setData(data)
     } catch (err) {
       console.log(err.message)
