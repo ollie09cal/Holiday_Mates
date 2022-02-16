@@ -76,7 +76,7 @@ const Profile = () => {
         {profileData.ownedHolidays.length ?
           profileData.ownedHolidays.map(holiday => (
             <div key={holiday._id}>
-              <Link to={`/viewHoliday/${holiday._id}`}>
+              <Link to={`/viewholiday/${holiday._id}`}>
                 <Box p={5} m={2} borderWidth='1px' shadow='md' >
                   <Stack spacing={2}>
                     {/* create a vertical stack for profile image */}

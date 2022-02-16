@@ -24,7 +24,7 @@ router.route('/holidays')
 
 //holiday card
 router.route('/holidays/:id')
-  .get(getHolidayById) //dont forget to add in secure route card
+  .get(secureRoute, getHolidayById) //dont forget to add in secure route card
   .post(secureRoute, addHolidayCard)
   .put(secureRoute, updateHoliday)
   .delete(secureRoute, deleteHoliday)
@@ -35,7 +35,7 @@ router.route('/holidaytypes')
 
 router.route('/holidaytypes/:cardId')
   .delete(secureRoute, deleteHolidayTypeCard)
-  .get(showHolidayCard)
+  .get(secureRoute, showHolidayCard)
   .put(secureRoute, updateHolidayCard)
 
 //profile route
