@@ -14,7 +14,7 @@ export default [
   //   holidayId: ''
   // },
   {
-    type: 'museum',
+    type: 'Activity',
     location: 'Met Museum, New York City',
     latitude: 40.7788963390875, 
     longitude: -73.96308306746725,
@@ -28,7 +28,7 @@ export default [
     holidayId: 'Jonny\'s trip to NY',
   },
   {
-    type: 'park',
+    type: 'Activity',
     location: 'Central Park, NY',
     latitude: 40.77227451469852, 
     longitude: -73.97585441775948,
@@ -42,7 +42,7 @@ export default [
     holidayId: 'Jonny\'s trip to NY',
   },
   {
-    type: 'landmark',
+    type: 'Landmark',
     location: 'Empire State Building, NY',
     latitude: 40.74842018004445, 
     longitude: -73.98568585767102,
@@ -56,7 +56,7 @@ export default [
     holidayId: 'Jonny\'s trip to NY',
   },
   {
-    type: 'beach',
+    type: 'Secret-Place',
     location: 'Cornwall',
     latitude: 50.12028280056415,
     longitude: -5.531141961319785,
@@ -70,7 +70,7 @@ export default [
     holidayId: 'Quick weekend in Cornwall',
   },
   {
-    type: 'restaurant',
+    type: 'Restaurant',
     location: 'Penzance, Cornwall',
     latitude: 50.11979821162925, 
     longitude: -5.538188549811783,
@@ -84,7 +84,7 @@ export default [
     holidayId: 'Quick weekend in Cornwall',
   },
   {
-    type: 'activity',
+    type: 'Walk',
     location: 'Penzance, Cornwall',
     latitude: 50.124530842075785, 
     longitude: -5.529269216224054,
@@ -98,7 +98,7 @@ export default [
     holidayId: 'Quick weekend in Cornwall',
   },
   {
-    type: 'activity',
+    type: 'Activity',
     location: 'Basella, Spain',
     latitude: 42.01985558768786, 
     longitude: 1.3027622693239238,
@@ -126,7 +126,7 @@ export default [
     holidayId: 'Stay at an Amazing House in Spain',
   },
   {
-    type: 'restaurant',
+    type: 'Restaurant',
     location: 'Basella, Spain',
     latitude: 42.064657642921546, 
     longitude: 1.3127139320878933,
@@ -140,7 +140,7 @@ export default [
     holidayId: 'Stay at an Amazing House in Spain',
   },
   {
-    type: 'Festival',
+    type: 'Event',
     location: 'Oslo',
     latitude: 59.9133301,
     longitude: 10.7389701,
@@ -154,7 +154,7 @@ export default [
     holidayId: 'Long Weekend getaway in Oslo',
   },
   {
-    type: 'Coffee shop',
+    type: 'Activity',
     location: 'Fuglen Coffee Roasters, Oslo',
     latitude: 59.9062863,
     longitude: 10.7768278,
@@ -168,7 +168,7 @@ export default [
     holidayId: 'Long Weekend getaway in Oslo',
   },
   {
-    type: 'Park',
+    type: 'Activity',
     location: 'Skoyenparken, Oslo',
     latitude: 59.9263678,
     longitude: 10.6879077,
@@ -182,7 +182,7 @@ export default [
     holidayId: 'Long Weekend getaway in Oslo',
   },
   {
-    type: 'restaurant',
+    type: 'Restaurant',
     location: 'Atsumi Raw Cafe, Phuket',
     latitude: 7.7935159,
     longitude: 98.331021,
@@ -196,7 +196,7 @@ export default [
     holidayId: 'Essi\'s stress holiday to Phuket',
   },
   {
-    type: 'landmark',
+    type: 'Landmark',
     location: 'Chaithararam Temple - Wat Chalong, Phuket',
     latitude: 7.8462631,
     longitude: 98.3374691,
@@ -210,7 +210,7 @@ export default [
     holidayId: 'Essi\'s stress holiday to Phuket',
   },
   {
-    type: 'bar',
+    type: 'Bar',
     location: 'Illuzion, Phuket',
     latitude: 7.8934636,
     longitude: 98.2974422,
@@ -224,7 +224,7 @@ export default [
     holidayId: 'Essi\'s stress holiday to Phuket',
   },
   {
-    type: 'spa',
+    type: 'Activity',
     location: 'Kuopion Saana, Kuopio',
     latitude: 62.8734262,
     longitude: 27.657595,
@@ -238,7 +238,7 @@ export default [
     holidayId: 'Trip to hometown for Christmas',
   },
   {
-    type: 'event',
+    type: 'Event',
     location: 'Kuopion Jäähalli, Kuopio',
     latitude: 62.8952822,
     longitude: 27.6663623,
@@ -252,7 +252,7 @@ export default [
     holidayId: 'Trip to hometown for Christmas',
   },
   {
-    type: 'landmark',
+    type: 'Landmark',
     location: 'My Grandma\'s, Lukkarila',
     latitude: 63.2754311,
     longitude: 27.6753696,

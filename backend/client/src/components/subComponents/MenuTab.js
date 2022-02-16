@@ -10,6 +10,7 @@ const MenuTab = () => {
     window.localStorage.removeItem('holiday-token')
     navigate('/')
   }
+  
   return (
     <Menu isLazy>
       <MenuButton
