@@ -13,8 +13,11 @@ const MatesMap = () => {
   const navigate = useNavigate()
 
   const [currentLocation, setCurrentLocation] = useState(null)
-  const [data, setData] = useState([])
+  const [mates, setMates] = useState([])
+  const [matesHolidays, setMatesHolidays] = useState([])
+  const [userHolidays, setUserHolidays] = useState([])
   const [user, setUser] = useState(null)
+  const [data, setData] = useState(null)
   const [showPopup, setShowPopup] = useState(null)
   const [viewPort, setViewPort] = useState({
     latitude: 51,
@@ -22,31 +25,7 @@ const MatesMap = () => {
     zoom: 1
   })
 
-  useEffect(() => {
-    window.navigator.geolocation.getCurrentPosition(position => {
-      const { latitude, longitude } = position.coords
-      setCurrentLocation({ latitude: latitude, longitude: longitude })
-      setViewPort({ latitude: latitude, longitude: longitude })
-    })
-    getMatesHolidays()
-  }, [])
-
-  useEffect(() => {
-    const getUser = async () => {
-      try {
-        const token = window.localStorage.getItem('holiday-token')
-        const { data } = await axios.get('api/profile', {
-          headers: { Authorization: `Bearer ${token}` }
-        })
-        setUser(data)
-      } catch (err) {
-        console.log(err)
-      }
-    }
-    getUser()
-  }, [])
-
-  const getMatesHolidays = async () => {
+  const getMates = async () => {
     try {
       // const payload = getPayload()
       const token = window.localStorage.getItem('holiday-token')
@@ -54,11 +33,62 @@ const MatesMap = () => {
       const { data } = await axios.get('api/mates', {
         headers: { Authorization: `Bearer ${token}` }
       })
-      setData(data.mates)
+      !data ? console.log('No mates') : setMates(data.mates)
+      console.log(data.mates)
     } catch (err) {
       console.log(err.message)
     }
   }
+
+  useEffect(() => {
+    window.navigator.geolocation.getCurrentPosition(position => {
+      const { latitude, longitude } = position.coords
+      setCurrentLocation({ latitude: latitude, longitude: longitude })
+      setViewPort({ latitude: latitude, longitude: longitude })
+    })
+
+  }, [])
+
+  useEffect(() => {
+    const getUserHolidays = async () => {
+      try {
+        const token = window.localStorage.getItem('holiday-token')
+        const { data } = await axios.get('api/profile', {
+          headers: { Authorization: `Bearer ${token}` }
+        })
+        setUser(data)
+        setUserHolidays(data.ownedHolidays)
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    getUserHolidays()
+  }, [])
+
+  useEffect(() => {
+    getMates()
+    getData()
+  }, [])
+
+  useEffect(() => {
+    for (let i = 0; i < mates.length; i++) {
+      setMatesHolidays([...matesHolidays, ...mates[i].ownedHolidays])
+    }
+    console.log(matesHolidays)
+  }, [mates])
+
+  const getData = async () => {
+    try {
+      const token = window.localStorage.getItem('holiday-token')
+      const { data } = await axios.get('api/holidays', {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+      setData(data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const handleClick = (e) => {
     const holidayId = e.currentTarget.id
     const holiday = data[data.findIndex(item => item._id === holidayId)]
@@ -83,17 +113,25 @@ const MatesMap = () => {
           {...viewPort}
           onMove={e => setViewPort(e.viewState)}
         >
-          {!!data.length && ///data.mates
-            data.map(mate => (
-              mate.ownedHolidays.map(holiday => (
-                <Marker key={holiday._id} latitude={holiday.latitude} longitude={holiday.longitude} >
-                  <div id={holiday._id} onClick={handleClick}>
-                    <Avatar src={holiday.image} name={holiday.title} showBorder size='sm' />
-                  </div>
-                </Marker>
-              ))
-            ))
+          {!!userHolidays.length &&
+            userHolidays.map(holiday => {
+              return < Marker key={holiday._id} latitude={holiday.latitude} longitude={holiday.longitude} >
+                <div id={holiday._id} onClick={handleClick}>
+                  <Avatar src={holiday.image} name={holiday.title} showBorder size='sm' />
+                </div>
+              </Marker >
+            })
           }
+          {!!matesHolidays.length &&
+            matesHolidays.map((holiday, index) => {
+              return < Marker key={index} latitude={holiday.latitude} longitude={holiday.longitude} >
+                <div id={holiday._id} onClick={handleClick}>
+                  <Avatar src={holiday.image} name={holiday.title} showBorder size='sm' />
+                </div>
+              </Marker >
+            })
+          }
+
           {!!showPopup &&
             <div onClick={() => navigate(`/viewholiday/${showPopup._id}`)}>
               <Popup closeOnMove={false} closeOnClick={false} latitude={showPopup.latitude} longitude={showPopup.longitude} anchor='bottom' onClose={closePopup}>
@@ -113,3 +151,4 @@ const MatesMap = () => {
 }
 
 export default MatesMap
+

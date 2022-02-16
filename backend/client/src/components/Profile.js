@@ -50,7 +50,7 @@ const Profile = () => {
         </Box>
         {/* mates */}
         <Box p={5} m={2} borderWidth='1px' shadow='md'>
-          <Link to={'/mates'}>
+          <Link to={'/matestiles'}>
             <Heading as='h3' size='md' isTruncated>
               Mates
             </Heading>

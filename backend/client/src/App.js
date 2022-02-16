@@ -15,6 +15,7 @@ import AddHoliday from './components/AddHoliday'
 import AddHolidayCard from './components/AddHolidayCard'
 import MatesMap from './components/MatesMap'
 import MateProfile from './components/MateProfile'
+import MatesTiles from './components/MatesTiles'
 
 function App() {
 
@@ -34,6 +35,7 @@ function App() {
           <Route path='/addholidaycard/:holidayid' element={<AddHolidayCard />} />
           <Route path='/mates' element={<MatesMap />} />
           <Route path={'/mate/:mateId'} element={<MateProfile  />} />
+          <Route path={'/matestiles'} element={<MatesTiles  />} />
         </Routes >
       </BrowserRouter >
     </ChakraProvider >
