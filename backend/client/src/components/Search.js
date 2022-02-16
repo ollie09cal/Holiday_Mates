@@ -92,7 +92,7 @@ const Search = () => {
 
   const search = (e) => {
     const { center } = resultsOptions[resultsOptions.findIndex(result => result.place_name === e.target.innerText)]
-    setViewPort({ latitude: center[1], longitude: center[0], zoom: 3 })
+    setViewPort({ latitude: center[1], longitude: center[0], zoom: 5 })
     setResultsOptions([])
     setSearchValues({...searchValues, search: '' })
   }
