@@ -4,8 +4,8 @@ import Navbar from 'react-bootstrap/Navbar'
 import Container from 'react-bootstrap/Container'
 import { userAuth } from '../enviroment/helpers/auth'
 import MenuTab from './subComponents/MenuTab'
-import { Menu, MenuButton, IconButton, MenuList, MenuItem } from '@chakra-ui/react'
-import { AddIcon, ArrowBackIcon, AtSignIcon, HamburgerIcon, LockIcon, StarIcon, SunIcon } from '@chakra-ui/icons'
+import { IconButton } from '@chakra-ui/react'
+import { ArrowBackIcon } from '@chakra-ui/icons'
 
 const NavigationBar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
