@@ -24,10 +24,7 @@ const MenuTab = () => {
         <MenuItem icon={<AddIcon />} onClick={() => navigate('/addholiday')}>Add Holiday</MenuItem>
         <MenuItem icon={<StarIcon />} onClick={() => navigate('/mates')}>Mates</MenuItem>
         <MenuItem icon={<SunIcon />} onClick={() => navigate('/search')}>Explore the map</MenuItem>
-        <MenuItem icon={<LockIcon />}
-          onClick={() => {
-            handleLogOut()
-          }}>
+        <MenuItem icon={<LockIcon />} onClick={() => handleLogOut()}>
           Logout
         </MenuItem>
       </MenuList>
