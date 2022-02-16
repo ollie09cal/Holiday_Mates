@@ -10,6 +10,7 @@ const ViewHoliday = () => {
 
   const [holiday, setHoliday] = useState([])
   const [holidayId, setHolidayId] = useState()
+  const [profileData, setProfileData] = useState(null)
   const token = getTokenFromLocal()
   const [hasError, setHasError] = useState({ error: false, message: '' })
   const navigate = useNavigate()
@@ -21,6 +22,22 @@ const ViewHoliday = () => {
       navigate('/')
     }
   }, [])
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const otherToken = window.localStorage.getItem('holiday-token')
+        const { data } = await axios.get('api/profile', {
+          headers: {Authorization: `Bearer ${otherToken}`}
+        })
+        setProfileData(data)
+        console.log('hello ---->', data)
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    getData()
+  },[])
 
   useEffect(() => {
     const getHoliday = async () => {
@@ -71,7 +88,7 @@ const ViewHoliday = () => {
               <Image src={holiday.image} alt={`image of ${holiday.location}`} borderRadius={15} />
 
             </Stack>
-
+                
           </Box>
 
           {
