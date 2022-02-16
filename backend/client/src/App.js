@@ -17,7 +17,7 @@ import AddHolidayCard from './components/AddHolidayCard'
 import MatesMap from './components/MatesMap'
 
 function App() {
-  
+
   return (
     <ChakraProvider>
       <BrowserRouter>

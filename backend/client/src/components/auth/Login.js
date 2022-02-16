@@ -41,7 +41,7 @@ const Login = () => {
       navigate('/profile')
     } catch (err) {
       console.log(err)
-      setIsError({ error: true, message: 'Username and password does not match.' })
+      setIsError({ error: true, message: 'Email and password does not match.' })
       toast({
         title: 'Error',
         description: "Failed to login.",
