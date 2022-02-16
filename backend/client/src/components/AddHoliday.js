@@ -214,8 +214,9 @@ const AddHoliday = () => {
             {formError.description && <FormErrorMessage>try keeping the text below 500 characters! we dont want your life story</FormErrorMessage>}
           </FormControl>
           <FormControl>
-            <FormLabel htmlFor='image'>Upload an image</FormLabel>
-            <ImageUpload value={holidayInfo.image} name="image" handleImageURL={handleImageURL} />
+            <Box boxSize='100%'>
+              <ImageUpload value={holidayInfo.image} name="image" handleImageURL={handleImageURL} />
+            </Box>
           </FormControl>
 
           <Button

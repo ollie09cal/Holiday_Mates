@@ -3,7 +3,7 @@ import axios from 'axios'
 import ReactMapGl, { Marker } from 'react-map-gl'
 import { REACT_APP_MAPBOX_ACCESS_TOKEN } from '../enviroment/env'
 import { useNavigate } from 'react-router-dom'
-import { Box, Spinner, Stack, Heading, Image, HStack, Tag } from '@chakra-ui/react'
+import { Box, Spinner, Stack, Heading, Image, HStack, Tag, Button } from '@chakra-ui/react'
 import { useParams } from 'react-router-dom'
 import { getTokenFromLocal, userAuth } from './../enviroment/helpers/auth'
 
@@ -31,7 +31,8 @@ const ViewHolidayCard = () => {
           headers: { Authorization: `Bearer ${token}` }
         })
         setHolidayCard(data)
-        console.log(data)
+        console.log(data.link)
+
       } catch (err) {
         setHasError({ error: true, message: ''})
         console.log(err)
@@ -52,6 +53,7 @@ const ViewHolidayCard = () => {
               <Heading as='h3' size='l'>
                 Author: {holidayCard.owner.username}
               </Heading>
+              {holidayCard.link.length && <Button colorScheme='blue' onClick={() =>{window.location.href=holidayCard.link}} >Related Link</Button>}
               <Box p={3} m={3} borderWidth='1px' shadow='md'>
                 <HStack spacing={4}>
                   {holidayCard.vibeTag.map((vibe, i) => {
