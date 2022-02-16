@@ -9,10 +9,10 @@ import { AddIcon, ArrowBackIcon, AtSignIcon, HamburgerIcon, LockIcon, StarIcon, 
 
 const NavigationBar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
-  
+
   useEffect(() => {
     setIsLoggedIn(userAuth())
-  }, )
+  })
 
   const navigate = useNavigate()
   const handleLogOut = () => {
@@ -28,7 +28,7 @@ const NavigationBar = () => {
   return (
     <Navbar className="navbar-container">
       <Container>
-        <Navbar.Brand href='/'>Holiday Mates</Navbar.Brand>
+        <Navbar.Brand >Holiday Mates</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <IconButton aria-label='Go Back' icon={<ArrowBackIcon />} onClick={goBack}/>
         {isLoggedIn ?
@@ -42,7 +42,7 @@ const NavigationBar = () => {
             <MenuList>
               <MenuItem icon={<AtSignIcon />} onClick={() => navigate('/profile')}>Profile</MenuItem>
               <MenuItem icon={<AddIcon />} onClick={() => navigate('/addholiday')}>Add Holiday</MenuItem>
-              <MenuItem icon={<StarIcon />} onClick={() => navigate('/')}>Mates</MenuItem>
+              <MenuItem icon={<StarIcon />} onClick={() => navigate('/mates')}>Mates</MenuItem>
               <MenuItem icon={<SunIcon />} onClick={() => navigate('/search')}>Explore the map</MenuItem>
               <MenuItem icon={<LockIcon />}
                 onClick={() => {
@@ -54,6 +54,7 @@ const NavigationBar = () => {
           </Menu>
           :
           <>
+            <Link to="/">Home</Link>
             <Link to="/login">Login</Link>
             <Link to="/register">Register</Link>
           </>

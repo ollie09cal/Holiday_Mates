@@ -3,13 +3,13 @@ import ReactMapGl, { Marker, Popup } from 'react-map-gl'
 import { REACT_APP_MAPBOX_ACCESS_TOKEN } from '../enviroment/env'
 import axios from 'axios'
 import 'mapbox-gl/dist/mapbox-gl.css'
-import { Avatar, Spinner, Image, useDisclosure, Input, Button, Text, FormControl, Select, FormLabel, Box, VStack, Menu,  Modal, ModalFooter, ModalBody, ModalHeader, ModalOverlay, ModalContent, ModalCloseButton, Heading, Checkbox } from '@chakra-ui/react'
+import { Avatar, Spinner, Image, useDisclosure, Input, Button, Text, FormControl, Select, FormLabel, Box, VStack, Menu, Modal, ModalFooter, ModalBody, ModalHeader, ModalOverlay, ModalContent, ModalCloseButton, Heading, Checkbox } from '@chakra-ui/react'
 import { getTokenFromLocal } from '../enviroment/helpers/auth'
 import { useNavigate } from 'react-router-dom'
 
 const Search = () => {
   const navigate = useNavigate()
-  
+
   //STATE
   const [viewPort, setViewPort] = useState({
     latitude: 10,
@@ -30,26 +30,25 @@ const Search = () => {
   const [filteredData, setFilteredData] = useState([])
   const [showPopup, setShowPopup] = useState(null)
   const [user, setUser] = useState(null)
-  
+
   //get user
   useEffect(() => {
-    const getUser = async () =>  {
+    const getUser = async () => {
       try {
-        console.log(showPopup)
-      const token = window.localStorage.getItem('holiday-token')
-      const { data } = await axios.get('api/profile', {
-        headers: {Authorization: `Bearer ${token}`}
-      })
-      setUser(data)
+        const token = window.localStorage.getItem('holiday-token')
+        const { data } = await axios.get('api/profile', {
+          headers: { Authorization: `Bearer ${token}` }
+        })
+        setUser(data)
       } catch (err) {
         console.log(err)
       }
     }
     getUser()
-  },[])
+  }, [])
 
-  
-//get current location
+
+  //get current location
   useEffect(() => {
     window.navigator.geolocation.getCurrentPosition(position => {
       const { latitude, longitude } = position.coords
@@ -63,7 +62,7 @@ const Search = () => {
     try {
       const token = window.localStorage.getItem('holiday-token')
       const { data } = await axios.get('api/holidays', {
-        headers: {Authorization: `Bearer ${token}`}
+        headers: { Authorization: `Bearer ${token}` }
       })
       setData(data)
     } catch (err) {
@@ -71,7 +70,7 @@ const Search = () => {
     }
   }
   //search and filter functions
-  const handleChange = (e) => setSearchValues({...searchValues, [e.target.name]: e.target.value })
+  const handleChange = (e) => setSearchValues({ ...searchValues, [e.target.name]: e.target.value })
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -88,17 +87,17 @@ const Search = () => {
     const { center } = resultsOptions[resultsOptions.findIndex(result => result.place_name === e.target.innerText)]
     setViewPort({ latitude: center[1], longitude: center[0], zoom: 8 })
     setResultsOptions([])
-    setSearchValues({search: ''})
+    setSearchValues({ search: '' })
   }
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   const handleCheckbox = (e) => {
     e.preventDefault()
     console.log(e.target.name)
-    setSearchValues({...searchValues, [e.target.name]: e.target.checked})
+    setSearchValues({ ...searchValues, [e.target.name]: e.target.checked })
   }
 
-  const handleClick =  (e) => {
+  const handleClick = (e) => {
     const holidayId = e.currentTarget.id
     let holiday
     searchValues.searchByHolidayType ?
@@ -117,9 +116,9 @@ const Search = () => {
 
   const getHolidayTypesData = async (holidayType) => {
     try {
-        const token = getTokenFromLocal()
-        const { data } = await axios.get('api/holidayTypes', {
-        headers: {Authorization: `Bearer ${token}`}
+      const token = getTokenFromLocal()
+      const { data } = await axios.get('api/holidayTypes', {
+        headers: { Authorization: `Bearer ${token}` }
       })
       console.log(holidayType)
       if (holidayType) {
@@ -129,17 +128,17 @@ const Search = () => {
       } else {
         setFilteredData(data)
       }
-      
+
       return data
     } catch (err) {
       console.log(err)
     }
   }
 
-  useEffect(() =>{
+  useEffect(() => {
     const { showMatesHolidays, showMyHolidays, searchByHolidayType, holidayType } = searchValues
     console.log(showMatesHolidays, showMyHolidays)
-    
+
     if (!showMatesHolidays) {
       const filterResults = data.filter(holiday => holiday.owner._id === user._id)
       setFilteredData(filterResults)
@@ -148,26 +147,26 @@ const Search = () => {
       const filterResults = data.filter(holiday => holiday.owner._id !== user._id)
       setFilteredData(filterResults)
     }
-    if(!showMatesHolidays && !showMyHolidays) {
+    if (!showMatesHolidays && !showMyHolidays) {
       setFilteredData(['noResults'])
     }
-    if(showMatesHolidays && showMyHolidays) {
+    if (showMatesHolidays && showMyHolidays) {
       setFilteredData([])
     }
     (searchByHolidayType) ? setHolidayTypeSearch(true) : setHolidayTypeSearch(false)
-    
-    if(searchByHolidayType) {
+
+    if (searchByHolidayType) {
       getHolidayTypesData(holidayType)
     }
 
-  },[searchValues])
+  }, [searchValues])
 
   const goToHoliday = () => {
-    searchValues.searchByHolidayType ? 
-      navigate(`/viewholidaycard/${showPopup._id}`) 
-      : 
+    searchValues.searchByHolidayType ?
+      navigate(`/viewholidaycard/${showPopup._id}`)
+      :
       navigate(`/viewholiday/${showPopup._id}`)
-    
+
   }
 
   return (
@@ -175,59 +174,59 @@ const Search = () => {
       <Heading>Search</Heading>
       <Box>
         <form onSubmit={handleSubmit}>
-            <Input placeholder='search' size='md' name='search' value={searchValues.search} onChange={handleChange}/>
-            <Menu>
-              <Button onClick={onOpen}>Filters</Button>
-              <Modal isOpen={isOpen} onClose={onClose}>
-                <ModalOverlay />
-                <ModalContent>
-                  <ModalHeader>Filters</ModalHeader>
-                  <ModalCloseButton />
-                  <ModalBody>
-                    <form>
+          <Input placeholder='search' size='md' name='search' value={searchValues.search} onChange={handleChange} />
+          <Menu>
+            <Button onClick={onOpen}>Filters</Button>
+            <Modal isOpen={isOpen} onClose={onClose}>
+              <ModalOverlay />
+              <ModalContent>
+                <ModalHeader>Filters</ModalHeader>
+                <ModalCloseButton />
+                <ModalBody>
+                  <form>
                     <Checkbox name='searchByHolidayType' onChange={handleCheckbox}>Search By Holiday Type</Checkbox>
-                      {!!holidayTypeSearch && 
-                        <FormControl>
-                          <FormLabel htmlFor='holiday-type'>Holiday Type</FormLabel>
-                          <Select id='holiday-type' name='holidayType'onChange={handleChange}>
-                            <option defaultValue value='' >All</option>
-                            <option value="Restaurant">Restaurant</option>
-                            <option value="Landmark">Landmark</option>
-                            <option value="Secret-Place">Secret Place</option>
-                            <option value="Walk">Walk</option>
-                            <option value="Bar">Bar</option>
-                            <option value="Activity">Activity</option>
-                            <option value="Stay">Stay</option>
-                            <option value="Event">Event</option>
-                          </Select>
-                        </FormControl>
-                        }
-                      
-                      <Checkbox defaultIsChecked name='showMatesHolidays' onChange={handleCheckbox}>Show Mates Holidays</Checkbox>
-                      <Checkbox defaultIsChecked name='showMyHolidays' onChange={handleCheckbox}>Show My Holidays</Checkbox>
-                    </form>
-                  </ModalBody>
-                  <ModalFooter>
-                    <Button onClick={onClose}>Close</Button>
-                  </ModalFooter>
-                </ModalContent>
-                  
-              </Modal>
-            </Menu>
-            <Button type='Submit'>Search</Button>
-          
-          {!!resultsOptions.length && 
+                    {!!holidayTypeSearch &&
+                      <FormControl>
+                        <FormLabel htmlFor='holiday-type'>Holiday Type</FormLabel>
+                        <Select id='holiday-type' name='holidayType' onChange={handleChange}>
+                          <option defaultValue value='' >All</option>
+                          <option value="Restaurant">Restaurant</option>
+                          <option value="Landmark">Landmark</option>
+                          <option value="Secret-Place">Secret Place</option>
+                          <option value="Walk">Walk</option>
+                          <option value="Bar">Bar</option>
+                          <option value="Activity">Activity</option>
+                          <option value="Stay">Stay</option>
+                          <option value="Event">Event</option>
+                        </Select>
+                      </FormControl>
+                    }
+
+                    <Checkbox defaultIsChecked name='showMatesHolidays' onChange={handleCheckbox}>Show Mates Holidays</Checkbox>
+                    <Checkbox defaultIsChecked name='showMyHolidays' onChange={handleCheckbox}>Show My Holidays</Checkbox>
+                  </form>
+                </ModalBody>
+                <ModalFooter>
+                  <Button onClick={onClose}>Close</Button>
+                </ModalFooter>
+              </ModalContent>
+
+            </Modal>
+          </Menu>
+          <Button type='Submit'>Search</Button>
+
+          {!!resultsOptions.length &&
             <VStack spacing={4}>
               {resultsOptions.map((option, i) => {
                 console.log(option)
-                return(
+                return (
                   <Box h='40px' key={i} onClick={search}>
                     <p>{option.place_name}</p>
                   </Box>
                 )
               })}
             </VStack>
-            }
+          }
         </form>
       </Box>
       <div className="map-container" >
@@ -240,7 +239,7 @@ const Search = () => {
             mapStyle="mapbox://styles/mapbox/streets-v9"
             mapboxAccessToken={REACT_APP_MAPBOX_ACCESS_TOKEN}
           >
-            {!!data.length & filteredData[0] !== 'noResults' && 
+            {!!data.length & filteredData[0] !== 'noResults' &&
               (filteredData.length ? filteredData : data).map((holiday) => (
                 <Marker key={holiday._id} latitude={holiday.latitude} longitude={holiday.longitude} >
                   <div id={holiday._id} onClick={handleClick} >
@@ -248,27 +247,27 @@ const Search = () => {
                   </div>
                 </Marker>
               ))}
-              
-              {!!showPopup &&
-                  <div onClick={goToHoliday}>
-                    <Popup closeOnMove={false}  closeOnClick={false} latitude={showPopup.latitude} longitude={showPopup.longitude} anchor='bottom' onClose={closePopup}>
-                      <Heading as='h3' size='sm'>{showPopup.title}</Heading>
-                      <Text>{showPopup.location}</Text>
-                      <Image src={(showPopup.image) ? showPopup.image : showPopup.photo} alt={showPopup.title}/>
-                      <Text>{showPopup.description}</Text>
-                    </Popup>
-                  </div>
-              }
-              {!!currentLocation &&    
-                <Marker className='current-location-marker' longitude={currentLocation.longitude} latitude={currentLocation.latitude} color="green" />
-                }
-              </ReactMapGl>
+
+            {!!showPopup &&
+              <div onClick={goToHoliday}>
+                <Popup closeOnMove={false} closeOnClick={false} latitude={showPopup.latitude} longitude={showPopup.longitude} anchor='bottom' onClose={closePopup}>
+                  <Heading as='h3' size='sm'>{showPopup.title}</Heading>
+                  <Text>{showPopup.location}</Text>
+                  <Image src={(showPopup.image) ? showPopup.image : showPopup.photo} alt={showPopup.title} />
+                  <Text>{showPopup.description}</Text>
+                </Popup>
+              </div>
+            }
+            {!!currentLocation &&
+              <Marker className='current-location-marker' longitude={currentLocation.longitude} latitude={currentLocation.latitude} color="green" />
+            }
+          </ReactMapGl>
           :
           <Spinner />}
-        
+
       </div>
     </>
-    
+
   )
 }
 

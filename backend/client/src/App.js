@@ -14,9 +14,10 @@ import Profile from './components/Profile'
 import AddHoliday from './components/AddHoliday'
 import AddHolidayCard from './components/AddHolidayCard'
 import MatesMap from './components/MatesMap'
+import MateProfile from './components/MateProfile'
 
 function App() {
-  
+
   return (
     <ChakraProvider>
       <BrowserRouter>
@@ -32,6 +33,7 @@ function App() {
           <Route path='/addholiday' element={<AddHoliday />} />
           <Route path='/addholidaycard/:holidayid' element={<AddHolidayCard />} />
           <Route path='/mates' element={<MatesMap />} />
+          <Route path={'/mate/:mateId'} element={<MateProfile  />} />
         </Routes >
       </BrowserRouter >
     </ChakraProvider >

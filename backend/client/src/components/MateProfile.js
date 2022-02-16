@@ -1,25 +1,26 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
-import { Spinner, Box, Stack, HStack, Heading, Text, Avatar, AvatarGroup, Button, Image } from '@chakra-ui/react'
+import { Link, useParams } from 'react-router-dom'
+import { Spinner, Box, Stack, HStack, Heading, Text, Avatar, AvatarGroup, Image } from '@chakra-ui/react'
 import { StarIcon } from '@chakra-ui/icons'
-import AddMate from './subComponents/AddMate'
 
-const Profile = () => {
+const MateProfile = () => {
   //state
   const [profileData, setProfileData] = useState(null)
-  
+  const { mateId } = useParams()
+
   useEffect(() => {
     const getData = async () => {
       try {
+        console.log(mateId)
         const token = window.localStorage.getItem('holiday-token')
-        const { data } = await axios.get('api/profile', {
-          headers: {Authorization: `Bearer ${token}`}
+        const { data } = await axios.get(`/api/mates/${mateId}`, {
+          headers: { Authorization: `Bearer ${token}`}
         })
         setProfileData(data)
         console.log('hello')
       } catch (err) {
-        console.log(err)
+        console.log(err.response)
       }
     }
     getData()
@@ -39,9 +40,6 @@ const Profile = () => {
               <Heading as='h1' size='xl' isTruncated>
                 {profileData.username}
               </Heading>
-              <Text isTruncated>
-                Personal Token: {profileData.personalToken}
-              </Text>
               <Text>
                 {profileData.ownedHolidays.length} holidays
               </Text>
@@ -64,7 +62,6 @@ const Profile = () => {
             :
             <Text>Looking a bit lonely...</Text>}
           </AvatarGroup>
-          <AddMate />
         </Box>
         
           <HStack>
@@ -72,7 +69,6 @@ const Profile = () => {
               Holidays
             </Heading>
             <Link to={'/addholiday'}>
-              <Button>+</Button>
             </Link>
           </HStack>
         
@@ -117,4 +113,4 @@ const Profile = () => {
   )
 }
 
-export default Profile
+export default MateProfile
