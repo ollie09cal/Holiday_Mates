@@ -18,7 +18,7 @@ const holidayTypeCardSchema = new Schema({
   longitude: { type: Number, required: true },
   owner: { type: mongoose.Schema.ObjectId, ref: 'User', required: true },
   link: { type: String },
-  photo: { type: String, required: true },
+  photo: [{ type: String }],
   description: { type: String, required: true, maxLength: 300 },
   vibeTag: [{ type: String }],
   rating: { type: Number, required: true, min: 1, max: 5 },
