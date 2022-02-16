@@ -3,7 +3,7 @@ import { Text, FormControl, FormLabel, Input, Modal, ModalOverlay, ModalContent,
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 
-const AddMate = () => {
+const AddMate = ({ listenToChild }) => {
   //STATE
   const [isError, setIsError] = useState('')
 
@@ -26,12 +26,11 @@ const AddMate = () => {
       const token = window.localStorage.getItem('holiday-token')
       if (!token) navigate('/login')
       const { data } = await axios.post('api/mates', formData, { headers: {Authorization: `Bearer ${token}` } })
-      console.log(data)
-      console.log(data)
       setFormData({
         mateUsername: '',
         mateToken: '',
       })
+      listenToChild()
       onClose()
     } catch (err) {
       console.log(err)
