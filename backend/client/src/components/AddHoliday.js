@@ -34,7 +34,7 @@ const AddHoliday = () => {
 
   useEffect(() => {
     const isLogged = userAuth()
-    if (!isLogged){
+    if (!isLogged) {
       navigate('/')
     }
   }, [])
@@ -191,7 +191,7 @@ const AddHoliday = () => {
                 <option value="November">November</option>
                 <option value="December">December</option>
               </Select>
-              <NumberInput id='year' defaultValue={2000} min={1990} max={currentYear} onChange={handleYear}>
+              <NumberInput id='year' defaultValue={2022} min={1990} max={currentYear} onChange={handleYear}>
                 <NumberInputField />
                 <NumberInputStepper>
                   <NumberIncrementStepper />
@@ -214,7 +214,6 @@ const AddHoliday = () => {
             {formError.description && <FormErrorMessage>try keeping the text below 500 characters! we dont want your life story</FormErrorMessage>}
           </FormControl>
           <FormControl>
-            <FormLabel htmlFor='image'>Upload an image</FormLabel>
             <ImageUpload value={holidayInfo.image} name="image" handleImageURL={handleImageURL} />
           </FormControl>
 
