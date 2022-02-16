@@ -18,13 +18,11 @@ const Profile = () => {
           headers: {Authorization: `Bearer ${token}`}
         })
         await setProfileData(data)
-        console.log('going again', data)
       } catch (err) {
         console.log(err)
       }
     }
     getData()
-    console.log('useEffect')
   },[count])
   
   const listenToChild = () => {

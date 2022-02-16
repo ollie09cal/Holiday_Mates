@@ -20,7 +20,7 @@ const Search = () => {
     search: '',
     searchByHolidayType: false,
     holidayType: '',
-    showMatesHolidays: true,
+    showPuplicHolidays: true,
     showMyHolidays: true,
   })
   const [currentLocation, setCurrentLocation] = useState(null)
@@ -93,7 +93,6 @@ const Search = () => {
 
   const handleCheckbox = (e) => {
     e.preventDefault()
-    console.log(e.target.name)
     setSearchValues({ ...searchValues, [e.target.name]: e.target.checked })
   }
 
@@ -103,13 +102,10 @@ const Search = () => {
     searchValues.searchByHolidayType ?
       holiday = filteredData[filteredData.findIndex(item => item._id === holidayId)]
       : holiday = data[data.findIndex(item => item._id === holidayId)]
-    console.log(holiday)
-    console.log(searchValues.searchByHolidayType)
     setShowPopup(holiday)
   }
 
   const closePopup = () => {
-    console.log('close')
     setShowPopup(null)
   }
   //filter Results
@@ -120,7 +116,6 @@ const Search = () => {
       const { data } = await axios.get('api/holidayTypes', {
         headers: { Authorization: `Bearer ${token}` }
       })
-      console.log(holidayType)
       if (holidayType) {
         const filterData = data.filter(holiday => holiday.type === holidayType)
         setFilteredData(filterData)
@@ -136,10 +131,9 @@ const Search = () => {
   }
 
   useEffect(() => {
-    const { showMatesHolidays, showMyHolidays, searchByHolidayType, holidayType } = searchValues
-    console.log(showMatesHolidays, showMyHolidays)
+    const { showPuplicHolidays, showMyHolidays, searchByHolidayType, holidayType } = searchValues
 
-    if (!showMatesHolidays) {
+    if (!showPuplicHolidays) {
       const filterResults = data.filter(holiday => holiday.owner._id === user._id)
       setFilteredData(filterResults)
     }
@@ -147,10 +141,10 @@ const Search = () => {
       const filterResults = data.filter(holiday => holiday.owner._id !== user._id)
       setFilteredData(filterResults)
     }
-    if (!showMatesHolidays && !showMyHolidays) {
+    if (!showPuplicHolidays && !showMyHolidays) {
       setFilteredData(['noResults'])
     }
-    if (showMatesHolidays && showMyHolidays) {
+    if (showPuplicHolidays && showMyHolidays) {
       setFilteredData([])
     }
     (searchByHolidayType) ? setHolidayTypeSearch(true) : setHolidayTypeSearch(false)
@@ -202,7 +196,7 @@ const Search = () => {
                       </FormControl>
                     }
 
-                    <Checkbox defaultIsChecked name='showMatesHolidays' onChange={handleCheckbox}>Show Mates Holidays</Checkbox>
+                    <Checkbox defaultIsChecked name='showPuplicHolidays' onChange={handleCheckbox}>Show Public Holidays</Checkbox>
                     <Checkbox defaultIsChecked name='showMyHolidays' onChange={handleCheckbox}>Show My Holidays</Checkbox>
                   </form>
                 </ModalBody>
