@@ -174,7 +174,7 @@ export default [
     longitude: 10.6879077,
     owner: 'Essi',
     link: 'https://www.google.com/search?q=skoyen+parken+oslo+wintter&tbm=isch&ved=2ahUKEwjLi9D0uPz1AhX5_bsIHVsDCC0Q2-cCegQIABAA&oq=skoyen+parken+oslo+wintter&gs_lcp=CgNpbWcQA1AAWLUQYJsUaABwAHgAgAE3iAH9ApIBATiYAQCgAQGqAQtnd3Mtd2l6LWltZ8ABAQ&sclient=img&ei=4dkIYouXCvn77_UP24ag6AI&bih=838&biw=1336#imgrc=Gj70mPQVWExD_M&imgdii=yJA5V12hqnUHEM',
-    photo: '',
+    photo: 'https://images.happycow.net/venues/1024/36/81/hcmp36812_165899.jpeg',
     description: 'Beautiful park with art installations across the forest and park areas. Great for walks.',
     vibeTag: ['artsy', 'chill', 'scenic'],
     rating: 4,

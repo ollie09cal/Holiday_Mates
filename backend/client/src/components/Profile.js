@@ -8,7 +8,8 @@ import AddMate from './subComponents/AddMate'
 const Profile = () => {
   //state
   const [profileData, setProfileData] = useState(null)
-  
+  // const [count, setCount] = useState(0)
+
   useEffect(() => {
     const getData = async () => {
       try {
@@ -64,7 +65,9 @@ const Profile = () => {
             :
             <Text>Looking a bit lonely...</Text>}
           </AvatarGroup>
-          <AddMate />
+          <div className='addMateContainer'>
+            <AddMate />
+          </div>
         </Box>
         
           <HStack>

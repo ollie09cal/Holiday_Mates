@@ -27,16 +27,16 @@ const AddMate = () => {
       if (!token) navigate('/login')
       const { data } = await axios.post('api/mates', formData, { headers: {Authorization: `Bearer ${token}` } })
       console.log(data)
+      console.log(data)
       setFormData({
         mateUsername: '',
         mateToken: '',
       })
       onClose()
     } catch (err) {
-      console.log(err.response.data.message)
+      console.log(err)
       setIsError(err.response.data.message)
     }
-
   } 
   return (
     <div className="AddMate-container">
