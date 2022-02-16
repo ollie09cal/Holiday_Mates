@@ -22,8 +22,6 @@ const MatesMap = () => {
     zoom: 1
   })
 
-  console.log(user)
-
   useEffect(() => {
     window.navigator.geolocation.getCurrentPosition(position => {
       const { latitude, longitude } = position.coords
@@ -53,10 +51,10 @@ const MatesMap = () => {
       // const payload = getPayload()
       const token = window.localStorage.getItem('holiday-token')
       // const payload = 'hello'
-      const { data } = await axios.get('api/holidays', {
+      const { data } = await axios.get('api/mates', {
         headers: { Authorization: `Bearer ${token}` }
       })
-      setData(data)
+      setData(data.mates)
     } catch (err) {
       console.log(err.message)
     }
@@ -85,13 +83,15 @@ const MatesMap = () => {
           {...viewPort}
           onMove={e => setViewPort(e.viewState)}
         >
-          {!!data.length &&
-            data.map((holiday) => (
-              <Marker key={holiday._id} latitude={holiday.latitude} longitude={holiday.longitude} >
-                <div id={holiday._id} onClick={handleClick}>
-                  <Avatar src={holiday.image} name={holiday.title} showBorder size='sm' />
-                </div>
-              </Marker>
+          {!!data.length && ///data.mates
+            data.map(mate => (
+              mate.ownedHolidays.map(holiday => (
+                <Marker key={holiday._id} latitude={holiday.latitude} longitude={holiday.longitude} >
+                  <div id={holiday._id} onClick={handleClick}>
+                    <Avatar src={holiday.image} name={holiday.title} showBorder size='sm' />
+                  </div>
+                </Marker>
+              ))
             ))
           }
           {!!showPopup &&
