@@ -1,4 +1,4 @@
-import React, { Profiler, useEffect, useState } from 'react'
+import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import NavigationBar from './components/NavigationBar'
 import { ChakraProvider } from '@chakra-ui/react'
@@ -17,8 +17,7 @@ import AddHolidayCard from './components/AddHolidayCard'
 import MatesMap from './components/MatesMap'
 
 function App() {
-
-
+  
   return (
     <ChakraProvider>
       <BrowserRouter>
