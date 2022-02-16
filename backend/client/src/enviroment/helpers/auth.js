@@ -1,6 +1,6 @@
 import { Buffer } from 'buffer'
 
-const getTokenFromLocal = () => {
+export const getTokenFromLocal = () => {
   return window.localStorage.getItem('holiday-token')
 }
 

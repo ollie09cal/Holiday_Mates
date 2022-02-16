@@ -13,7 +13,7 @@ const holidaySchema = new Schema({
   latitude: { type: Number },
   date: { type: String, required: true },
   description: { type: String, maxLength: 500 },
-  image: { type: String, required: true },
+  image: { type: String },
   private: { type: Boolean },
   holidayTypes: [{ type: mongoose.Schema.ObjectId, ref: 'HolidayType' }]
 })
