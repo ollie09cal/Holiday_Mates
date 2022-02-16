@@ -2,30 +2,35 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import ReactMapGl, { Marker } from 'react-map-gl'
 import { REACT_APP_MAPBOX_ACCESS_TOKEN } from '../enviroment/env'
-
+import { useNavigate } from 'react-router-dom'
 import { Box, Spinner, Stack, Heading, Image, HStack, Tag } from '@chakra-ui/react'
+import { useParams } from 'react-router-dom'
+import { getTokenFromLocal, userAuth } from './../enviroment/helpers/auth'
 
 const ViewHolidayCard = () => {
   const [holidayCard, setHolidayCard] = useState([])
   const [holidayCardId, setHolidayCardId] = useState()
-
+  const token = getTokenFromLocal()
   const [hasError, setHasError] = useState({ error: false, message: '' })
+  const navigate = useNavigate()
   
   //setholidaycardId to be whatever gets passed to
+  const id = useParams()
   
   useEffect(() => {
-    setHolidayCardId('620a36b9a2e01d28c0440099')
-    console.log('set holiday card id to ---->', holidayCardId)
+    const isLogged = userAuth()
+    if (!isLogged){
+      navigate('/')
+    }
   }, [])
-  
-  
 
   useEffect(() => {
     const getHolidayCard = async () => {
       try {
-        const { data } = await axios.get(`/api/holidaytypes/${holidayCardId}`)
+        const { data } = await axios.get(`/api/holidaytypes/${id.holidaycardid}`, {
+          headers: { Authorization: `Bearer ${token}` }
+        })
         setHolidayCard(data)
-        console.log(holidayCardId)
         console.log(data)
       } catch (err) {
         setHasError({ error: true, message: ''})

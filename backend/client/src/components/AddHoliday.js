@@ -16,7 +16,7 @@ import {
   NumberDecrementStepper,
   useToast
 } from '@chakra-ui/react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import 'mapbox-gl/dist/mapbox-gl.css'
@@ -24,13 +24,22 @@ import 'mapbox-gl/dist/mapbox-gl.css'
 // import { REACT_APP_MAPBOX_ACCESS_TOKEN } from '../enviroment/env'
 import { SmallAddIcon } from '@chakra-ui/icons'
 import { ImageUpload } from '../components/subComponents/ImageUpload'
-import { getTokenFromLocal } from './../enviroment/helpers/auth'
+import { getTokenFromLocal, userAuth } from './../enviroment/helpers/auth'
 
 const currentYear = new Date().getFullYear()
 
 const AddHoliday = () => {
   const navigate = useNavigate()
   const toast = useToast()
+
+  useEffect(() => {
+    const isLogged = userAuth()
+    if (!isLogged){
+      navigate('/')
+    }
+  }, [])
+
+
 
   const [holidayInfo, setHolidayInfo] = useState({
     title: '', //max length 50

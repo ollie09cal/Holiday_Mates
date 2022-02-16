@@ -38,7 +38,7 @@ import CreatableSelect from 'react-select/creatable'
 import { ActionMeta, OnChangeValue } from 'react-select'
 import { SmallAddIcon, StarIcon } from '@chakra-ui/icons'
 import { ImageUpload } from '../components/subComponents/ImageUpload'
-import { getTokenFromLocal } from './../enviroment/helpers/auth'
+import { getTokenFromLocal, userAuth } from './../enviroment/helpers/auth'
 
 const AddHolidayCard = () => {
   const [holidayId, setHolidayId] = useState() //what does this do?
@@ -49,9 +49,16 @@ const AddHolidayCard = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   let vibes = []
   const [cardUpdated, setCardUpdated] = useState(false)
-
+  const navigate = useNavigate()
   const id = useParams()
   //console.log(id.holidayid)
+  
+  useEffect(() => {
+    const isLogged = userAuth()
+    if (!isLogged){
+      navigate('/')
+    }
+  }, [])
 
   useEffect(() => {
     const getHoliday = async () => {
