@@ -17,47 +17,29 @@ const Home = () => {
         gap={4}
       >
         <GridItem rowSpan={2} colSpan={2} bg='papayawhip'>
-          <Heading as='h4' >Welcome to Holiday Mates</Heading>
-          <Text fontSize='md'>Connect with your friends, brag or tag your holidays and explore the map for your next getaway.</Text>
-          <Text fontSize='sm' align='center' as='mark'>Just remember your shorts and sunscreen.</Text>
-          <Button onClick={() => navigate('/register')}>Sign me up!</Button>
+          <Box >
+            <Image
+              objectFit='cover'
+              boxSize='50vh'
+              src='https://res.cloudinary.com/dcnsstzif/image/upload/v1645042962/holiday_mates/Screenshot_2022-02-16_at_18.01.39_fuo0p2.png'
+              alt='Holiday Mates logo'
+            />
+          </Box>
+
         </GridItem>
 
         {/* <GridItem rowSpan={2} colSpan={1} bg='papayawhip'></GridItem> */}
 
-        <GridItem rowSpan={1} colSpan={1} bg='papayawhip'>
-          <Box p={2} m={1} borderWidth='1px' shadow='md'>
-            <Stack spacing={2}>
-              {/* create a vertical stack for profile image */}
-              <Heading as='h3' size='md' isTruncated>
-                Linda&apos;s trip to London
-              </Heading>
-              <Heading as='h4' size='sm' isTruncated>
-                London, England, UK
-              </Heading>
-              <Heading as='h4' size='sm'>
-                Author: linda2022
-              </Heading>
-              <Heading as='h4' size='xs'>
-                We painted the town red and let me tell you I will never forget our last night in Shoreditch.
-              </Heading>
-              <Box display='flex' mt='2' alignItems='center'>
-                {Array(5)
-                  .fill('')
-                  .map((_, i) => (
-                    <StarIcon
-                      key={i}
-                      color={i < 5 ? 'teal.500' : 'gray.300'}
-                    />
-                  ))
-                }
-              </Box>
-              {/* <Image src='' alt={`image of London`} borderRadius={15} /> */}
-            </Stack>
-
-          </Box>
+        <GridItem rowSpan={1} colSpan={2} >
+          {/* <Box p={2} m={1} borderWidth='1px' shadow='md'> */}
+          <Text fontSize='md'>Connect with your friends, brag or tag your holidays and explore the map for your next getaway.</Text>
+          <Text fontSize='sm'>Just remember your shorts and sunscreen.</Text>
+          <Button onClick={() => navigate('/register')}>Sign me up!</Button>
+          {/* </Box> */}
         </GridItem>
-        <GridItem colSpan={2} bg='tomato'></GridItem>
+        <GridItem colSpan={2}>
+
+        </GridItem>
       </Grid>
     </div>
   )
