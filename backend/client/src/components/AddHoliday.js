@@ -89,8 +89,8 @@ const AddHoliday = () => {
       // console.log(holidayInfo)
     } catch (err) {
       console.log(err)
-      setFormError({ ...formError, ...err.response.data.errors })
-      console.log(formError)
+      setFormError({ ...formError, ...err.response.data.description })
+      console.log(err.response.data.errors.description)
     }
   }
 
@@ -130,6 +130,7 @@ const AddHoliday = () => {
       setResultsOptions(results)
     } catch (err) {
       console.log(err)
+
     }
   }
 
