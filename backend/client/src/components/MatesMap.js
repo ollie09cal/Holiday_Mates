@@ -1,14 +1,37 @@
 import React, { useEffect, useState } from 'react'
+import {
+  Heading,
+  Text,
+  Avatar,
+  Image,
+  AvatarGroup,
+  Modal,
+  ModalOverlay,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  useDisclosure,
+  Center
+} from '@chakra-ui/react'
 import ReactMapGl, { Marker, Popup } from 'react-map-gl'
 import { REACT_APP_MAPBOX_ACCESS_TOKEN } from '../enviroment/env'
 import axios from 'axios'
 import 'mapbox-gl/dist/mapbox-gl.css'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, } from 'react-router-dom'
 
-
-import { Heading, Text, Avatar, Image, AvatarGroup } from '@chakra-ui/react'
 
 const MatesMap = () => {
+
+  const MatesOverlay = () => (
+    <ModalOverlay
+      bg='blackAlpha.300'
+      backdropFilter='blur(10px)'
+    />
+  )
+
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const [overlay, setOverlay] = useState(<MatesOverlay />)
 
   const navigate = useNavigate()
 
@@ -56,6 +79,7 @@ const MatesMap = () => {
     }
   }
 
+  //overall data
   const getData = async () => {
     try {
       const token = window.localStorage.getItem('holiday-token')
@@ -80,6 +104,8 @@ const MatesMap = () => {
 
   useEffect(() => {
     getData()
+    setOverlay(<MatesOverlay />)
+    onOpen()
   }, [])
 
   //user and user holiday data
@@ -107,22 +133,33 @@ const MatesMap = () => {
     setShowPopup(null)
   }
 
+
   return (
     <div className="mates-map-container">
-      <Heading>Mates</Heading>
-      <Text>Here you can see all your friends and your holidays all together. Lovely.</Text>
-      <AvatarGroup size='sm' max={5}>
-        {mates.length ?
-          mates.map(mate => (
-            <Avatar key={mate._id} name={mate.username} showBorder src={mate.profilePhoto} />
-          ))
-          :
-          <Text>Looking a bit lonely...</Text>}
-      </AvatarGroup>
+      <Center>
+        <Modal size='xs' isOpen={isOpen} onClose={onClose} motionPreset='slideInBottom'>
+          {overlay}
+          <ModalContent top='150px'>
+            <ModalHeader>Mates Map</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              <Text>Here you can see all your friends and your holidays all together. Lovely.</Text>
+              <AvatarGroup size='sm' max={5} mt={4} mb={4}>
+                {mates.length ?
+                  mates.map(mate => (
+                    <Avatar key={mate._id} name={mate.username} showBorder src={mate.profilePhoto} />
+                  ))
+                  :
+                  <Text>Looking a bit lonely...</Text>}
+              </AvatarGroup>
+            </ModalBody>
+          </ModalContent>
+        </Modal>
+      </Center>
       <div className='mates-map'>
         <ReactMapGl
           mapboxAccessToken={REACT_APP_MAPBOX_ACCESS_TOKEN}
-          style={{ width: '100%', height: '100%' }}
+          // style={{ width: '100%', height: '100%' }}
           mapStyle="mapbox://styles/mapbox/streets-v9"
           {...viewPort}
           onMove={e => setViewPort(e.viewState)}
@@ -148,15 +185,29 @@ const MatesMap = () => {
 
           {!!showPopup &&
             <div onClick={() => navigate(`/viewholiday/${showPopup._id}`)}>
-              <Popup closeOnMove={false} closeOnClick={false} latitude={showPopup.latitude} longitude={showPopup.longitude} anchor='bottom' onClose={closePopup}>
-                <Heading as='h3' size='sm'>{showPopup.title}</Heading>
-                <Text>{showPopup.location}</Text>
-                <Image src={showPopup.image} alt={showPopup.title} />
-                <Text>{showPopup.description}</Text>
+              <Popup
+                closeOnMove={false}
+                closeOnClick={false}
+                latitude={showPopup.latitude}
+                longitude={showPopup.longitude}
+                anchor='bottom'
+                onClose={closePopup}
+                className='popup'
+              >
+                <div className='popup-info'>
+                  <Heading as='h3' size='sm'>{showPopup.title}</Heading>
+                  <Text id='popup-location'>{showPopup.location}</Text>
+                  <Image borderRadius={10} border='2px' borderColor='#24A19C' src={showPopup.image} alt={showPopup.title} />
+                  <Text>{showPopup.description}</Text>
+                </div>
               </Popup>
             </div>}
           {!!currentLocation &&
-            <Marker className='current-location-marker' longitude={currentLocation.longitude} latitude={currentLocation.latitude} color="green" />
+            <Marker
+              className='current-location-marker'
+              longitude={currentLocation.longitude}
+              latitude={currentLocation.latitude}
+              color='#FFBCBC' />
           }
         </ReactMapGl>
       </div>

@@ -40,6 +40,7 @@ button{
 .navbar-container {
   position: sticky;
   top: 0;
+  z-index: 1;
   background-color: $bbase-color;
   display: flex;
   justify-content: space-between;
@@ -82,4 +83,21 @@ button{
 
 #file-upload-button{
   background-color: red !important;
+}
+
+
+@media only screen and (min-width: 800px){
+  .mates-map-container{
+    // margin: 5vh 0;
+    .mates-map{
+      position: relative;
+      width: 100%;
+      margin-top: 7vh;
+      max-width: 100vh;
+      height: 85%;
+      box-shadow: 0 0 20px 0 rgb(0 0 0 / 20%)
+      
+    }
+  }
+  
 }
