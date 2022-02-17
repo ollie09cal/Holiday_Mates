@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Navbar from 'react-bootstrap/Navbar'
-import Container from 'react-bootstrap/Container'
+// import Container from 'react-bootstrap/Container'
 import { userAuth } from '../enviroment/helpers/auth'
 import MenuTab from './subComponents/MenuTab'
-import { IconButton } from '@chakra-ui/react'
+import { IconButton, Text } from '@chakra-ui/react'
 import { ArrowBackIcon } from '@chakra-ui/icons'
 
 const NavigationBar = () => {
@@ -17,11 +17,11 @@ const NavigationBar = () => {
   const navigate = useNavigate()
 
   return (
-    <Navbar className="navbar-container">
-      <Container>
-        <Navbar.Brand >Holiday Mates</Navbar.Brand>
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        <IconButton aria-label='Go Back' icon={<ArrowBackIcon />} onClick={() => navigate(-1)}/>
+    <Navbar className="navbar-container" sticky="top">
+      <Text className="brand">Holiday Mates</Text>
+      <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+      <div className="navmenu-container">
+        <IconButton aria-label='Go Back' icon={<ArrowBackIcon />} onClick={() => navigate(-1)} />
         {isLoggedIn ?
           <MenuTab />
           :
@@ -31,8 +31,7 @@ const NavigationBar = () => {
             <Link to="/register">Register</Link>
           </>
         }
-
-      </Container>
+      </div>
     </Navbar>
   )
 }

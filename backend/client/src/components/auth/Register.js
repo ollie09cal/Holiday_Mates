@@ -7,7 +7,8 @@ import {
   Input,
   Button,
   Box,
-  useToast
+  useToast,
+  Center
 } from '@chakra-ui/react'
 import { ImageUpload } from '../subComponents/ImageUpload'
 import { SmallAddIcon } from '@chakra-ui/icons'
@@ -144,12 +145,13 @@ const Register = () => {
 
             <ImageUpload value={registerInfo.profilePhoto} name="profileImage" handleImageURL={handleImageURL} />
 
-            <Button
+            <Center><Button
               type='submit'
               rightIcon={<SmallAddIcon />}
               onSubmit={() => {
                 handleSubmit()
               }}>Register</Button>
+            </Center>
 
           </form>
         </Box>

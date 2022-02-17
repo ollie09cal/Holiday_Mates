@@ -6,7 +6,8 @@ import {
   Input,
   Button,
   Box,
-  useToast
+  useToast,
+  Center
 } from '@chakra-ui/react'
 import { useState } from 'react'
 import axios from 'axios'
@@ -60,7 +61,7 @@ const Login = () => {
   return (
     <div className="login-container">
       <div className="login-form-container">
-        <Box p={3} m={2} borderWidth='1px' borderRadius={10} shadow='md'>
+        <Box p={3} m={2} borderWidth='1px' borderRadius={10} shadow='md' bg="#f7f4f4">
           <form onSubmit={handleSubmit}>
 
             <FormControl isRequired isInvalid={isError.error} onSubmit={handleSubmit}>
@@ -74,7 +75,7 @@ const Login = () => {
               {isError.error && <FormErrorMessage>{isError.message}</FormErrorMessage>}
             </FormControl>
 
-            <Button type='submit' onSubmit={handleSubmit}>Log me in</Button>
+            <Center><Button type='submit' onSubmit={handleSubmit}>Log me in</Button></Center>
 
           </form>
         </Box>

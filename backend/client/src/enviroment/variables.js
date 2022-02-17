@@ -3,6 +3,8 @@ const types = ['stay', 'restaurant', 'event', 'secret spot', 'bar', 'landmark', 
 
 console.log(vibes, '+', types)
 
+//https://res.cloudinary.com/dcnsstzif/image/upload/v1645042962/holiday_mates/Screenshot_2022-02-16_at_18.01.39_fuo0p2.png
+
 //<Box p={2} m={1} borderWidth='1px' shadow='md'>
             //<Stack spacing={2}>
              // {/* create a vertical stack for profile image */}

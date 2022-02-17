@@ -50,7 +50,7 @@ const MatesMap = () => {
         headers: { Authorization: `Bearer ${token}` }
       })
       setUser(data)
-      setUserHolidays(data.ownedHolidays) //<----------------------------------
+      setUserHolidays(data.ownedHolidays)
     } catch (err) {
       console.log(err)
     }
