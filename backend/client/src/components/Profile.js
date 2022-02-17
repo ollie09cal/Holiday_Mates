@@ -44,7 +44,7 @@ const Profile = () => {
                         {profileData.username}
                       </Heading>
                       <Text isTruncated>
-                        Personal Token: {profileData.personalToken}
+                        Mate&apos;s Code: {profileData.personalToken}
                       </Text>
                       <Text>
                         {profileData.ownedHolidays.length} holidays
