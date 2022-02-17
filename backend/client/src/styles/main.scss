@@ -86,3 +86,28 @@ button{
 #file-upload-button{
   background-color: red !important;
 }
+
+.web-only{
+  display: none;
+}
+
+
+@media only screen and (min-width: 800px){
+  .mates-map-container{
+    padding-top: 2vh;
+    // margin: 5vh 0;
+    .web-only{
+      display: block;
+    }
+    .mates-map{
+      position: relative;
+      width: 100%;
+      margin-top: 4vh;
+      max-width: 100vh;
+      height: 85%;
+      box-shadow: 0 0 20px 0 rgb(0 0 0 / 20%)
+      
+    }
+  }
+  
+}
