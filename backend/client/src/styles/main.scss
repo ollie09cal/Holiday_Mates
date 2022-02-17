@@ -1,6 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Teko&display=swap');
+@import './components/variables.scss';
 @import './components/practicemap.scss';
 @import './components/navbar.scss';
 
 * {
   box-sizing: border-box;
+  color: $txt-color;
+}
+
+.chakra-button{
+  background-color: $accent-color !important;
+  color: white;
+  margin-top: 5px;
+}
+.chakra-button:hover{
+  background-color: darken($color: $accent-color, $amount: 10%);
+}
+
+.hero-container{
+  background-color: $primary;
+  display: flex;
+  justify-content: center;
+}
+
+.sign-up-container{
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  position: absolute;
+  background-color: $bbase-color;
+
+}
+
+button{
+  background-color: $accent-color;
+}
+
+.navbar-container {
+  position: sticky;
+  top: 0;
+  background-color: $bbase-color;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-height: 50px;
+  padding: 10px;
+  .brand{
+    font-family: $holiday-mate;
+    font-size: 150%;
+    letter-spacing: 2px;
+    font-weight: 400;
+  }
+  .navmenu-container > a{
+    padding: 0 5px;
+    margin-right: 5px;
+
+  }
+}
+
+.login-container, .register-container{
+  background-color: $primary;
+  height: 94vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-form-container, .register-form-container{
+  width: 370px;
+  margin: 0 auto;
+  
+  *{
+    padding: 2px;
+  }
+  button{
+    margin: 15px 0 10px 0; 
+  }
+}
+
+#file-upload-button{
+  background-color: red !important;
 }
