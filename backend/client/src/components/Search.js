@@ -172,22 +172,24 @@ const Search = () => {
 
   return (
       <div className='explore-map-container'>
-        <Center><Heading className='explore-heading'>Explore</Heading></Center>
+        {/* <Center><Heading className='explore-heading'>Explore</Heading></Center> */}
         <div className='search-filter-container'>
           <Box >
             <form>
-              <HStack margin={1}>
-                <Input placeholder='Search' size='md' shadow='md'  name='search' background='#f7f4f4' value={searchValues.search} onChange={handleChange} />
+              <HStack margin={2}>
+                <Input placeholder='Search and Explore' size='md' shadow='md'  name='search' background='#f7f4f4' value={searchValues.search} onChange={handleChange} />
                 <Menu>
                   <Button shadow='md' onClick={onOpen}>Filters</Button>
                   <Modal isOpen={isOpen} onClose={onClose} >
                     <ModalOverlay />
                     <ModalContent>
-                      <ModalHeader>Filters</ModalHeader>
+                      <Center>
+                        <ModalHeader>Filters</ModalHeader>
+                      </Center>
                       <ModalCloseButton />
-                      <ModalBody>
-                        <form>
-                          <Checkbox name='searchByHolidayType' onChange={handleCheckbox}>Search By Holiday Type</Checkbox>
+                      <ModalBody display='flex' justifyContent='center'>
+                        <form className='filter-map-form'>
+                          <Checkbox colorScheme='teal' margin={1} size='lg' name='searchByHolidayType' onChange={handleCheckbox}>Search By Holiday Type</Checkbox>
                           {!!holidayTypeSearch &&
                             <FormControl>
                               <FormLabel htmlFor='holiday-type'>Holiday Type</FormLabel>
@@ -205,8 +207,8 @@ const Search = () => {
                             </FormControl>
                           }
 
-                          <Checkbox defaultIsChecked name='showPuplicHolidays' onChange={handleCheckbox}>Show Public Holidays</Checkbox>
-                          <Checkbox defaultIsChecked name='showMyHolidays' onChange={handleCheckbox}>Show My Holidays</Checkbox>
+                          <Checkbox colorScheme='teal' margin={1} size='lg' defaultIsChecked name='showPuplicHolidays' onChange={handleCheckbox}>Show Public Holidays</Checkbox>
+                          <Checkbox colorScheme='teal' margin={1} size='lg' defaultIsChecked name='showMyHolidays' onChange={handleCheckbox}>Show My Holidays</Checkbox>
                         </form>
                       </ModalBody>
                       <ModalFooter>

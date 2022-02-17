@@ -3,24 +3,24 @@
   background-image: linear-gradient(rgb(255, 188, 188, 1), rgba(252, 252, 251, 0.5)), url('../../../public/mapbg.png');
   background-color: $primary;
   background-size: cover;
-  .explore-heading {
-    display: none;
+  .map-container {
+    height: 99vh;
+    width: 100vw;
+    margin: 0 auto;
   }
   .search-filter-container {
     position: absolute;
-    z-index: 1;
     width: 100%;
-  }
-}
-
-@media only screen and (min-width: 800px){
-  .explore-heading {
-    display: block;
-    margin-bottom: 10px;
-  }
-  .search-filter-container {
-    position: sticky;
-    top: 7%;
     z-index: 1;
-  }
+  }  
+}
+.filter-map-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.chakra-modal__content {
+  margin-left: 10px;
+  margin-right: 10px;
+
 }
