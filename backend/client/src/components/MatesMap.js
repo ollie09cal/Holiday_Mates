@@ -136,6 +136,7 @@ const MatesMap = () => {
 
   return (
     <div className="mates-map-container">
+      <Center><Heading className='web-only'>Mates Map</Heading></Center>
       <Center>
         <Modal size='xs' isOpen={isOpen} onClose={onClose} motionPreset='slideInBottom'>
           {overlay}

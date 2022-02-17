@@ -6,7 +6,9 @@
 
 .mates-map-container{
   height: 100vh;
+  background-image: linear-gradient(rgba(247, 247, 247, 0.5), rgba(252, 252, 251, 0.5)), url('../../../public/mapbg.png');
   background-color: $primary;
+  background-size: cover;
   .mates-map {
     height: 100vh;
     width: 100vh;
