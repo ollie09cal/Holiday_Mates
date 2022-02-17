@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
-import { Box, Spinner, Stack, Heading, Skeleton, Image, HStack, Tag, Button, useToast } from '@chakra-ui/react'
+import { Box, Spinner, Stack, Heading, Flex, Image, HStack, VStack, Tag, Button, useToast, Center } from '@chakra-ui/react'
 import { StarIcon } from '@chakra-ui/icons'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { getTokenFromLocal, userAuth } from './../enviroment/helpers/auth'
@@ -28,7 +28,7 @@ const ViewHoliday = () => {
     try {
       const token = window.localStorage.getItem('holiday-token')
       const { data } = await axios.get('/api/profile', {
-        headers: {Authorization: `Bearer ${token}`}
+        headers: { Authorization: `Bearer ${token}` }
       })
       console.log(data.id)
       setProfileData(data)
@@ -79,86 +79,89 @@ const ViewHoliday = () => {
     <div className="holiday-container">
       {holiday.owner && profileData ?
         <div className="holidayCards">
-          {/* Holiday card header box */}
-          <Box p={5} m={2} borderWidth='1px' shadow='md'>
-            <Stack spacing={2}>
-              {/* create a vertical stack for profile image */}
-              <Heading as='h2' size='xl' isTruncated>
-                {holiday.title}
-              </Heading>
-              <Heading as='h3' size='lg' isTruncated>
-                {holiday.location}
-              </Heading>
-              <Heading as='h3' size='l'>
-                Author: {holiday.owner.username}
-              </Heading>
-              <Heading as='h3' size='l'>
-                {holiday.description}
-              </Heading>
-              <Box display='flex' mt='2' alignItems='center'>
-                {Array(5)
-                  .fill('')
-                  .map((_, i) => (
-                    <StarIcon
-                      key={i}
-                      color={i < holiday.avgRating ? 'teal.500' : 'gray.300'}
-                    />
-                  ))
-                }
-              </Box>
-              <Image src={holiday.image} alt={`image of ${holiday.location}`} borderRadius={15} />
-              {profileData.id && <Button onClick={deleteHoliday}>Delete Holiday</Button>}
-            </Stack>
-          </Box>
-
+          <Center>
+            {/* Holiday card header box */}
+            <Box p={5} m={2} borderWidth='1px' shadow='md' maxWidth='500px'>
+              <Stack spacing={2}>
+                {/* create a vertical stack for profile image */}
+                <Heading as='h2' size='xl' isTruncated>
+                  {holiday.title}
+                </Heading>
+                <Heading as='h3' size='lg' isTruncated>
+                  {holiday.location}
+                </Heading>
+                <Heading as='h3' size='l'>
+                  Author: {holiday.owner.username}
+                </Heading>
+                <Heading as='h3' size='l'>
+                  {holiday.description}
+                </Heading>
+                <Box display='flex' mt='2' alignItems='center'>
+                  {Array(5)
+                    .fill('')
+                    .map((_, i) => (
+                      <StarIcon
+                        key={i}
+                        color={i < holiday.avgRating ? 'teal.500' : 'gray.300'}
+                      />
+                    ))
+                  }
+                </Box>
+                <Image src={holiday.image} alt={`image of ${holiday.location}`} borderRadius={15} />
+                {(profileData.id === holiday.owner.id) && <Button onClick={deleteHoliday}>Delete Holiday</Button>}
+              </Stack>
+            </Box>
+          </Center>
           {
             //holiday card boxes
             holiday.holidayTypes ?
               holiday.holidayTypes.map((holidayCard, i) => {
                 return (
                   <Link to={`/viewholidaycard/${holidayCard._id}`} key={i}>
-                    <Box p={3} m={2} borderWidth='1px' borderRadius={10} shadow='md' key={i}>
-                      <Heading as='h3' size='xl'>
-                        {holidayCard.type}
-                      </Heading>
-                      <Heading as='h4' size='l'>
-                        📍 {holidayCard.location}
-                      </Heading>
-                      <Box p={3} m={3} borderWidth='1px' shadow='md'>
-                        <HStack spacing={4}>
-                          {holidayCard.vibeTag.map((vibe, i) => {
+                    <Center>
+                      <Box p={3} m={2} borderWidth='1px' borderRadius={10} shadow='md' maxWidth='500px' width='100%' key={i}>
+                        <Heading as='h3' size='xl'>
+                          {holidayCard.type}
+                        </Heading>
+                        <Heading as='h4' size='l'>
+                          📍 {holidayCard.location}
+                        </Heading>
+                        <Box p={3} m={3} borderWidth='1px' shadow='md'>
+                          <HStack spacing={4}>
+                            {holidayCard.vibeTag.map((vibe, i) => {
+                              return (
+                                <Tag size='md' key={i} variant='solid' colorScheme='green'>
+                                  {vibe}
+                                </Tag>
+                              )
+                            })
+                            }
+                          </HStack>
+                        </Box>
+                        <Heading as='h4' size='m'>
+                          {holidayCard.description}
+                        </Heading>
+                        <Box>
+                          {holidayCard.photo && holidayCard.photo.map((photo, i) => {
                             return (
-                              <Tag size='md' key={i} variant='solid' colorScheme='green'>
-                                {vibe}
-                              </Tag>
+                              <Image src={photo} alt={`image of ${holidayCard.location}`} key={i} boxSize='150px' />
                             )
                           })
                           }
-                        </HStack>
+                        </Box>
+                        <Box display='flex' mt='2' alignItems='center'>
+                          {Array(5)
+                            .fill('')
+                            .map((_, i) => (
+                              <StarIcon
+                                key={i}
+                                color={i < holidayCard.rating ? 'teal.500' : 'gray.300'}
+                              />
+                            ))
+                          }
+                        </Box>
                       </Box>
-                      <Heading as='h4' size='m'>
-                        {holidayCard.description}
-                      </Heading>
-                      <Box>
-                        {holidayCard.photo && holidayCard.photo.map((photo, i) => {
-                          return (
-                            <Image src={photo} alt={`image of ${holidayCard.location}`} key={i} boxSize='150px' />
-                          )
-                        })
-                        }
-                      </Box>
-                      <Box display='flex' mt='2' alignItems='center'>
-                        {Array(5)
-                          .fill('')
-                          .map((_, i) => (
-                            <StarIcon
-                              key={i}
-                              color={i < holidayCard.rating ? 'teal.500' : 'gray.300'}
-                            />
-                          ))
-                        }
-                      </Box>
-                    </Box>
+                    </Center>
                   </Link>
                 )
               })
@@ -169,8 +172,10 @@ const ViewHoliday = () => {
         </div>
         :
         <Spinner />
+
+
       }
-    </div>
+    </div >
   )
 }
 
