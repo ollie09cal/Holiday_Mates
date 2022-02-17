@@ -1,7 +1,7 @@
 .main-container {
-  display: flex;
-  justify-content: center;
+  margin: 0 auto;
   background: $primary;
+  width: 100%;
   .profile-container {
     padding: 30px 10px;
     .profile-card-container {
@@ -11,12 +11,23 @@
     }
     .box {
       background-color: $bbase-color;
-      margin: 0 10px 10px 30px;
-      max-width: 400px;
+      margin: 0 10px 30px 10px;
+    }
+    .css-12atx2w {
+      width: 50px !important;
+    }
+    .chakra-image {
+      margin-bottom: 15px;
     }
   }
 }
 
+@media screen and (min-width: 450px){
+  .main-container{
+    display: flex;
+    justify-content: center;
+  }
+}
 
 
 @media screen and (min-width: 850px) {
@@ -35,6 +46,9 @@
     }
     .proile-holidays-container {
       overflow: auto;
+      .ratings-wrapper {
+        width: 50px;
+      }
     }
     .header-mates-container {
       .profile-header-container {
@@ -43,7 +57,7 @@
       }
       .box {
         position: sticky;
-        top: 42%;
+        top: 47%;
       }
     }
   }

@@ -38,7 +38,7 @@ const Profile = () => {
               
               <Box p={3} borderWidth='1px' borderRadius={10} shadow='md' className='box'>
                   <div className='profile-card-container'>
-                    <Avatar name={profileData.username} marginRight={3} showBorder size='xl' src={profileData.profilePhoto} />
+                    <Avatar name={profileData.username} marginRight={3} showBorder size='2xl' src={profileData.profilePhoto} />
                     <Stack>
                       <Heading as='h1' size='xl' isTruncated>
                         {profileData.username}
@@ -54,14 +54,14 @@ const Profile = () => {
               </Box>
             </div>
             
-            <Box p={3} borderWidth='1px' borderRadius={10} shadow='md' className='box'>
+            <Box p={3} borderWidth='1px' borderRadius={10} shadow='md' display='flex' flexDirection='column' alignItems='center' className='box'>
               <Link to={'/matestiles'}>
-                <Heading as='h3' size='md' isTruncated>
+                <Heading as='h3' size='md' marginBottom={4} isTruncated>
                   Mates
                 </Heading>
               </Link>
               
-              <AvatarGroup size='sm' max={5}>
+              <AvatarGroup size='md' max={5} marginBottom={2}>
                 {profileData.mates.length ?
                   profileData.mates.map(mate => (
                     <Avatar key={mate._id} name={mate.username} showBorder src={mate.profilePhoto} />
@@ -73,8 +73,8 @@ const Profile = () => {
                 <AddMate listenToChild={listenToChild}/>
               </div>
             </Box>
-            
           </div>
+          
           <div className='profile-holidays-container'>
               <Center marginBottom={4} >
                 <Heading as='h2' size='lg' isTruncated>
@@ -90,30 +90,32 @@ const Profile = () => {
               profileData.ownedHolidays.map(holiday => (
                 <div key={holiday._id}>
                   <Link to={`/viewholiday/${holiday._id}`}>
-                    <Box p={3} borderWidth='1px' borderRadius={10} shadow='md' className='box'>
-                      <Stack spacing={2}>
+                    <Box p={3} borderWidth='1px' borderRadius={10} shadow='md' maxW='400px' className='box'>
+                      <Stack spacing={2} display='flex' flexDirection='column' alignItems='center'>
                         {/* create a vertical stack for profile image */}
-                        <Heading as='h3' size='lg' isTruncated>
+                        <Heading as='h3' size='lg' isTruncated maxW='350px' >
                           {holiday.title}
                         </Heading>
-                        <Heading as='h4' size='md' isTruncated>
+                        <Heading as='h4' size='md' isTruncated maxW='350px'>
                           {holiday.location}
                         </Heading>
                         <Text>
                           {holiday.description}
                         </Text>
-                        <Box display='flex' mt='2' alignItems='center' className='box' width={4}>
-                          {Array(5)
-                            .fill('')
-                            .map((_, i) => (
-                              <StarIcon
-                                key={i}
-                                color={i < holiday.avgRating ? 'teal.500' : 'gray.300'}
-                              />
-                            ))
-                          }
-                        </Box>
-                        <Image src={holiday.image} alt={`image of ${holiday.location}`} borderRadius={15} />
+                        <div className='ratings-wrapper'>
+                          <Box display='flex' mt='2' alignItems='center' className='box'>
+                            {Array(5)
+                              .fill('')
+                              .map((_, i) => (
+                                <StarIcon
+                                  key={i}
+                                  color={i < holiday.avgRating ? 'teal.500' : 'gray.300'}
+                                />
+                              ))
+                            }
+                          </Box>
+                        </div>
+                        <Image src={holiday.image} boxSize='300px' objectFit='cover' alt={`image of ${holiday.location}`} borderRadius={15} />
                       
                       </Stack>
                     </Box>
