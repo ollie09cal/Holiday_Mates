@@ -1,0 +1,26 @@
+
+.explore-map-container {
+  background-image: linear-gradient(rgb(255, 188, 188, 1), rgba(252, 252, 251, 0.5)), url('../../../public/mapbg.png');
+  background-color: $primary;
+  background-size: cover;
+  .explore-heading {
+    display: none;
+  }
+  .search-filter-container {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+  }
+}
+
+@media only screen and (min-width: 800px){
+  .explore-heading {
+    display: block;
+    margin-bottom: 10px;
+  }
+  .search-filter-container {
+    position: sticky;
+    top: 7%;
+    z-index: 1;
+  }
+}
