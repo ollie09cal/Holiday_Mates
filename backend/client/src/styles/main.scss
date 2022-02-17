@@ -61,12 +61,17 @@ button{
 
 .login-container, .register-container{
   background-color: $primary;
-  height: 100vh;
+  height: 94vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .login-form-container, .register-form-container{
   width: 370px;
   margin: 0 auto;
+  
   *{
     padding: 2px;
   }

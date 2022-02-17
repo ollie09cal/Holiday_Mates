@@ -79,7 +79,7 @@ const Register = () => {
   return (
     <div className="register-container">
       <div className="register-form-container">
-        <Box p={3} m={2} borderWidth='1px' borderRadius={10} shadow='md'>
+        <Box p={3} borderWidth='1px' borderRadius={10} shadow='md' bg="#f7f4f4">
           <form onSubmit={handleSubmit}>
             <FormControl isRequired isInvalid={formError.username}>
               <FormLabel htmlFor='username'>Username</FormLabel>
