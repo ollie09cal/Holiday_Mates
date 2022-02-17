@@ -290,7 +290,7 @@ const AddHolidayCard = () => {
                 <form onSubmit={handleSubmit}>
                   <ModalBody>
                     <FormControl isRequired isInvalid={formError.type}>
-                      <FormLabel htmlFor='type'>Select a genre for your activity:</FormLabel>
+                      <FormLabel htmlFor='type'>Type of your activity:</FormLabel>
                       <Select id='type' isRequired placeholder='Pick a Type' onChange={handleChange}>
                         <option value="Resturant">Resturant</option>
                         <option value="Landmark">Landmark</option>
@@ -306,12 +306,12 @@ const AddHolidayCard = () => {
                     <FormControl isRequired isInvalid={formError.location}>
                       <FormLabel htmlFor='location'>Location, Location, Location!</FormLabel>
                       <Input
-                        placeholder='search'
+                        placeholder='Search'
                         size='md'
                         name='search'
                         value={searchValues.search}
                         onChange={handleSearch} />
-                      <Button mt={2} onClick={searchSubmit}>search</Button>
+                      <Button mt={2} onClick={searchSubmit}>Search</Button>
                       {!!resultsOptions.length &&
                         <VStack spacing={4}>
                           {resultsOptions.map((option, i) => {
@@ -374,16 +374,16 @@ const AddHolidayCard = () => {
                     <FormControl>
                       <ImageUpload value={holidayCardInfo.photo} name="photo" handleImageURL={handleImageURL} />
                     </FormControl>
-                  </ModalBody>
 
-                  <ModalFooter>
+                    {/* <ModalFooter> */}
                     <Button type='submit' colorScheme='blue' mr={3} onSubmit={() => {
                       handleSubmit()
 
                     }}>
                       Add Card!
                     </Button>
-                  </ModalFooter>
+                    {/* </ModalFooter> */}
+                  </ModalBody>
                 </form>
               </ModalContent>
             </Modal>
