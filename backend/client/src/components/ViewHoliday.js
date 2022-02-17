@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
-import { Box, Spinner, Stack, Heading, Skeleton, Image, HStack, Tag } from '@chakra-ui/react'
+import { Box, Spinner, Stack, Heading, Skeleton, Image, HStack, Tag, Button, useToast } from '@chakra-ui/react'
 import { StarIcon } from '@chakra-ui/icons'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { getTokenFromLocal, userAuth } from './../enviroment/helpers/auth'
@@ -15,6 +15,7 @@ const ViewHoliday = () => {
   const [hasError, setHasError] = useState({ error: false, message: '' })
   const navigate = useNavigate()
   const id = useParams()
+  const toast = useToast()
 
   useEffect(() => {
     const isLogged = userAuth()
@@ -23,21 +24,38 @@ const ViewHoliday = () => {
     }
   }, [])
 
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const otherToken = window.localStorage.getItem('holiday-token')
-        const { data } = await axios.get('api/profile', {
-          headers: {Authorization: `Bearer ${otherToken}`}
-        })
-        setProfileData(data)
-        console.log('hello ---->', data)
-      } catch (err) {
-        console.log(err)
-      }
+  const getProfile = async () => {
+    try {
+      const token = window.localStorage.getItem('holiday-token')
+      const { data } = await axios.get('/api/profile', {
+        headers: {Authorization: `Bearer ${token}`}
+      })
+      console.log(data.id)
+      setProfileData(data)
+    } catch (err) {
+      console.log(err.response)
     }
-    getData()
-  },[])
+  }
+
+  const deleteHoliday = async () => {
+    try {
+      const { data } = await axios.delete(`/api/holidays/${holiday._id}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+
+      toast({
+        title: 'Holiday Deleted!',
+        description: 'The Holiday Card has now been removed from your collection',
+        status: 'success',
+        duration: 9000,
+        isClosable: true
+      })
+      navigate('/profile')
+    } catch (err) {
+      console.log(err.response)
+    }
+  }
+
 
   useEffect(() => {
     const getHoliday = async () => {
@@ -47,16 +65,19 @@ const ViewHoliday = () => {
         })
         setHoliday(data)
         console.log(data)
+        console.log('owner id on holiday--->', holiday.owner.id)
       } catch (err) {
         setHasError({ error: true, message: err.message })
       }
     }
     getHoliday()
+    getProfile()
   }, [holidayId])
+
 
   return (
     <div className="holiday-container">
-      {holiday.owner ?
+      {holiday.owner && profileData ?
         <div className="holidayCards">
           {/* Holiday card header box */}
           <Box p={5} m={2} borderWidth='1px' shadow='md'>
@@ -86,9 +107,8 @@ const ViewHoliday = () => {
                 }
               </Box>
               <Image src={holiday.image} alt={`image of ${holiday.location}`} borderRadius={15} />
-
+              {profileData.id && <Button onClick={deleteHoliday}>Delete Holiday</Button>}
             </Stack>
-                
           </Box>
 
           {

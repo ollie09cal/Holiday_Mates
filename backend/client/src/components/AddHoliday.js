@@ -208,15 +208,7 @@ const AddHoliday = () => {
 
             <FormControl>
               <FormLabel htmlFor="description">Give us a short Description</FormLabel>
-              {/* <Input
-                id='description'
-                type='text'
-                placeholder='Give us a short description of ya trip!'
-                defaultValue={holidayInfo.description}
-                onChange={handleChange}
-              /> */}
               <Textarea placeholder='Give us a short description of ya trip!'/>
-
               {formError.description && <FormErrorMessage>try keeping the text below 500 characters! we dont want your life story</FormErrorMessage>}
             </FormControl>
             <FormControl>
