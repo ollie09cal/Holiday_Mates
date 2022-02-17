@@ -29,6 +29,7 @@ import {
   NumberInputStepper,
   NumberIncrementStepper,
   NumberDecrementStepper,
+  Divider
 } from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
@@ -52,10 +53,10 @@ const AddHolidayCard = () => {
   const navigate = useNavigate()
   const id = useParams()
   //console.log(id.holidayid)
-  
+
   useEffect(() => {
     const isLogged = userAuth()
-    if (!isLogged){
+    if (!isLogged) {
       navigate('/')
     }
   }, [])
@@ -198,76 +199,81 @@ const AddHolidayCard = () => {
       {holiday.owner ?
         <div className="holidayCard">
           {/* Holiday card header box */}
-          <Box p={5} m={2} borderWidth='1px' shadow='md'>
-            <Stack spacing={2}>
-              {/* create a vertical stack for profile image */}
-              <Heading as='h2' size='xl' isTruncated>
-                {holiday.title}
-              </Heading>
-              <Heading as='h3' size='lg' isTruncated>
-                {holiday.location}
-              </Heading>
-              <Heading as='h3' size='l'>
-                Author: {holiday.owner.username}
-              </Heading>
-              <Heading as='h3' size='l'>
-                {holiday.description}
-              </Heading>
-              <Image src={holiday.image} alt={`image of ${holiday.location}`} borderRadius={15} />
-            </Stack>
-          </Box>
+          <Center>
+            <Box p={5} m={2} borderWidth='1px' shadow='md' maxW="800px">
+              <Stack spacing={2}>
+                {/* create a vertical stack for profile image */}
+                <Heading as='h2' size='xl' isTruncated>
+                  {holiday.title}
+                </Heading>
+                <Heading as='h3' size='lg' isTruncated>
+                  {holiday.location}
+                </Heading>
+                <Heading as='h3' size='l'>
+                  Author: {holiday.owner.username}
+                </Heading>
+                <Heading as='h3' size='l'>
+                  {holiday.description}
+                </Heading>
+                <Image src={holiday.image} alt={`image of ${holiday.location}`} borderRadius={15} />
+              </Stack>
+            </Box>
+          </Center>
 
           {holiday.holidayTypes.length ?
             holiday.holidayTypes.map((holidayCard, i) => {
               return (
-                <Box p={3} m={2} borderWidth='1px' borderRadius={10} shadow='md' key={i}>
-                  <Heading as='h3' size='xl'>
-                    {holidayCard.type}
-                  </Heading>
-                  <Heading as='h4' size='l'>
-                    📍 {holidayCard.location}
-                  </Heading>
-                  <Box p={3} m={3} borderWidth='1px' shadow='md'>
-                    <HStack spacing={4}>
-                      {holidayCard.vibeTag.map((vibe, i) => {
+
+                <Center key={i}>
+                  <Box maxW="800px" p={3} m={2} borderWidth='1px' borderRadius={10} shadow='md' key={i}>
+                    <Heading as='h3' size='xl'>
+                      {holidayCard.type}
+                    </Heading>
+                    <Heading as='h4' size='l'>
+                      📍 {holidayCard.location}
+                    </Heading>
+                    <Box p={3} m={3} borderWidth='1px' shadow='md'>
+                      <HStack spacing={4}>
+                        {holidayCard.vibeTag.map((vibe, i) => {
+                          return (
+                            <Tag size='md' key={i} variant='solid' colorScheme='green'>
+                              {vibe}
+                            </Tag>
+                          )
+                        })
+                        }
+                      </HStack>
+                    </Box>
+                    <Heading as='h4' size='m'>
+                      {holidayCard.description}
+                    </Heading>
+                    <Box>
+                      {holidayCard.photo && holidayCard.photo.map((photo, i) => {
                         return (
-                          <Tag size='md' key={i} variant='solid' colorScheme='green'>
-                            {vibe}
-                          </Tag>
+                          <Image src={photo} alt={`image of ${holidayCard.location}`} key={i} boxSize='150px' />
                         )
                       })
                       }
-                    </HStack>
+                    </Box>
+                    <Box display='flex' mt='2' alignItems='center'>
+                      {Array(5)
+                        .fill('')
+                        .map((_, i) => (
+                          <StarIcon
+                            key={i}
+                            color={i < holidayCard.rating ? 'teal.500' : 'gray.300'}
+                          />
+                        ))
+                      }
+                    </Box>
+                    <Button mt={3} value={holidayCard._id} onClick={deleteCard} colorScheme='red'>Delete</Button>
                   </Box>
-                  <Heading as='h4' size='m'>
-                    {holidayCard.description}
-                  </Heading>
-                  <Box>
-                    {holidayCard.photo && holidayCard.photo.map((photo, i) => {
-                      return (
-                        <Image src={photo} alt={`image of ${holidayCard.location}`} key={i} boxSize='150px' />
-                      )
-                    })
-                    }
-                  </Box>
-                  <Box display='flex' mt='2' alignItems='center'>
-                    {Array(5)
-                      .fill('')
-                      .map((_, i) => (
-                        <StarIcon
-                          key={i}
-                          color={i < holidayCard.rating ? 'teal.500' : 'gray.300'}
-                        />
-                      ))
-                    }
-                  </Box>
-                  <Button mt={3} value={holidayCard._id} onClick={deleteCard} colorScheme='red'>Delete</Button>
-                </Box>
+                </Center>
               )
             })
             :
             <Center>
-              <Heading as='h3' size='l' spacing={4}>Tell us what you got up to on holiday...</Heading>
+              <Heading as='h3' size='l' mb={4} mt={4}>Tell us what you got up to on holiday...</Heading>
             </Center>
 
           }
@@ -313,6 +319,7 @@ const AddHolidayCard = () => {
                             return (
                               <Box h='40px' key={i} onClick={search}>
                                 <p>{option.place_name}</p>
+                                <Divider orientation='horizontal' />
                               </Box>
                             )
                           })}

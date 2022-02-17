@@ -14,7 +14,8 @@ import {
   NumberInputStepper,
   NumberIncrementStepper,
   NumberDecrementStepper,
-  useToast
+  useToast,
+  Center
 } from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
@@ -34,7 +35,7 @@ const AddHoliday = () => {
 
   useEffect(() => {
     const isLogged = userAuth()
-    if (!isLogged){
+    if (!isLogged) {
       navigate('/')
     }
   }, [])
@@ -136,98 +137,101 @@ const AddHoliday = () => {
 
   return (
     <div className="holiday-add-container">
-      <Box p={3} m={2} borderWidth='1px' borderRadius={10} shadow='md'>
-        <form onSubmit={handleSubmit}>
+      <Center>
+        <Box p={3} m={2} borderWidth='1px' borderRadius={10} shadow='md' maxW="500px">
+          <form onSubmit={handleSubmit}>
 
-          <FormControl isRequired isInvalid={formError.title}>
-            <FormLabel htmlFor='title'>Holiday Title</FormLabel>
-            <Input
-              id='title'
-              type='text'
-              placeholder='Marks trip to paradise!'
-              defaultValue={holidayInfo.title}
-              onChange={handleChange}
-            />
-            {formError.title && <FormErrorMessage>It&apos;s Not a Novel! Keep it short and sweet</FormErrorMessage>}
-          </FormControl>
+            <FormControl isRequired isInvalid={formError.title}>
+              <FormLabel htmlFor='title'>Holiday Title</FormLabel>
+              <Input
+                id='title'
+                type='text'
+                placeholder='Marks trip to paradise!'
+                defaultValue={holidayInfo.title}
+                onChange={handleChange}
+              />
+              {formError.title && <FormErrorMessage>It&apos;s Not a Novel! Keep it short and sweet</FormErrorMessage>}
+            </FormControl>
 
-          <FormControl isRequired isInvalid={formError.location}>
-            <FormLabel htmlFor='location'>Location, Location, Location!</FormLabel>
-            <Input
-              placeholder='search'
-              size='md'
-              name='search'
-              value={searchValues.search}
-              onChange={handleSearch} />
-            <Button spacing={2} onClick={searchSubmit}>search</Button>
-            {!!resultsOptions.length &&
-              <VStack spacing={4}>
-                {resultsOptions.map((option, i) => {
-                  console.log(option)
-                  return (
-                    <Box h='40px' key={i} onClick={search}>
-                      <p>{option.place_name}</p>
-                    </Box>
-                  )
-                })}
-              </VStack>
-            }
-            {formError.location && <FormErrorMessage>Invalid location (try chosing somewhere near)</FormErrorMessage>}
-          </FormControl>
+            <FormControl isRequired isInvalid={formError.location}>
+              <FormLabel htmlFor='location'>Location, Location, Location!</FormLabel>
+              <Input
+                placeholder='search'
+                size='md'
+                name='search'
+                value={searchValues.search}
+                onChange={handleSearch} />
+              <Button mt={2} mb={3} onClick={searchSubmit}>search</Button>
+              {!!resultsOptions.length &&
+                <VStack spacing={4}>
+                  {resultsOptions.map((option, i) => {
+                    console.log(option)
+                    return (
+                      <Box h='40px' key={i} onClick={search} borderWidth='1px'>
+                        <p>{option.place_name}</p>
+                      </Box>
+                    )
+                  })}
+                </VStack>
+              }
+              {formError.location && <FormErrorMessage>Invalid location (try chosing somewhere near)</FormErrorMessage>}
+            </FormControl>
 
-          <FormControl>
-            <FormLabel htmlFor='date'>Tell us the month and year of your trip!</FormLabel>
-            <HStack>
-              <Select id='month' isRequired placeholder='Pick a Month' onChange={handleMonth}>
-                <option value="January">January</option>
-                <option value="Febuary">Febuary</option>
-                <option value="March">March</option>
-                <option value="April">April</option>
-                <option value="May">May</option>
-                <option value="June">June</option>
-                <option value="July">July</option>
-                <option value="August">August</option>
-                <option value="September">September</option>
-                <option value="October">October</option>
-                <option value="November">November</option>
-                <option value="December">December</option>
-              </Select>
-              <NumberInput id='year' defaultValue={2000} min={1990} max={currentYear} onChange={handleYear}>
-                <NumberInputField />
-                <NumberInputStepper>
-                  <NumberIncrementStepper />
-                  <NumberDecrementStepper />
-                </NumberInputStepper>
-              </NumberInput>
-            </HStack>
-            {formError.date && <FormErrorMessage>Invalid date, try another time!</FormErrorMessage>}
-          </FormControl>
+            <FormControl>
+              <FormLabel htmlFor='date'>Tell us the month and year of your trip!</FormLabel>
+              <HStack>
+                <Select id='month' isRequired placeholder='Pick a Month' onChange={handleMonth}>
+                  <option value="January">January</option>
+                  <option value="Febuary">Febuary</option>
+                  <option value="March">March</option>
+                  <option value="April">April</option>
+                  <option value="May">May</option>
+                  <option value="June">June</option>
+                  <option value="July">July</option>
+                  <option value="August">August</option>
+                  <option value="September">September</option>
+                  <option value="October">October</option>
+                  <option value="November">November</option>
+                  <option value="December">December</option>
+                </Select>
+                <NumberInput id='year' defaultValue={2000} min={1990} max={currentYear} onChange={handleYear}>
+                  <NumberInputField />
+                  <NumberInputStepper>
+                    <NumberIncrementStepper />
+                    <NumberDecrementStepper />
+                  </NumberInputStepper>
+                </NumberInput>
+              </HStack>
+              {formError.date && <FormErrorMessage>Invalid date, try another time!</FormErrorMessage>}
+            </FormControl>
 
-          <FormControl>
-            <FormLabel htmlFor="description">Give us a short Description</FormLabel>
-            <Input
-              id='description'
-              type='text'
-              placeholder='Give us a short description of ya trip!'
-              defaultValue={holidayInfo.description}
-              onChange={handleChange}
-            />
-            {formError.description && <FormErrorMessage>try keeping the text below 500 characters! we dont want your life story</FormErrorMessage>}
-          </FormControl>
-          <FormControl>
-            <Box boxSize='100%'>
-              <ImageUpload value={holidayInfo.image} name="image" handleImageURL={handleImageURL} />
-            </Box>
-          </FormControl>
+            <FormControl>
+              <FormLabel htmlFor="description">Give us a short Description</FormLabel>
+              <Input
+                id='description'
+                type='text'
+                placeholder='Give us a short description of ya trip!'
+                defaultValue={holidayInfo.description}
+                onChange={handleChange}
+              />
+              {formError.description && <FormErrorMessage>try keeping the text below 500 characters! we dont want your life story</FormErrorMessage>}
+            </FormControl>
+            <FormControl>
+              <Box boxSize='100%'>
+                <ImageUpload value={holidayInfo.image} name="image" handleImageURL={handleImageURL} />
+              </Box>
+            </FormControl>
 
-          <Button
-            type='submit'
-            rightIcon={<SmallAddIcon />}
-            onSubmit={() => {
-              handleSubmit()
-            }}>Create Holiday</Button>
-        </form>
-      </Box>
+            <Button
+              type='submit'
+              rightIcon={<SmallAddIcon />}
+              mt={2}
+              onSubmit={() => {
+                handleSubmit()
+              }}>Create Holiday</Button>
+          </form>
+        </Box>
+      </Center>
     </div>
   )
 }
