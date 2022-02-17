@@ -1,0 +1,64 @@
+.main-container {
+  margin: 0 auto;
+  background: $primary;
+  width: 100%;
+  .profile-container {
+    padding: 30px 10px;
+    .profile-card-container {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+    .box {
+      background-color: $bbase-color;
+      margin: 0 10px 30px 10px;
+    }
+    .css-12atx2w {
+      width: 50px !important;
+    }
+    .chakra-image {
+      margin-bottom: 15px;
+    }
+  }
+}
+
+@media screen and (min-width: 450px){
+  .main-container{
+    display: flex;
+    justify-content: center;
+  }
+}
+
+
+@media screen and (min-width: 850px) {
+  .profile-container {
+    display: flex;
+    height: 100%;
+    justify-content: space-around;
+    .box {
+      width: 400px;
+    }
+    .profile-card-container {
+      flex-direction: column;
+      .chakra-stack {
+        text-align: center;
+      }
+    }
+    .proile-holidays-container {
+      overflow: auto;
+      .ratings-wrapper {
+        width: 50px;
+      }
+    }
+    .header-mates-container {
+      .profile-header-container {
+        position: sticky;
+        top: 11%;
+      }
+      .box {
+        position: sticky;
+        top: 47%;
+      }
+    }
+  }
+}

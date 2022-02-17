@@ -2,6 +2,7 @@
 @import './components/variables.scss';
 @import './components/practicemap.scss';
 @import './components/navbar.scss';
+@import './components/profile.scss';
 
 * {
   box-sizing: border-box;
@@ -60,7 +61,7 @@ button{
   }
 }
 
-.login-container, .register-container{
+.login-container, .register-container {
   background-color: $primary;
   height: 94vh;
   display: flex;
@@ -69,7 +70,7 @@ button{
   align-items: center;
 }
 
-.login-form-container, .register-form-container{
+.login-form-container, .register-form-container {
   width: 370px;
   margin: 0 auto;
   
