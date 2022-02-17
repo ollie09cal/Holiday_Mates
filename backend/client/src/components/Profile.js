@@ -8,7 +8,8 @@ import AddMate from './subComponents/AddMate'
 const Profile = () => {
   //state
   const [profileData, setProfileData] = useState(null)
-  
+  const [count, setCount] = useState(0)
+
   useEffect(() => {
     const getData = async () => {
       try {
@@ -16,16 +17,17 @@ const Profile = () => {
         const { data } = await axios.get('api/profile', {
           headers: {Authorization: `Bearer ${token}`}
         })
-        setProfileData(data)
-        console.log('hello')
+        await setProfileData(data)
       } catch (err) {
         console.log(err)
       }
     }
     getData()
-  },[])
+  },[count])
   
-
+  const listenToChild = () => {
+    setCount(count + 1)
+  }
   return (
     <section className='profile-container'>
       {profileData ?
@@ -64,7 +66,9 @@ const Profile = () => {
             :
             <Text>Looking a bit lonely...</Text>}
           </AvatarGroup>
-          <AddMate />
+          <div className='addMateContainer'>
+            <AddMate listenToChild={listenToChild}/>
+          </div>
         </Box>
         
           <HStack>

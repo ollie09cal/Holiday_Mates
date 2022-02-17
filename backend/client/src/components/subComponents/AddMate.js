@@ -1,9 +1,13 @@
 import React, { useState} from 'react'
-import { Text, FormControl, FormLabel, Input, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, Button, useDisclosure } from '@chakra-ui/react'
+import { Text, FormControl, FormLabel, Input, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, Button, useDisclosure, useToast } from '@chakra-ui/react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 
-const AddMate = () => {
+const AddMate = ({ listenToChild }) => {
+  const navigate = useNavigate()
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const toast = useToast()
+
   //STATE
   const [isError, setIsError] = useState('')
 
@@ -13,8 +17,7 @@ const AddMate = () => {
   })
 
 
-  const navigate = useNavigate()
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -25,18 +28,24 @@ const AddMate = () => {
     try {
       const token = window.localStorage.getItem('holiday-token')
       if (!token) navigate('/login')
-      const { data } = await axios.post('api/mates', formData, { headers: {Authorization: `Bearer ${token}` } })
-      console.log(data)
+      await axios.post('api/mates', formData, { headers: {Authorization: `Bearer ${token}` } })
       setFormData({
         mateUsername: '',
         mateToken: '',
       })
+      listenToChild()
+      toast({
+        title: 'Mate Added!',
+        description: 'Now you can see all their wonderful holidays',
+        status: 'success',
+        duration: 9000,
+        isClosable: true
+      })
       onClose()
     } catch (err) {
-      console.log(err.response.data.message)
+      console.log(err)
       setIsError(err.response.data.message)
     }
-
   } 
   return (
     <div className="AddMate-container">

@@ -3,7 +3,7 @@ import ReactMapGl, { Marker, Popup } from 'react-map-gl'
 import { REACT_APP_MAPBOX_ACCESS_TOKEN } from '../enviroment/env'
 import axios from 'axios'
 import 'mapbox-gl/dist/mapbox-gl.css'
-import { Avatar, Spinner, Image, useDisclosure, Input, Button, Text, FormControl, Select, FormLabel, Box, VStack, Menu, Modal, ModalFooter, ModalBody, ModalHeader, ModalOverlay, ModalContent, ModalCloseButton, Heading, Checkbox } from '@chakra-ui/react'
+import { Avatar, Spinner, Image, useDisclosure, Input, Button, Text, FormControl, Select, FormLabel, Box, VStack, Menu, Modal, ModalFooter, ModalBody, ModalHeader, ModalOverlay, ModalContent, ModalCloseButton, Heading, Checkbox, HStack } from '@chakra-ui/react'
 import { getTokenFromLocal } from '../enviroment/helpers/auth'
 import { useNavigate } from 'react-router-dom'
 
@@ -20,7 +20,7 @@ const Search = () => {
     search: '',
     searchByHolidayType: false,
     holidayType: '',
-    showMatesHolidays: true,
+    showPuplicHolidays: true,
     showMyHolidays: true,
   })
   const [currentLocation, setCurrentLocation] = useState(null)
@@ -72,28 +72,34 @@ const Search = () => {
   //search and filter functions
   const handleChange = (e) => setSearchValues({ ...searchValues, [e.target.name]: e.target.value })
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    try {
-      const { data } = await axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${searchValues.search}.json?access_token=pk.eyJ1IjoianZpY2tlcnMiLCJhIjoiY2t6bGFuZTNoMHl3MDJza2Vvd2U2Mm84cSJ9.nYy2TJv3ChiUdpl4CLtYJA`)
-      const results = data.features
-      setResultsOptions(results)
-    } catch (err) {
-      console.log(err)
+  useEffect(() => {
+    if (searchValues.search) {
+      const getResultsOptions = async () => {
+        try {
+          const { data } = await axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${searchValues.search}.json?access_token=pk.eyJ1IjoianZpY2tlcnMiLCJhIjoiY2t6bGFuZTNoMHl3MDJza2Vvd2U2Mm84cSJ9.nYy2TJv3ChiUdpl4CLtYJA`)
+          const results = data.features
+          setResultsOptions(results)
+        } catch (err) {
+          console.log(err)
+        }
+      }
+      console.log('searching')
+      getResultsOptions()
+    } else {
+      setResultsOptions([])
     }
-  }
+  }, [searchValues.search])
 
   const search = (e) => {
     const { center } = resultsOptions[resultsOptions.findIndex(result => result.place_name === e.target.innerText)]
-    setViewPort({ latitude: center[1], longitude: center[0], zoom: 8 })
+    setViewPort({ latitude: center[1], longitude: center[0], zoom: 5 })
     setResultsOptions([])
-    setSearchValues({ search: '' })
+    setSearchValues({...searchValues, search: '' })
   }
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   const handleCheckbox = (e) => {
     e.preventDefault()
-    console.log(e.target.name)
     setSearchValues({ ...searchValues, [e.target.name]: e.target.checked })
   }
 
@@ -103,13 +109,10 @@ const Search = () => {
     searchValues.searchByHolidayType ?
       holiday = filteredData[filteredData.findIndex(item => item._id === holidayId)]
       : holiday = data[data.findIndex(item => item._id === holidayId)]
-    console.log(holiday)
-    console.log(searchValues.searchByHolidayType)
     setShowPopup(holiday)
   }
 
   const closePopup = () => {
-    console.log('close')
     setShowPopup(null)
   }
   //filter Results
@@ -120,7 +123,6 @@ const Search = () => {
       const { data } = await axios.get('api/holidayTypes', {
         headers: { Authorization: `Bearer ${token}` }
       })
-      console.log(holidayType)
       if (holidayType) {
         const filterData = data.filter(holiday => holiday.type === holidayType)
         setFilteredData(filterData)
@@ -136,10 +138,9 @@ const Search = () => {
   }
 
   useEffect(() => {
-    const { showMatesHolidays, showMyHolidays, searchByHolidayType, holidayType } = searchValues
-    console.log(showMatesHolidays, showMyHolidays)
+    const { showPuplicHolidays, showMyHolidays, searchByHolidayType, holidayType } = searchValues
 
-    if (!showMatesHolidays) {
+    if (!showPuplicHolidays) {
       const filterResults = data.filter(holiday => holiday.owner._id === user._id)
       setFilteredData(filterResults)
     }
@@ -147,10 +148,10 @@ const Search = () => {
       const filterResults = data.filter(holiday => holiday.owner._id !== user._id)
       setFilteredData(filterResults)
     }
-    if (!showMatesHolidays && !showMyHolidays) {
+    if (!showPuplicHolidays && !showMyHolidays) {
       setFilteredData(['noResults'])
     }
-    if (showMatesHolidays && showMyHolidays) {
+    if (showPuplicHolidays && showMyHolidays) {
       setFilteredData([])
     }
     (searchByHolidayType) ? setHolidayTypeSearch(true) : setHolidayTypeSearch(false)
@@ -173,50 +174,52 @@ const Search = () => {
     <>
       <Heading>Search</Heading>
       <Box>
-        <form onSubmit={handleSubmit}>
-          <Input placeholder='search' size='md' name='search' value={searchValues.search} onChange={handleChange} />
-          <Menu>
-            <Button onClick={onOpen}>Filters</Button>
-            <Modal isOpen={isOpen} onClose={onClose}>
-              <ModalOverlay />
-              <ModalContent>
-                <ModalHeader>Filters</ModalHeader>
-                <ModalCloseButton />
-                <ModalBody>
-                  <form>
-                    <Checkbox name='searchByHolidayType' onChange={handleCheckbox}>Search By Holiday Type</Checkbox>
-                    {!!holidayTypeSearch &&
-                      <FormControl>
-                        <FormLabel htmlFor='holiday-type'>Holiday Type</FormLabel>
-                        <Select id='holiday-type' name='holidayType' onChange={handleChange}>
-                          <option defaultValue value='' >All</option>
-                          <option value="Restaurant">Restaurant</option>
-                          <option value="Landmark">Landmark</option>
-                          <option value="Secret-Place">Secret Place</option>
-                          <option value="Walk">Walk</option>
-                          <option value="Bar">Bar</option>
-                          <option value="Activity">Activity</option>
-                          <option value="Stay">Stay</option>
-                          <option value="Event">Event</option>
-                        </Select>
-                      </FormControl>
-                    }
+        <form>
+          <HStack>
+            <Input placeholder='Search' size='md' name='search' value={searchValues.search} onChange={handleChange} />
+            <Menu>
+              <Button onClick={onOpen}>Filters</Button>
+              <Modal isOpen={isOpen} onClose={onClose}>
+                <ModalOverlay />
+                <ModalContent>
+                  <ModalHeader>Filters</ModalHeader>
+                  <ModalCloseButton />
+                  <ModalBody>
+                    <form>
+                      <Checkbox name='searchByHolidayType' onChange={handleCheckbox}>Search By Holiday Type</Checkbox>
+                      {!!holidayTypeSearch &&
+                        <FormControl>
+                          <FormLabel htmlFor='holiday-type'>Holiday Type</FormLabel>
+                          <Select id='holiday-type' name='holidayType' onChange={handleChange}>
+                            <option defaultValue value='' >All</option>
+                            <option value="Restaurant">Restaurant</option>
+                            <option value="Landmark">Landmark</option>
+                            <option value="Secret-Place">Secret Place</option>
+                            <option value="Walk">Walk</option>
+                            <option value="Bar">Bar</option>
+                            <option value="Activity">Activity</option>
+                            <option value="Stay">Stay</option>
+                            <option value="Event">Event</option>
+                          </Select>
+                        </FormControl>
+                      }
 
-                    <Checkbox defaultIsChecked name='showMatesHolidays' onChange={handleCheckbox}>Show Mates Holidays</Checkbox>
-                    <Checkbox defaultIsChecked name='showMyHolidays' onChange={handleCheckbox}>Show My Holidays</Checkbox>
-                  </form>
-                </ModalBody>
-                <ModalFooter>
-                  <Button onClick={onClose}>Close</Button>
-                </ModalFooter>
-              </ModalContent>
+                      <Checkbox defaultIsChecked name='showPuplicHolidays' onChange={handleCheckbox}>Show Public Holidays</Checkbox>
+                      <Checkbox defaultIsChecked name='showMyHolidays' onChange={handleCheckbox}>Show My Holidays</Checkbox>
+                    </form>
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button onClick={onClose}>Close</Button>
+                  </ModalFooter>
+                </ModalContent>
 
-            </Modal>
-          </Menu>
-          <Button type='Submit'>Search</Button>
+              </Modal>
+            </Menu>
+          </HStack>
+          
 
           {!!resultsOptions.length &&
-            <VStack spacing={4}>
+            <VStack spacing={4} position='absolute' zIndex={1} bg='white' width='100%'>
               {resultsOptions.map((option, i) => {
                 console.log(option)
                 return (

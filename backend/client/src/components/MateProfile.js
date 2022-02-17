@@ -18,6 +18,7 @@ const MateProfile = () => {
           headers: { Authorization: `Bearer ${token}`}
         })
         setProfileData(data)
+        console.log(data)
         console.log('hello')
       } catch (err) {
         console.log(err.response)

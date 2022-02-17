@@ -6,11 +6,13 @@ import 'mapbox-gl/dist/mapbox-gl.css'
 import { useNavigate } from 'react-router-dom'
 
 
-import { Heading, Text, Avatar, Image } from '@chakra-ui/react'
+import { Heading, Text, Avatar, Image, AvatarGroup } from '@chakra-ui/react'
 
 const MatesMap = () => {
 
   const navigate = useNavigate()
+
+  const holidaysFromMates = []
 
   const [currentLocation, setCurrentLocation] = useState(null)
   const [mates, setMates] = useState([])
@@ -25,6 +27,7 @@ const MatesMap = () => {
     zoom: 1
   })
 
+  //mates data
   const getMates = async () => {
     try {
       // const payload = getPayload()
@@ -34,48 +37,24 @@ const MatesMap = () => {
         headers: { Authorization: `Bearer ${token}` }
       })
       !data ? console.log('No mates') : setMates(data.mates)
-      console.log(data.mates)
+
     } catch (err) {
       console.log(err.message)
     }
   }
 
-  useEffect(() => {
-    window.navigator.geolocation.getCurrentPosition(position => {
-      const { latitude, longitude } = position.coords
-      setCurrentLocation({ latitude: latitude, longitude: longitude })
-      setViewPort({ latitude: latitude, longitude: longitude })
-    })
-
-  }, [])
-
-  useEffect(() => {
-    const getUserHolidays = async () => {
-      try {
-        const token = window.localStorage.getItem('holiday-token')
-        const { data } = await axios.get('api/profile', {
-          headers: { Authorization: `Bearer ${token}` }
-        })
-        setUser(data)
-        setUserHolidays(data.ownedHolidays)
-      } catch (err) {
-        console.log(err)
-      }
+  const getUserAndHolidays = async () => {
+    try {
+      const token = window.localStorage.getItem('holiday-token')
+      const { data } = await axios.get('api/profile', {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+      setUser(data)
+      setUserHolidays(data.ownedHolidays) //<----------------------------------
+    } catch (err) {
+      console.log(err)
     }
-    getUserHolidays()
-  }, [])
-
-  useEffect(() => {
-    getMates()
-    getData()
-  }, [])
-
-  useEffect(() => {
-    for (let i = 0; i < mates.length; i++) {
-      setMatesHolidays([...matesHolidays, ...mates[i].ownedHolidays])
-    }
-    console.log(matesHolidays)
-  }, [mates])
+  }
 
   const getData = async () => {
     try {
@@ -88,6 +67,33 @@ const MatesMap = () => {
       console.log(error)
     }
   }
+
+  //current location
+  useEffect(() => {
+    window.navigator.geolocation.getCurrentPosition(position => {
+      const { latitude, longitude } = position.coords
+      setCurrentLocation({ latitude: latitude, longitude: longitude })
+      setViewPort({ latitude: latitude, longitude: longitude })
+    })
+
+  }, [])
+
+  useEffect(() => {
+    getData()
+  }, [])
+
+  //user and user holiday data
+  useEffect(() => {
+    getMates()
+    getUserAndHolidays()
+  }, [data])
+
+  useEffect(() => {
+    mates.length && mates.map(mate => holidaysFromMates.push(...mate.ownedHolidays))
+    setMatesHolidays(holidaysFromMates)
+    console.log(matesHolidays)
+  }, [mates])
+
 
   const handleClick = (e) => {
     const holidayId = e.currentTarget.id
@@ -105,6 +111,14 @@ const MatesMap = () => {
     <div className="mates-map-container">
       <Heading>Mates</Heading>
       <Text>Here you can see all your friends and your holidays all together. Lovely.</Text>
+      <AvatarGroup size='sm' max={5}>
+        {mates.length ?
+          mates.map(mate => (
+            <Avatar key={mate._id} name={mate.username} showBorder src={mate.profilePhoto} />
+          ))
+          :
+          <Text>Looking a bit lonely...</Text>}
+      </AvatarGroup>
       <div className='mates-map'>
         <ReactMapGl
           mapboxAccessToken={REACT_APP_MAPBOX_ACCESS_TOKEN}
@@ -113,18 +127,18 @@ const MatesMap = () => {
           {...viewPort}
           onMove={e => setViewPort(e.viewState)}
         >
-          {!!userHolidays.length &&
-            userHolidays.map(holiday => {
-              return < Marker key={holiday._id} latitude={holiday.latitude} longitude={holiday.longitude} >
-                <div id={holiday._id} onClick={handleClick}>
-                  <Avatar src={holiday.image} name={holiday.title} showBorder size='sm' />
-                </div>
-              </Marker >
-            })
+
+          {userHolidays.map(holiday => {
+            return < Marker key={holiday._id} latitude={holiday.latitude} longitude={holiday.longitude} >
+              <div id={holiday._id} onClick={handleClick}>
+                <Avatar src={holiday.image} name={holiday.title} showBorder size='sm' />
+              </div>
+            </Marker >
+          })
           }
           {!!matesHolidays.length &&
             matesHolidays.map((holiday, index) => {
-              return < Marker key={index} latitude={holiday.latitude} longitude={holiday.longitude} >
+              return < Marker key={holiday.id + index} latitude={holiday.latitude} longitude={holiday.longitude} >
                 <div id={holiday._id} onClick={handleClick}>
                   <Avatar src={holiday.image} name={holiday.title} showBorder size='sm' />
                 </div>

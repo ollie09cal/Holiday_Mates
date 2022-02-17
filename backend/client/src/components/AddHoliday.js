@@ -53,7 +53,7 @@ const AddHoliday = () => {
   })
   const [holidayDate, setHolidayDate] = useState({
     month: '',
-    year: ''
+    year: '2022'
   })
   const [formError, setFormError] = useState({
     title: '',
@@ -194,7 +194,7 @@ const AddHoliday = () => {
                   <option value="November">November</option>
                   <option value="December">December</option>
                 </Select>
-                <NumberInput id='year' defaultValue={2000} min={1990} max={currentYear} onChange={handleYear}>
+                <NumberInput id='year' defaultValue={currentYear} min={1990} max={currentYear} onChange={handleYear}>
                   <NumberInputField />
                   <NumberInputStepper>
                     <NumberIncrementStepper />

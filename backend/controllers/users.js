@@ -35,8 +35,8 @@ export const addMate = async (req, res) => {
 export const getMate = async (req, res) => {
   try {
     const { mateId } = req.params
-    const mate = await User.findById(mateId).populate({ path: 'ownedHolidays', populate: { path: 'holidayTypes' } })
-    if (!mate.mates.includes(req.currentUser._id)) throw new Error('not authorised')
+    const mate = await User.findById(mateId).populate({ path: 'ownedHolidays', populate: { path: 'holidayTypes' } }).populate({ path: 'mates' })
+    if (!mate.mates.some(mate => mate._id.equals(req.currentUser._id))) throw new Error('not authorised')
     return res.status(200).json(mate)
   } catch (err) {
     console.log(err)
