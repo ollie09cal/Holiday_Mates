@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
-import { Spinner, Box, Stack, HStack, Heading, Text, Avatar, AvatarGroup, Button, Image } from '@chakra-ui/react'
+import { Spinner, Box, Stack, HStack, Heading, Text, Avatar, AvatarGroup, Button, Image, Center } from '@chakra-ui/react'
 import { StarIcon } from '@chakra-ui/icons'
 import AddMate from './subComponents/AddMate'
 
@@ -29,95 +29,105 @@ const Profile = () => {
     setCount(count + 1)
   }
   return (
-    <section className='profile-container'>
-      {profileData ?
-      <>
-      {/* HEADER */}
-        <Box p={5} m={2} borderWidth='1px' shadow='md'>
-          <HStack spacing={5}>
-            {/* create a vertical stack for profile image */}
-            <Avatar name={profileData.username} showBorder size='xl' src={profileData.profilePhoto} />
-            <Stack>
-              <Heading as='h1' size='xl' isTruncated>
-                {profileData.username}
-              </Heading>
-              <Text isTruncated>
-                Personal Token: {profileData.personalToken}
-              </Text>
-              <Text>
-                {profileData.ownedHolidays.length} holidays
-              </Text>
-            </Stack>
-          </HStack>
-        </Box>
-        {/* mates */}
-        <Box p={5} m={2} borderWidth='1px' shadow='md'>
-          <Link to={'/matestiles'}>
-            <Heading as='h3' size='md' isTruncated>
-              Mates
-            </Heading>
-          </Link>
-          
-          <AvatarGroup size='sm' max={5}>
-            {profileData.mates.length ?
-              profileData.mates.map(mate => (
-                <Avatar key={mate._id} name={mate.username} showBorder src={mate.profilePhoto} />
-              ))
-            :
-            <Text>Looking a bit lonely...</Text>}
-          </AvatarGroup>
-          <div className='addMateContainer'>
-            <AddMate listenToChild={listenToChild}/>
-          </div>
-        </Box>
-        
-          <HStack>
-              <Heading as='h2' size='lg' isTruncated>
-              Holidays
-            </Heading>
-            <Link to={'/addholiday'}>
-              <Button>+</Button>
-            </Link>
-          </HStack>
-        
-        {profileData.ownedHolidays.length ?
-          profileData.ownedHolidays.map(holiday => (
-            <div key={holiday._id}>
-              <Link to={`/viewholiday/${holiday._id}`}>
-                <Box p={5} m={2} borderWidth='1px' shadow='md' >
-                  <Stack spacing={2}>
-                    {/* create a vertical stack for profile image */}
-                    <Heading as='h3' size='lg' isTruncated>
-                      {holiday.title}
-                    </Heading>
-                    <Heading as='h4' size='md' isTruncated>
-                      {holiday.location}
-                    </Heading>
-                    <Text>
-                      {holiday.description}
-                    </Text>
-                    <Box display='flex' mt='2' alignItems='center'>
-                      {Array(5)
-                        .fill('')
-                        .map((_, i) => (
-                          <StarIcon
-                            key={i}
-                            color={i < holiday.avgRating ? 'teal.500' : 'gray.300'}
-                          />
-                        ))
-                      }
-                    </Box>
-                    <Image src={holiday.image} alt={`image of ${holiday.location}`} borderRadius={15} />
-                  
-                  </Stack>
-                </Box>
-              </Link>  
+    <div className='main-container'>
+      <section className='profile-container'>
+        {profileData ?
+        <>
+          <div className='header-mates-container'>
+            <div className='profile-header-container'>
+              
+              <Box p={3} borderWidth='1px' borderRadius={10} shadow='md' className='box'>
+                  <div className='profile-card-container'>
+                    <Avatar name={profileData.username} marginRight={3} showBorder size='xl' src={profileData.profilePhoto} />
+                    <Stack>
+                      <Heading as='h1' size='xl' isTruncated>
+                        {profileData.username}
+                      </Heading>
+                      <Text isTruncated>
+                        Personal Token: {profileData.personalToken}
+                      </Text>
+                      <Text>
+                        {profileData.ownedHolidays.length} holidays
+                      </Text>
+                    </Stack>
+                  </div>
+              </Box>
             </div>
-          ))
-          : <Text>No Holidays yet...</Text>}
-      </>
-        : <Spinner /> }
-    </section>
+            
+            <Box p={3} borderWidth='1px' borderRadius={10} shadow='md' className='box'>
+              <Link to={'/matestiles'}>
+                <Heading as='h3' size='md' isTruncated>
+                  Mates
+                </Heading>
+              </Link>
+              
+              <AvatarGroup size='sm' max={5}>
+                {profileData.mates.length ?
+                  profileData.mates.map(mate => (
+                    <Avatar key={mate._id} name={mate.username} showBorder src={mate.profilePhoto} />
+                  ))
+                :
+                <Text>Looking a bit lonely...</Text>}
+              </AvatarGroup>
+              <div className='addMateContainer'>
+                <AddMate listenToChild={listenToChild}/>
+              </div>
+            </Box>
+            
+          </div>
+          <div className='profile-holidays-container'>
+              <Center marginBottom={4} >
+                <Heading as='h2' size='lg' isTruncated>
+                  Holidays
+                </Heading>
+                <Link to={'/addholiday'}>
+                  <Button marginLeft={5}>+</Button>
+                </Link>
+              </Center>
+              
+            
+            {profileData.ownedHolidays.length ?
+              profileData.ownedHolidays.map(holiday => (
+                <div key={holiday._id}>
+                  <Link to={`/viewholiday/${holiday._id}`}>
+                    <Box p={3} borderWidth='1px' borderRadius={10} shadow='md' className='box'>
+                      <Stack spacing={2}>
+                        {/* create a vertical stack for profile image */}
+                        <Heading as='h3' size='lg' isTruncated>
+                          {holiday.title}
+                        </Heading>
+                        <Heading as='h4' size='md' isTruncated>
+                          {holiday.location}
+                        </Heading>
+                        <Text>
+                          {holiday.description}
+                        </Text>
+                        <Box display='flex' mt='2' alignItems='center' className='box' width={4}>
+                          {Array(5)
+                            .fill('')
+                            .map((_, i) => (
+                              <StarIcon
+                                key={i}
+                                color={i < holiday.avgRating ? 'teal.500' : 'gray.300'}
+                              />
+                            ))
+                          }
+                        </Box>
+                        <Image src={holiday.image} alt={`image of ${holiday.location}`} borderRadius={15} />
+                      
+                      </Stack>
+                    </Box>
+                  </Link>  
+                </div>
+              ))
+              : <Text>No Holidays yet...</Text>}
+          </div>
+            
+        </>
+          : <Spinner /> }
+      </section>
+    </div>
+    
   )
 }
 
