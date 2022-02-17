@@ -34,6 +34,12 @@
 
 }
 
+.home-map{
+  background-image: linear-gradient(rgb(255, 188, 188, 1), rgba(252, 252, 251, 0.5)), url('../../public/mapbg.png');
+  background-color: $primary;
+  background-size: cover;
+}
+
 button{
   background-color: $accent-color;
 }
@@ -62,7 +68,9 @@ button{
 }
 
 .login-container, .register-container {
+  background-image: linear-gradient(rgb(255, 188, 188, 1) 54%, rgba(252, 252, 251, 0.5) 97%), url('../../public/background.png');
   background-color: $primary;
+  background-size: cover;
   height: 94vh;
   display: flex;
   flex-direction: column;
