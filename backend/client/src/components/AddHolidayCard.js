@@ -67,10 +67,8 @@ const AddHolidayCard = () => {
           headers: { Authorization: `Bearer ${token}` }
         })
         setHoliday(data)
-        console.log(data)
       } catch (err) {
         setHasError({ error: true, message: err.message })
-        console.log(hasError)
       }
     }
     getHoliday()
@@ -107,15 +105,12 @@ const AddHolidayCard = () => {
     setFormError({ ...formError, [e.target.id]: '' })
     const newObj = { ...holidayCardInfo, [e.target.id]: e.target.value }
     setHolidayCardInfo(newObj)
-    console.log(holidayCardInfo)
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log(vibes)
     // vibes.forEach(vibe => {holidayCardInfo.vibeTag.push(vibe)})
     setHolidayCardInfo({ ...holidayCardInfo, vibeTag: vibes })
-    console.log(holidayCardInfo)
     try {
       const { data } = await axios.post(`/api/holidays/${id.holidayid}`, holidayCardInfo, {
         headers: { Authorization: `Bearer ${token}` }
@@ -127,11 +122,9 @@ const AddHolidayCard = () => {
         duration: 9000,
         isClosable: true
       })
-      console.log('uploading')
       onClose()
       setCardUpdated(true)
     } catch (err) {
-      console.log(err)
       setFormError({ ...formError, ...err.response.data.errors })
     }
   }
@@ -140,7 +133,6 @@ const AddHolidayCard = () => {
   const search = (e) => {
     const { center } = resultsOptions[resultsOptions.findIndex(result => result.place_name === e.target.innerText)]
     setHolidayCardInfo({ ...holidayCardInfo, longitude: center[0], latitude: center[1], location: e.target.innerText })
-    console.log(holidayCardInfo)
     setSearchValues({ search: e.target.innerText })
     setResultsOptions([])
   }
@@ -161,11 +153,9 @@ const AddHolidayCard = () => {
       vibes.push(vibe.label)
     })
     setHolidayCardInfo({ ...holidayCardInfo, vibeTag: vibes })
-    console.log(holidayCardInfo)
   }
 
   const handleRating = (e) => {
-    console.log(e)
     setHolidayCardInfo({ ...holidayCardInfo, rating: e })
   }
 
@@ -174,7 +164,6 @@ const AddHolidayCard = () => {
   }
   const deleteCard = async (e) => {
     try {
-      console.log(e.target.value)
       const { data } = await axios.delete(`/api/holidaytypes/${e.target.value}`, {
         headers: { Authorization: `Bearer ${token}` }
       })

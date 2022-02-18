@@ -90,9 +90,7 @@ const AddHoliday = () => {
       await navigate(`/addholidaycard/${data._id}`)
       // console.log(holidayInfo)
     } catch (err) {
-      console.log(err)
       setFormError({ ...formError, ...err.response.data.description })
-      console.log(err.response.data.errors.description)
     }
   }
 
@@ -119,7 +117,6 @@ const AddHoliday = () => {
   const search = (e) => {
     const { center } = resultsOptions[resultsOptions.findIndex(result => result.place_name === e.target.innerText)]
     setHolidayInfo({ ...holidayInfo, longitude: center[0], latitude: center[1], location: e.target.innerText })
-    console.log(holidayInfo)
     setSearchValues({ search: e.target.innerText })
     setResultsOptions([])
   }
@@ -132,7 +129,6 @@ const AddHoliday = () => {
       setResultsOptions(results)
     } catch (err) {
       console.log(err)
-
     }
   }
 

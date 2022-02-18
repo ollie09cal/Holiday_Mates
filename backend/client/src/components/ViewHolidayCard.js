@@ -32,11 +32,8 @@ const ViewHolidayCard = () => {
           headers: { Authorization: `Bearer ${token}` }
         })
         setHolidayCard(data)
-        console.log(data.link)
-
       } catch (err) {
         setHasError({ error: true, message: '' })
-        console.log(err)
       }
     }
     getHolidayCard()
