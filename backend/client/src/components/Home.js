@@ -17,6 +17,7 @@ const Home = () => {
         <GridItem rowSpan={2} colSpan={2}>
           <div className='hero-container'>
             <Image
+              pl={4}
               objectFit='cover'
               boxSize='50vh'
               src='https://res.cloudinary.com/dcnsstzif/image/upload/v1645042962/holiday_mates/Screenshot_2022-02-16_at_18.01.39_fuo0p2.png'
