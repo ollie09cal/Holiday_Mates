@@ -3,7 +3,7 @@ import ReactMapGl, { Marker, Popup } from 'react-map-gl'
 import { REACT_APP_MAPBOX_ACCESS_TOKEN } from '../enviroment/env'
 import axios from 'axios'
 import 'mapbox-gl/dist/mapbox-gl.css'
-import { Avatar, Spinner, Image, useDisclosure, Input, Button, Text, FormControl, Select, FormLabel, Box, VStack, Menu, Modal, ModalFooter, ModalBody, ModalHeader, ModalOverlay, ModalContent, ModalCloseButton, Heading, Checkbox, HStack } from '@chakra-ui/react'
+import { Avatar, Center, Spinner, Image, useDisclosure, Input, Button, Text, FormControl, Select, FormLabel, Box, VStack, Menu, Modal, ModalFooter, ModalBody, ModalHeader, ModalOverlay, ModalContent, ModalCloseButton, Heading, Checkbox, HStack } from '@chakra-ui/react'
 import { getTokenFromLocal } from '../enviroment/helpers/auth'
 import { useNavigate } from 'react-router-dom'
 
@@ -171,105 +171,111 @@ const Search = () => {
   }
 
   return (
-    <>
-      <Heading>Search</Heading>
-      <Box>
-        <form>
-          <HStack>
-            <Input placeholder='Search' size='md' name='search' value={searchValues.search} onChange={handleChange} />
-            <Menu>
-              <Button onClick={onOpen}>Filters</Button>
-              <Modal isOpen={isOpen} onClose={onClose}>
-                <ModalOverlay />
-                <ModalContent>
-                  <ModalHeader>Filters</ModalHeader>
-                  <ModalCloseButton />
-                  <ModalBody>
-                    <form>
-                      <Checkbox name='searchByHolidayType' onChange={handleCheckbox}>Search By Holiday Type</Checkbox>
-                      {!!holidayTypeSearch &&
-                        <FormControl>
-                          <FormLabel htmlFor='holiday-type'>Holiday Type</FormLabel>
-                          <Select id='holiday-type' name='holidayType' onChange={handleChange}>
-                            <option defaultValue value='' >All</option>
-                            <option value="Restaurant">Restaurant</option>
-                            <option value="Landmark">Landmark</option>
-                            <option value="Secret-Place">Secret Place</option>
-                            <option value="Walk">Walk</option>
-                            <option value="Bar">Bar</option>
-                            <option value="Activity">Activity</option>
-                            <option value="Stay">Stay</option>
-                            <option value="Event">Event</option>
-                          </Select>
-                        </FormControl>
-                      }
+      <div className='explore-map-container'>
+        {/* <Center><Heading className='explore-heading'>Explore</Heading></Center> */}
+        <div className='search-filter-container'>
+          <Box >
+            <form>
+              <HStack margin={2}>
+                <Input placeholder='Search and Explore' size='md' shadow='md'  name='search' background='#f7f4f4' value={searchValues.search} onChange={handleChange} />
+                <Menu>
+                  <Button shadow='md' onClick={onOpen}>Filters</Button>
+                  <Modal isOpen={isOpen} onClose={onClose} >
+                    <ModalOverlay />
+                    <ModalContent>
+                      <Center>
+                        <ModalHeader>Filters</ModalHeader>
+                      </Center>
+                      <ModalCloseButton />
+                      <ModalBody display='flex' justifyContent='center'>
+                        <form className='filter-map-form'>
+                          <Checkbox colorScheme='teal' margin={1} size='lg' name='searchByHolidayType' onChange={handleCheckbox}>Search By Holiday Type</Checkbox>
+                          {!!holidayTypeSearch &&
+                            <FormControl>
+                              <FormLabel htmlFor='holiday-type'>Holiday Type</FormLabel>
+                              <Select id='holiday-type' name='holidayType' onChange={handleChange}>
+                                <option defaultValue value='' >All</option>
+                                <option value="Restaurant">Restaurant</option>
+                                <option value="Landmark">Landmark</option>
+                                <option value="Secret-Place">Secret Place</option>
+                                <option value="Walk">Walk</option>
+                                <option value="Bar">Bar</option>
+                                <option value="Activity">Activity</option>
+                                <option value="Stay">Stay</option>
+                                <option value="Event">Event</option>
+                              </Select>
+                            </FormControl>
+                          }
 
-                      <Checkbox defaultIsChecked name='showPuplicHolidays' onChange={handleCheckbox}>Show Public Holidays</Checkbox>
-                      <Checkbox defaultIsChecked name='showMyHolidays' onChange={handleCheckbox}>Show My Holidays</Checkbox>
-                    </form>
-                  </ModalBody>
-                  <ModalFooter>
-                    <Button onClick={onClose}>Close</Button>
-                  </ModalFooter>
-                </ModalContent>
+                          <Checkbox colorScheme='teal' margin={1} size='lg' defaultIsChecked name='showPuplicHolidays' onChange={handleCheckbox}>Show Public Holidays</Checkbox>
+                          <Checkbox colorScheme='teal' margin={1} size='lg' defaultIsChecked name='showMyHolidays' onChange={handleCheckbox}>Show My Holidays</Checkbox>
+                        </form>
+                      </ModalBody>
+                      <ModalFooter>
+                        <Button onClick={onClose}>Close</Button>
+                      </ModalFooter>
+                    </ModalContent>
 
-              </Modal>
-            </Menu>
-          </HStack>
-          
+                  </Modal>
+                </Menu>
+              </HStack>
+              
 
-          {!!resultsOptions.length &&
-            <VStack spacing={4} position='absolute' zIndex={1} bg='white' width='100%'>
-              {resultsOptions.map((option, i) => {
-                console.log(option)
-                return (
-                  <Box h='40px' key={i} onClick={search}>
-                    <p>{option.place_name}</p>
-                  </Box>
-                )
-              })}
-            </VStack>
-          }
-        </form>
-      </Box>
-      <div className="map-container" >
-        {viewPort ?
-          <ReactMapGl
-            // initialViewState={{ ...viewPort, zoom: 10 }}
-            {...viewPort}
-            onMove={e => setViewPort(e.viewState)}
-            style={{ width: '100%', height: '100%' }}
-            mapStyle="mapbox://styles/mapbox/streets-v9"
-            mapboxAccessToken={REACT_APP_MAPBOX_ACCESS_TOKEN}
-          >
-            {!!data.length & filteredData[0] !== 'noResults' &&
-              (filteredData.length ? filteredData : data).map((holiday) => (
-                <Marker key={holiday._id} latitude={holiday.latitude} longitude={holiday.longitude} >
-                  <div id={holiday._id} onClick={handleClick} >
-                    <Avatar src={(holiday.image) ? holiday.image : holiday.photo} name={holiday.title} showBorder size='sm' />
-                  </div>
-                </Marker>
-              ))}
+              {!!resultsOptions.length &&
+                <VStack spacing={4} position='absolute' zIndex={1} bg='white' width='100%'>
+                  {resultsOptions.map((option, i) => {
+                    console.log(option)
+                    return (
+                      <Box h='40px' key={i} onClick={search}>
+                        <p>{option.place_name}</p>
+                      </Box>
+                    )
+                  })}
+                </VStack>
+              }
+            </form>
+          </Box>
+        </div>
 
-            {!!showPopup &&
-              <div onClick={goToHoliday}>
-                <Popup closeOnMove={false} closeOnClick={false} latitude={showPopup.latitude} longitude={showPopup.longitude} anchor='bottom' onClose={closePopup}>
-                  <Heading as='h3' size='sm'>{showPopup.title}</Heading>
-                  <Text>{showPopup.location}</Text>
-                  <Image src={(showPopup.image) ? showPopup.image : showPopup.photo} alt={showPopup.title} />
-                  <Text>{showPopup.description}</Text>
-                </Popup>
-              </div>
-            }
-            {!!currentLocation &&
-              <Marker className='current-location-marker' longitude={currentLocation.longitude} latitude={currentLocation.latitude} color="green" />
-            }
-          </ReactMapGl>
-          :
-          <Spinner />}
+        
+        <div className="map-container" >
+          {viewPort ?
+            <ReactMapGl
+              // initialViewState={{ ...viewPort, zoom: 10 }}
+              {...viewPort}
+              onMove={e => setViewPort(e.viewState)}
+              style={{ width: '100%', height: '100%' }}
+              mapStyle="mapbox://styles/mapbox/streets-v9"
+              mapboxAccessToken={REACT_APP_MAPBOX_ACCESS_TOKEN}
+            >
+              {!!data.length & filteredData[0] !== 'noResults' &&
+                (filteredData.length ? filteredData : data).map((holiday) => (
+                  <Marker key={holiday._id} latitude={holiday.latitude} longitude={holiday.longitude} >
+                    <div id={holiday._id} onClick={handleClick} >
+                      <Avatar src={(holiday.image) ? holiday.image : holiday.photo} name={holiday.title} showBorder size='sm' />
+                    </div>
+                  </Marker>
+                ))}
 
+              {!!showPopup &&
+                <div onClick={goToHoliday}>
+                  <Popup closeOnMove={false} closeOnClick={false} latitude={showPopup.latitude} longitude={showPopup.longitude} anchor='bottom' onClose={closePopup}>
+                    <Heading as='h3' size='sm'>{showPopup.title}</Heading>
+                    <Text>{showPopup.location}</Text>
+                    <Image src={(showPopup.image) ? showPopup.image : showPopup.photo} alt={showPopup.title} />
+                    <Text>{showPopup.description}</Text>
+                  </Popup>
+                </div>
+              }
+              {!!currentLocation &&
+                <Marker className='current-location-marker' longitude={currentLocation.longitude} latitude={currentLocation.latitude} color="green" />
+              }
+            </ReactMapGl>
+            :
+            <Spinner />}
+
+        </div>
       </div>
-    </>
 
   )
 }

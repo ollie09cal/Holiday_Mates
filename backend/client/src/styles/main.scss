@@ -1,8 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Teko&display=swap');
 @import './components/variables.scss';
-@import './components/practicemap.scss';
+@import './components/map.scss';
 @import './components/navbar.scss';
 @import './components/profile.scss';
+@import './components/mates-tiles.scss';
+@import './components/search-map.scss';
 
 * {
   box-sizing: border-box;
@@ -34,6 +36,12 @@
 
 }
 
+.home-map{
+  background-image: linear-gradient(rgb(255, 188, 188, 1), rgba(252, 252, 251, 0.5)), url('../../public/mapbg.png');
+  background-color: $primary;
+  background-size: cover;
+}
+
 button{
   background-color: $accent-color;
 }
@@ -62,7 +70,9 @@ button{
 }
 
 .login-container, .register-container {
+  background-image: linear-gradient(rgb(255, 188, 188, 1) 54%, rgba(252, 252, 251, 0.5) 97%), url('../../public/background.png');
   background-color: $primary;
+  background-size: cover;
   height: 94vh;
   display: flex;
   flex-direction: column;
@@ -105,4 +115,28 @@ button{
 
 .bold{
   font-weight: 600;
+}
+.web-only{
+  display: none;
+}
+
+
+@media only screen and (min-width: 800px){
+  .mates-map-container{
+    padding-top: 2vh;
+    // margin: 5vh 0;
+    .web-only{
+      display: block;
+    }
+    .mates-map{
+      position: relative;
+      width: 100%;
+      margin-top: 4vh;
+      max-width: 100vh;
+      height: 85%;
+      box-shadow: 0 0 20px 0 rgb(0 0 0 / 20%)
+      
+    }
+  }
+  
 }

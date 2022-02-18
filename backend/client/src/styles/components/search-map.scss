@@ -1,0 +1,26 @@
+
+.explore-map-container {
+  background-image: linear-gradient(rgb(255, 188, 188, 1), rgba(252, 252, 251, 0.5)), url('../../../public/mapbg.png');
+  background-color: $primary;
+  background-size: cover;
+  .map-container {
+    height: 99vh;
+    width: 100vw;
+    margin: 0 auto;
+  }
+  .search-filter-container {
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+  }  
+}
+.filter-map-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.chakra-modal__content {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+

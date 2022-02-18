@@ -207,8 +207,8 @@ const AddHoliday = () => {
             </FormControl>
 
             <FormControl>
-              <FormLabel htmlFor="description">Give us a short Description</FormLabel>
-              <Textarea placeholder='Give us a short description of ya trip!'/>
+              <FormLabel htmlFor="description">Give us a short description</FormLabel>
+              <Textarea placeholder='Give us a short description of ya trip!' />
               {formError.description && <FormErrorMessage>try keeping the text below 500 characters! we dont want your life story</FormErrorMessage>}
             </FormControl>
             <FormControl>
