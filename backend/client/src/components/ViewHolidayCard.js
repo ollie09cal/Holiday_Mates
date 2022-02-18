@@ -66,7 +66,7 @@ const ViewHolidayCard = () => {
                   ))
                 }
               </Box>
-              {holidayCard.link.length && <Button colorScheme='blue' onClick={() => { window.location.href = holidayCard.link }} >Related Link</Button>}
+              {holidayCard.link.length && <Button colorScheme='blue' onClick={() => { window.open(holidayCard.link) }} >Related Link</Button>}
               <Box p={3} m={3} borderWidth='1px' shadow='md'>
                 <HStack spacing={4}>
                   {holidayCard.vibeTag.map((vibe, i) => {

@@ -85,7 +85,7 @@ const ViewHoliday = () => {
         })
         setHoliday(data)
         console.log(data)
-        console.log('owner id on holiday--->', holiday.owner.id)
+        console.log('holiday avg rating--->', data.avgRating)
       } catch (err) {
         setHasError({ error: true, message: err.message })
       }
@@ -101,7 +101,7 @@ const ViewHoliday = () => {
         <div className="holidayCards">
           <Center>
             {/* Holiday card header box */}
-            <Box bg='#ffffff' p={5} m={2} borderWidth='1px' shadow='md' maxWidth='500px'>
+            <Box bg='#ffffff' p={5} m={2} borderWidth='1px' shadow='md' maxWidth='500px' width="90%">
               <Stack spacing={2}>
                 {/* create a vertical stack for profile image */}
                 <Heading as='h2' size='xl' isTruncated>
