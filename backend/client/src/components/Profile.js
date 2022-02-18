@@ -30,6 +30,7 @@ const Profile = () => {
   }
   return (
     <div className='main-container'>
+      <div className='background'></div>
       <section className='profile-container'>
         {profileData ?
         <>
@@ -44,7 +45,7 @@ const Profile = () => {
                         {profileData.username}
                       </Heading>
                       <Text isTruncated>
-                        Mate&apos;s Code: <span className="bold">{profileData.personalToken}</span>
+                        MatesCode: <span className="bold">{profileData.personalToken}</span>
                       </Text>
                       <Text>
                         {profileData.ownedHolidays.length} holidays

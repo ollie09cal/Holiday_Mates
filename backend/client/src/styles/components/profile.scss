@@ -1,7 +1,10 @@
 .main-container {
   margin: 0 auto;
-  background: $primary;
+  background-image: linear-gradient(rgb(255, 188, 188, 1) 54%, rgba(252, 252, 251, 0.5) 97%), url('../../../public/background.png');
+  background-color: $primary;
+  background-size: cover;
   width: 100%;
+  min-height: 100vh;
   .profile-container {
     padding: 30px 10px;
     .profile-card-container {
@@ -31,6 +34,7 @@
 
 
 @media screen and (min-width: 850px) {
+  
   .profile-container {
     display: flex;
     height: 100%;
@@ -54,11 +58,11 @@
     .header-mates-container {
       .profile-header-container {
         position: sticky;
-        top: 11%;
+        top: 20%;
       }
       .box {
         position: sticky;
-        top: 60%;
+        top: 65%;
       }
     }
   }

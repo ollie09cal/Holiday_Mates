@@ -19,7 +19,7 @@ const MenuTab = () => {
           icon={<HamburgerIcon />}
           variant='outline'
         />
-        <MenuList>
+        <MenuList >
           <MenuItem icon={<AtSignIcon />} onClick={() => navigate('/profile')}>Profile</MenuItem>
           <MenuItem icon={<AddIcon />} onClick={() => navigate('/addholiday')}>Add Holiday</MenuItem>
           <MenuItem icon={<StarIcon />} onClick={() => navigate('/mates')}>Mates</MenuItem>
