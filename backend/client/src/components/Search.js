@@ -208,7 +208,7 @@ const Search = () => {
                             </FormControl>
                           }
 
-                          <Checkbox colorScheme='teal' margin={1} size='lg' defaultIsChecked name='showPuplicHolidays' onChange={handleCheckbox}>Show Public Holidays</Checkbox>
+                          <Checkbox colorScheme='teal' margin={1} size='lg' defaultIsChecked name='showPuplicHolidays' onChange={handleCheckbox}>Show All Holidays</Checkbox>
                           <Checkbox colorScheme='teal' margin={1} size='lg' defaultIsChecked name='showMyHolidays' onChange={handleCheckbox}>Show My Holidays</Checkbox>
                         </form>
                       </ModalBody>
