@@ -1,5 +1,5 @@
 import React, { useState} from 'react'
-import { Text, FormControl, FormLabel, Input, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, Button, useDisclosure, useToast } from '@chakra-ui/react'
+import { Text, FormControl, Center, FormLabel, Input, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, Button, useDisclosure, useToast } from '@chakra-ui/react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 
@@ -54,7 +54,7 @@ const AddMate = ({ listenToChild }) => {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Add Mate</ModalHeader>
+          <ModalHeader textAlign='center'>Add Mate</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <form onSubmit={handleSubmit}>
@@ -64,11 +64,11 @@ const AddMate = ({ listenToChild }) => {
             </FormControl>
 
             <FormControl isRequired >
-              <FormLabel htmlFor='mateToken'>Mates Token</FormLabel>
+              <FormLabel htmlFor='mateToken'>Your Mate&apos;s MatesCode</FormLabel>
               <Input name='mateToken' placeholder='Enter Mates Token'defaultValue={formData.mateToken} onChange={handleChange}/>
             </FormControl>
             {!!isError && <Text color='red'>{isError}</Text>}
-            <Button type='submit'>Add Mate</Button>
+            <Center><Button type='submit'>Add Mate</Button></Center>
             </form>
           </ModalBody>
         </ModalContent>

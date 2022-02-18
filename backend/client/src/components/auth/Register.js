@@ -53,7 +53,6 @@ const Register = () => {
       })
       navigate('/login')
     } catch (err) {
-      console.log(err.response.data.errors)
       setFormError({ ...formError, ...err.response.data.errors })
       toast({
         title: 'Error',
@@ -62,7 +61,6 @@ const Register = () => {
         duration: 9000,
         isClosable: true,
       })
-      console.log(formError)
     }
   }
 
