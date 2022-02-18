@@ -127,7 +127,7 @@ const Register = () => {
             </FormControl>
 
             <FormControl isRequired isInvalid={formError.personalToken}>
-              <FormLabel htmlFor='personalToken'>MatesCode</FormLabel>
+              <FormLabel htmlFor='personalToken'>Mate&apos;s Code</FormLabel>
               <Input
                 id='personalToken'
                 type='text'
@@ -137,8 +137,8 @@ const Register = () => {
                 minLength='10'
                 maxLength='20'
               />
-              {formError.personalToken && <FormErrorMessage>MatesCode is invalid. Try again.</FormErrorMessage>}
-              <FormHelperText>MatesCode is what you connect with your mates. Choose a code 10-20 characters long.</FormHelperText>
+              {formError.personalToken && <FormErrorMessage>Mate&apos;s Code is invalid. Try again.</FormErrorMessage>}
+              <FormHelperText>Mate&apos;s Code is what you connect with your mates. Choose a code 10-20 characters long.</FormHelperText>
             </FormControl>
 
             <ImageUpload value={registerInfo.profilePhoto} name="profileImage" handleImageURL={handleImageURL} />

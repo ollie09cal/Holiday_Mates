@@ -79,5 +79,28 @@ export default [
     description: 'Refreshing winter city holiday',
     image: 'https://www.thonhotels.com/globalassets/hoteller/norge/oslo/destinasjon-oslo-operaen.jpg?width=1100&height=619&mode=crop&quality=80',
     private: false,
+  },
+  {
+    owner: 'Ollie',
+    title: 'Camping Trip To Norfolk',
+    location: 'Alby, Norwich',
+    longitude: 1.26589,
+    latitude: 52.85451,
+    date: 'July 2021',
+    description: 'Relaxing camping trip to the countryside',
+    image: 'https://i.imgur.com/6QgoJH5.jpg',
+    private: false
+  },
+  {
+    owner: 'Ollie',
+    title: 'Trip to Hong-Kong',
+    location: 'Islands District, Hong Kong',
+    longitude: 114.168609682987, 
+    latitude: 22.32215707913007,
+    date: 'January 2019',
+    description: 'Trip to Hong Kong to visit my brother during his studies',
+    image: 'https://i.imgur.com/PZL4xXr.jpg',
+    private: false
   }
+  
 ]

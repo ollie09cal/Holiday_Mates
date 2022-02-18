@@ -135,7 +135,7 @@ const AddHoliday = () => {
   return (
     <div className="holiday-add-container">
       <Center>
-        <Box p={3} m={2} borderWidth='1px' borderRadius={10} shadow='md' maxW="500px">
+        <Box bg="#ffffff" p={3} m={2} borderWidth='1px' borderRadius={10} shadow='md' maxW="500px">
           <form onSubmit={handleSubmit}>
 
             <FormControl isRequired isInvalid={formError.title}>
@@ -164,7 +164,7 @@ const AddHoliday = () => {
                   {resultsOptions.map((option, i) => {
                     console.log(option)
                     return (
-                      <Box h='40px' key={i} onClick={search} borderWidth='1px'>
+                      <Box h='40px' key={i} onClick={search} >
                         <p>{option.place_name}</p>
                       </Box>
                     )

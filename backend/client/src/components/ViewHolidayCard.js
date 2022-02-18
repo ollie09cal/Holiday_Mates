@@ -43,7 +43,7 @@ const ViewHolidayCard = () => {
     <div className="holiday-card-container">
       {holidayCard.owner ?
         <Center>
-          <Box p={5} m={2} borderWidth='1px' shadow='md' maxWidth='500px'>
+          <Box bg='#ffffff' p={5} m={2} borderWidth='1px' shadow='md' maxWidth='500px' borderRadius={15}>
             <Stack spacing={2}>
               {/* create a vertical stack for profile image */}
               <Heading as='h2' size='xl' isTruncated>
@@ -98,7 +98,7 @@ const ViewHolidayCard = () => {
               <Box>
                 {holidayCard.photo && holidayCard.photo.map((photo, i) => {
                   return (
-                    <Image src={photo} alt={`image of ${holidayCard.location}`} key={i} boxSize='l' />
+                    <Image borderRadius={10} src={photo} alt={`image of ${holidayCard.location}`} key={i} boxSize='l' />
                   )
                 })
                 }

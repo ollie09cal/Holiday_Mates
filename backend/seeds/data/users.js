@@ -21,5 +21,6 @@ export default [
     password: 'pass',
     passwordConfirmation: 'pass',
     personalToken: 'iammorethan10',
+    profilePhoto: 'https://i.imgur.com/F5vZTEp.jpg'
   }
 ]
