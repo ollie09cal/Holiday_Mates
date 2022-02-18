@@ -14,8 +14,6 @@ const Home = () => {
         h='100vh'
         templateRows='repeat(4, 1fr)'
         templateColumns='repeat(2, 1fr)'
-        gap={4}
-        bg='#FFBCBC'
       >
         <GridItem rowSpan={2} colSpan={2}>
           <div className='hero-container'>
@@ -31,8 +29,8 @@ const Home = () => {
 
         {/* <GridItem rowSpan={2} colSpan={1} bg='papayawhip'></GridItem> */}
 
-        <GridItem rowSpan={1} colSpan={2} >
-          <Center><Box className='sign-up-container' p={2} m={1} borderWidth='1px' shadow='md' maxW='600px' borderRadius={10} margin={15} padding={7}>
+        <GridItem rowSpan={2} colSpan={2} className='home-map' >
+          <Center><Box className='sign-up-container' p={2} borderWidth='1px' shadow='md' maxW='600px' borderRadius={10} margin={15} padding={7}>
             <Text
               fontSize='md'
               textAlign='center'
@@ -54,9 +52,7 @@ const Home = () => {
           </Box></Center>
         </GridItem>
 
-        <GridItem colSpan={2}>
 
-        </GridItem>
       </Grid>
     </div >
   )

@@ -157,12 +157,12 @@ const AddHoliday = () => {
             <FormControl isRequired isInvalid={formError.location}>
               <FormLabel htmlFor='location'>Location, Location, Location!</FormLabel>
               <Input
-                placeholder='search'
+                placeholder='Search'
                 size='md'
                 name='search'
                 value={searchValues.search}
                 onChange={handleSearch} />
-              <Button mt={2} mb={3} onClick={searchSubmit}>search</Button>
+              <Button mt={2} mb={3} onClick={searchSubmit}>Search</Button>
               {!!resultsOptions.length &&
                 <VStack spacing={4}>
                   {resultsOptions.map((option, i) => {
@@ -207,8 +207,8 @@ const AddHoliday = () => {
             </FormControl>
 
             <FormControl>
-              <FormLabel htmlFor="description">Give us a short Description</FormLabel>
-              <Textarea placeholder='Give us a short description of ya trip!'/>
+              <FormLabel htmlFor="description">Give us a short description</FormLabel>
+              <Textarea placeholder='Give us a short description of ya trip!' />
               {formError.description && <FormErrorMessage>try keeping the text below 500 characters! we dont want your life story</FormErrorMessage>}
             </FormControl>
             <FormControl>

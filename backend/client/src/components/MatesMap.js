@@ -198,7 +198,7 @@ const MatesMap = () => {
                 <div className='popup-info'>
                   <Heading as='h3' size='sm'>{showPopup.title}</Heading>
                   <Text id='popup-location'>{showPopup.location}</Text>
-                  <Image borderRadius={10} border='2px' borderColor='#24A19C' src={showPopup.image} alt={showPopup.title} />
+                  <Image borderRadius={10} src={showPopup.image} alt={showPopup.title} m={2} />
                   <Text>{showPopup.description}</Text>
                 </div>
               </Popup>
