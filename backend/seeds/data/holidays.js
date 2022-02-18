@@ -89,7 +89,7 @@ export default [
     date: 'July 2021',
     description: 'Relaxing camping trip to the countryside',
     image: 'https://i.imgur.com/6QgoJH5.jpg',
-    private: false
+    private: false,
   },
   {
     owner: 'Ollie',
@@ -100,7 +100,7 @@ export default [
     date: 'January 2019',
     description: 'Trip to Hong Kong to visit my brother during his studies',
     image: 'https://i.imgur.com/PZL4xXr.jpg',
-    private: false
+    private: false,
   }
   
 ]

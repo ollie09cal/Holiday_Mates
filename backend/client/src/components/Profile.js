@@ -30,6 +30,7 @@ const Profile = () => {
   }
   return (
     <div className='main-container'>
+      <div className='background'></div>
       <section className='profile-container'>
         {profileData ?
         <>
