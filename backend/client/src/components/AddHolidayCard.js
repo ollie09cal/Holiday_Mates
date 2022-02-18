@@ -200,7 +200,7 @@ const AddHolidayCard = () => {
         <div className="holidayCard">
           {/* Holiday card header box */}
           <Center>
-            <Box p={5} m={2} borderWidth='1px' shadow='md' maxW="800px">
+            <Box bg="#ffffff" p={5} m={5} borderWidth='1px' shadow='md' w='100%' maxW="500px">
               <Stack spacing={2}>
                 {/* create a vertical stack for profile image */}
                 <Heading as='h2' size='xl' isTruncated>
@@ -225,7 +225,7 @@ const AddHolidayCard = () => {
               return (
 
                 <Center key={i}>
-                  <Box maxW="800px" p={3} m={2} borderWidth='1px' borderRadius={10} shadow='md' key={i}>
+                  <Box maxW="800px" p={3} m={2} bg="#ffffff" borderWidth='1px' borderRadius={10} shadow='md' key={i}>
                     <Heading as='h3' size='xl'>
                       {holidayCard.type}
                     </Heading>
@@ -282,7 +282,7 @@ const AddHolidayCard = () => {
             <Center>
               <Button position='center' spacing={3} shadow='md' onClick={onOpen}>➕</Button>
             </Center>
-            <Modal isOpen={isOpen} onClose={onClose}>
+            <Modal bg="#ffffff" isOpen={isOpen} onClose={onClose}>
               <ModalOverlay />
               <ModalContent>
                 <ModalHeader>Holiday Card Creation</ModalHeader>
@@ -291,7 +291,7 @@ const AddHolidayCard = () => {
                   <ModalBody>
                     <FormControl isRequired isInvalid={formError.type}>
                       <FormLabel htmlFor='type'>Select a genre for your activity:</FormLabel>
-                      <Select id='type' isRequired placeholder='Pick a Type' onChange={handleChange}>
+                      <Select id='type' isRequired placeholder='Pick a Genre' onChange={handleChange}>
                         <option value="Resturant">Resturant</option>
                         <option value="Landmark">Landmark</option>
                         <option value="Secret-Place">Secret Place</option>
@@ -311,7 +311,7 @@ const AddHolidayCard = () => {
                         name='search'
                         value={searchValues.search}
                         onChange={handleSearch} />
-                      <Button mt={2} onClick={searchSubmit}>search</Button>
+                      <Button mt={2} onClick={searchSubmit}>Search</Button>
                       {!!resultsOptions.length &&
                         <VStack spacing={4}>
                           {resultsOptions.map((option, i) => {
@@ -379,7 +379,6 @@ const AddHolidayCard = () => {
                   <ModalFooter>
                     <Button type='submit' colorScheme='blue' mr={3} onSubmit={() => {
                       handleSubmit()
-
                     }}>
                       Add Card!
                     </Button>

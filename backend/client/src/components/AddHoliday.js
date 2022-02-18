@@ -139,7 +139,7 @@ const AddHoliday = () => {
   return (
     <div className="holiday-add-container">
       <Center>
-        <Box p={3} m={2} borderWidth='1px' borderRadius={10} shadow='md' maxW="500px">
+        <Box bg="#ffffff" p={3} m={2} borderWidth='1px' borderRadius={10} shadow='md' maxW="500px">
           <form onSubmit={handleSubmit}>
 
             <FormControl isRequired isInvalid={formError.title}>
@@ -157,18 +157,18 @@ const AddHoliday = () => {
             <FormControl isRequired isInvalid={formError.location}>
               <FormLabel htmlFor='location'>Location, Location, Location!</FormLabel>
               <Input
-                placeholder='search'
+                placeholder='Search'
                 size='md'
                 name='search'
                 value={searchValues.search}
                 onChange={handleSearch} />
-              <Button mt={2} mb={3} onClick={searchSubmit}>search</Button>
+              <Button mt={2} mb={3} onClick={searchSubmit}>Search</Button>
               {!!resultsOptions.length &&
                 <VStack spacing={4}>
                   {resultsOptions.map((option, i) => {
                     console.log(option)
                     return (
-                      <Box h='40px' key={i} onClick={search} borderWidth='1px'>
+                      <Box h='40px' key={i} onClick={search} >
                         <p>{option.place_name}</p>
                       </Box>
                     )

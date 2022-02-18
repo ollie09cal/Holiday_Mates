@@ -44,7 +44,7 @@ const Profile = () => {
                         {profileData.username}
                       </Heading>
                       <Text isTruncated>
-                        Personal Token: {profileData.personalToken}
+                        Personal Token: <span className="bold">{profileData.personalToken}</span>
                       </Text>
                       <Text>
                         {profileData.ownedHolidays.length} holidays

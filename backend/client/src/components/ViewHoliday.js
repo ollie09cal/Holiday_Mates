@@ -1,7 +1,25 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
-import { Box, Spinner, Stack, Heading, Flex, Image, HStack, VStack, Tag, Button, useToast, Center } from '@chakra-ui/react'
+import {
+  Box,
+  Spinner,
+  Stack,
+  Heading,
+  Image,
+  HStack,
+  VStack,
+  Button,
+  useToast,
+  Center,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
+  Tag
+} from '@chakra-ui/react'
 import { StarIcon } from '@chakra-ui/icons'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { getTokenFromLocal, userAuth } from './../enviroment/helpers/auth'
@@ -9,7 +27,9 @@ import { getTokenFromLocal, userAuth } from './../enviroment/helpers/auth'
 const ViewHoliday = () => {
 
   const [holiday, setHoliday] = useState([])
-  const [holidayId, setHolidayId] = useState()
+  const [isOpen, setIsOpen] = React.useState(false)
+  const onClose = () => setIsOpen(false)
+  const cancelRef = React.useRef()
   const [profileData, setProfileData] = useState(null)
   const token = getTokenFromLocal()
   const [hasError, setHasError] = useState({ error: false, message: '' })
@@ -72,7 +92,7 @@ const ViewHoliday = () => {
     }
     getHoliday()
     getProfile()
-  }, [holidayId])
+  }, [])
 
 
   return (
@@ -81,7 +101,7 @@ const ViewHoliday = () => {
         <div className="holidayCards">
           <Center>
             {/* Holiday card header box */}
-            <Box p={5} m={2} borderWidth='1px' shadow='md' maxWidth='500px'>
+            <Box bg='#ffffff' p={5} m={2} borderWidth='1px' shadow='md' maxWidth='500px'>
               <Stack spacing={2}>
                 {/* create a vertical stack for profile image */}
                 <Heading as='h2' size='xl' isTruncated>
@@ -108,7 +128,41 @@ const ViewHoliday = () => {
                   }
                 </Box>
                 <Image src={holiday.image} alt={`image of ${holiday.location}`} borderRadius={15} />
-                {(profileData.id === holiday.owner.id) && <Button onClick={deleteHoliday}>Delete Holiday</Button>}
+                {(profileData.id === holiday.owner.id) &&
+                  <>
+                    <Button
+                      colorScheme='red'
+                      onClick={() => setIsOpen(true)}>
+                      Delete Holiday
+                    </Button>
+                    <AlertDialog
+                      isOpen={isOpen}
+                      leastDestructiveRef={cancelRef}
+                      onClose={onClose}
+                    >
+                      <AlertDialogOverlay>
+                        <AlertDialogContent>
+                          <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+                            Delete Holiday
+                          </AlertDialogHeader>
+
+                          <AlertDialogBody>
+                            Are you sure? You cannot undo this action afterwards.
+                          </AlertDialogBody>
+
+                          <AlertDialogFooter>
+                            <Button ref={cancelRef} onClick={onClose}>
+                              Cancel
+                            </Button>
+                            <Button colorScheme='red' onClick={onClose, deleteHoliday} ml={3}>
+                              Delete
+                            </Button>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialogOverlay>
+                    </AlertDialog>
+                  </>
+                }
               </Stack>
             </Box>
           </Center>
@@ -119,7 +173,7 @@ const ViewHoliday = () => {
                 return (
                   <Link to={`/viewholidaycard/${holidayCard._id}`} key={i}>
                     <Center>
-                      <Box p={3} m={2} borderWidth='1px' borderRadius={10} shadow='md' maxWidth='500px' width='100%' key={i}>
+                      <Box bg='#ffffff' p={3} m={2} borderWidth='1px' borderRadius={10} shadow='md' maxWidth='500px' width='100%' key={i}>
                         <Heading as='h3' size='xl'>
                           {holidayCard.type}
                         </Heading>
@@ -144,7 +198,9 @@ const ViewHoliday = () => {
                         <Box>
                           {holidayCard.photo && holidayCard.photo.map((photo, i) => {
                             return (
-                              <Image src={photo} alt={`image of ${holidayCard.location}`} key={i} boxSize='150px' />
+                              <Center key={i}>
+                                <Image mt={3} borderRadius={5} src={photo} alt={`image of ${holidayCard.location}`} key={i} boxSize='150px' />
+                              </Center>
                             )
                           })
                           }

@@ -6,7 +6,7 @@
 
 * {
   box-sizing: border-box;
-  color: $txt-color;
+  // color: $txt-color;
 }
 
 .chakra-button{
@@ -84,4 +84,25 @@ button{
 
 #file-upload-button{
   background-color: red !important;
+}
+
+.holiday-container {
+  background-color: #FFBCBC;
+  // height: 100vh;
+}
+.holiday-card-container {
+  background-color: #FFBCBC;
+  // height: 100vh;
+}
+.holiday-add-container{
+  background-color: #FFBCBC;
+  height: 100vh;
+}
+.holidaytype-input-container{
+  background-color: #FFBCBC;
+  height: 100vh;
+}
+
+.bold{
+  font-weight: 600;
 }
