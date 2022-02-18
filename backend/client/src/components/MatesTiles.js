@@ -19,7 +19,7 @@ const MatesTiles = () => {
         })
         setData(data.mates)
       } catch (err) {
-        console.log(err.message)
+        console.log(err)
       }
     }
     getMates()
@@ -45,26 +45,26 @@ const MatesTiles = () => {
                       {mate.ownedHolidays.length ?
                         <Text>{mate.ownedHolidays.length} holidays</Text>
                         : <Text>No holidays yet...</Text>}
-                        </Stack>
+                    </Stack>
                   </HStack>
-                    {!!mate.ownedHolidays.length &&
-                        <div className='images-container' size='md' max={3}>
-                          {mate.ownedHolidays.map((holiday, i) => {
-                            if (i < 1) return <Image margin={0.3} boxSize='100px' borderRadius='10px 0 0 10px' key={holiday._id} alt={holiday.title} src={holiday.image} objectFit='cover'/>
-                            if (i < 2) return <Image margin={0.3} boxSize='50px' borderRadius='0 10px 0 0' key={holiday._id} alt={holiday.title} src={holiday.image} objectFit='cover'/>
-                            if (i < 3) return <Image margin={0.3} boxSize='50px' borderRadius='0 0 10px 0' key={holiday._id} alt={holiday.title} src={holiday.image} objectFit='cover'/>
-                          })}
-                        </div>
-                    }
+                  {!!mate.ownedHolidays.length &&
+                    <div className='images-container' size='md' max={3}>
+                      {mate.ownedHolidays.map((holiday, i) => {
+                        if (i < 1) return <Image margin={0.3} boxSize='100px' borderRadius='10px 0 0 10px' key={holiday._id} alt={holiday.title} src={holiday.image} objectFit='cover' />
+                        if (i < 2) return <Image margin={0.3} boxSize='50px' borderRadius='0 10px 0 0' key={holiday._id} alt={holiday.title} src={holiday.image} objectFit='cover' />
+                        if (i < 3) return <Image margin={0.3} boxSize='50px' borderRadius='0 0 10px 0' key={holiday._id} alt={holiday.title} src={holiday.image} objectFit='cover' />
+                      })}
+                    </div>
+                  }
                 </Box>
               </Link>
             ))
             :
             <Spinner />}
         </div>
-          <AddMate listenToChild={listenToChild}/>
+        <AddMate listenToChild={listenToChild} />
       </div>
-      
+
     </>
   )
 }

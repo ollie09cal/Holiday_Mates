@@ -30,10 +30,9 @@ const ViewHoliday = () => {
       const { data } = await axios.get('/api/profile', {
         headers: { Authorization: `Bearer ${token}` }
       })
-      console.log(data.id)
       setProfileData(data)
     } catch (err) {
-      console.log(err.response)
+      console.log(err)
     }
   }
 
@@ -52,7 +51,7 @@ const ViewHoliday = () => {
       })
       navigate('/profile')
     } catch (err) {
-      console.log(err.response)
+      console.log(err)
     }
   }
 
@@ -64,8 +63,6 @@ const ViewHoliday = () => {
           headers: { Authorization: `Bearer ${token}` }
         })
         setHoliday(data)
-        console.log(data)
-        console.log('owner id on holiday--->', holiday.owner.id)
       } catch (err) {
         setHasError({ error: true, message: err.message })
       }

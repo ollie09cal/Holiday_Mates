@@ -4,7 +4,6 @@ import { Grid, GridItem, Heading, Text, Box, Image, Stack, Button, Center } from
 import { StarIcon } from '@chakra-ui/icons'
 import axios from 'axios'
 
-// #24A19C
 const Home = () => {
   const navigate = useNavigate()
 
@@ -26,8 +25,6 @@ const Home = () => {
           </div>
 
         </GridItem>
-
-        {/* <GridItem rowSpan={2} colSpan={1} bg='papayawhip'></GridItem> */}
 
         <GridItem rowSpan={2} colSpan={2} className='home-map' >
           <Center><Box className='sign-up-container' p={2} borderWidth='1px' shadow='md' maxW='600px' borderRadius={10} margin={15} padding={7}>

@@ -10,8 +10,6 @@ const user = {
   personalToken: ''
 }
 
-console.log(user)
-
 //Holiday model input ---> 
 
 const holiday = {
@@ -39,4 +37,3 @@ const holidayType = {
   private: false
 }
 
-console.log('Holiday-->', holiday, 'Holiday type-->', holidayType)

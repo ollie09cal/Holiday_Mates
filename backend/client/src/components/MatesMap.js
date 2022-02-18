@@ -117,19 +117,16 @@ const MatesMap = () => {
   useEffect(() => {
     mates.length && mates.map(mate => holidaysFromMates.push(...mate.ownedHolidays))
     setMatesHolidays(holidaysFromMates)
-    console.log(matesHolidays)
   }, [mates])
 
 
   const handleClick = (e) => {
     const holidayId = e.currentTarget.id
     const holiday = data[data.findIndex(item => item._id === holidayId)]
-    console.log(holiday)
     setShowPopup(holiday)
   }
 
   const closePopup = () => {
-    console.log('close')
     setShowPopup(null)
   }
 
@@ -160,7 +157,6 @@ const MatesMap = () => {
       <div className='mates-map'>
         <ReactMapGl
           mapboxAccessToken={REACT_APP_MAPBOX_ACCESS_TOKEN}
-          // style={{ width: '100%', height: '100%' }}
           mapStyle="mapbox://styles/mapbox/streets-v9"
           {...viewPort}
           onMove={e => setViewPort(e.viewState)}

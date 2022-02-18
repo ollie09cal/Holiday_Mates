@@ -41,7 +41,6 @@ const Login = () => {
       setTokenFromLocal(data.token)
       navigate('/profile')
     } catch (err) {
-      console.log(err)
       setIsError({ error: true, message: 'Email and password does not match.' })
       toast({
         title: 'Error',

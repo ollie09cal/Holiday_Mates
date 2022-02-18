@@ -13,6 +13,7 @@ export default [
     password: 'pass',
     passwordConfirmation: 'pass',
     personalToken: 'essistoken',
+    profilePhoto: 'https://res.cloudinary.com/dcnsstzif/image/upload/v1645182715/holiday_mates/profilePic_kxfvdv.png'
   },
   {
     username: 'ollie',
