@@ -4,21 +4,21 @@
   background-color: $primary;
   background-size: cover;
   position: absolute;
-  z-index: -2;
+  // z-index: -2;
   .map-container {
     height: 99vh;
     width: 100vw;
     margin: 0 auto;
-    z-index: -1;
+    // z-index: -1;
     .mapboxgl-map{
-      z-index: -1;
+      // z-index: -1;
 
     }
   }
   .search-filter-container {
     position: absolute;
     width: 100%;
-    z-index: 0;
+    z-index: 1;
   }  
 }
 .filter-map-form {
@@ -31,3 +31,6 @@
   margin-right: 10px;
 }
 
+.is-lower {
+  transform: translateY(105px);
+}

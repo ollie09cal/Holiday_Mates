@@ -173,7 +173,6 @@ const Search = () => {
 
   return (
       <div className='explore-map-container'>
-        {/* <Center><Heading className='explore-heading'>Explore</Heading></Center> */}
         <div className='search-filter-container'>
           <Box >
             <form>
@@ -242,7 +241,6 @@ const Search = () => {
         <div className="map-container" >
           {viewPort ?
             <ReactMapGl
-              // initialViewState={{ ...viewPort, zoom: 10 }}
               {...viewPort}
               onMove={e => setViewPort(e.viewState)}
               style={{ width: '100%', height: '100%' }}
@@ -274,7 +272,6 @@ const Search = () => {
             </ReactMapGl>
             :
             <Spinner />}
-
         </div>
       </div>
 
