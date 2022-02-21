@@ -28,7 +28,8 @@ import {
   NumberInputStepper,
   NumberIncrementStepper,
   NumberDecrementStepper,
-  Divider
+  Divider,
+  Textarea
 } from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
@@ -188,7 +189,7 @@ const AddHolidayCard = () => {
         <div className="holidayCard">
           {/* Holiday card header box */}
           <Center>
-            <Box bg="#ffffff" p={5} m={5} borderWidth='1px' shadow='md' w='100%' maxW="500px">
+            <Box borderRadius={5} bg="#ffffff" p={5} m={5} borderWidth='1px' shadow='md' w='100%' maxW="500px">
               <Stack spacing={2}>
                 {/* create a vertical stack for profile image */}
                 <Heading as='h2' size='xl' isTruncated>
@@ -207,64 +208,65 @@ const AddHolidayCard = () => {
               </Stack>
             </Box>
           </Center>
+          <div className="load-holidaytypes-card-creation">
+            {holiday.holidayTypes.length ?
+              holiday.holidayTypes.map((holidayCard, i) => {
+                return (
 
-          {holiday.holidayTypes.length ?
-            holiday.holidayTypes.map((holidayCard, i) => {
-              return (
-
-                <Center key={i}>
-                  <Box maxW="800px" p={3} m={2} bg="#ffffff" borderWidth='1px' borderRadius={10} shadow='md' key={i}>
-                    <Heading as='h3' size='xl'>
-                      {holidayCard.type}
-                    </Heading>
-                    <Heading as='h4' size='l'>
-                      📍 {holidayCard.location}
-                    </Heading>
-                    <Box p={3} m={3} borderWidth='1px' shadow='md'>
-                      <HStack spacing={4}>
-                        {holidayCard.vibeTag.map((vibe, i) => {
+                  <Center key={i}>
+                    <Box maxW="800px" minW='400px' p={3} m={5} bg="#ffffff" borderWidth='1px' borderRadius={10} shadow='md' key={i}>
+                      <Heading as='h3' size='xl'>
+                        {holidayCard.type}
+                      </Heading>
+                      <Heading as='h4' size='l'>
+                        📍 {holidayCard.location}
+                      </Heading>
+                      <Box p={3} m={3} borderWidth='1px' shadow='md'>
+                        <HStack spacing={4}>
+                          {holidayCard.vibeTag.map((vibe, i) => {
+                            return (
+                              <Tag size='md' key={i} variant='solid' colorScheme='green'>
+                                {vibe}
+                              </Tag>
+                            )
+                          })
+                          }
+                        </HStack>
+                      </Box>
+                      <Heading as='h4' size='m'>
+                        {holidayCard.description}
+                      </Heading>
+                      <Box>
+                        {holidayCard.photo && holidayCard.photo.map((photo, i) => {
                           return (
-                            <Tag size='md' key={i} variant='solid' colorScheme='green'>
-                              {vibe}
-                            </Tag>
+                            <Image src={photo} alt={`image of ${holidayCard.location}`} key={i} boxSize='150px' />
                           )
                         })
                         }
-                      </HStack>
+                      </Box>
+                      <Box display='flex' mt='2' alignItems='center'>
+                        {Array(5)
+                          .fill('')
+                          .map((_, i) => (
+                            <StarIcon
+                              key={i}
+                              color={i < holidayCard.rating ? 'teal.500' : 'gray.300'}
+                            />
+                          ))
+                        }
+                      </Box>
+                      <Button mt={3} value={holidayCard._id} onClick={deleteCard} colorScheme='red'>Delete</Button>
                     </Box>
-                    <Heading as='h4' size='m'>
-                      {holidayCard.description}
-                    </Heading>
-                    <Box>
-                      {holidayCard.photo && holidayCard.photo.map((photo, i) => {
-                        return (
-                          <Image src={photo} alt={`image of ${holidayCard.location}`} key={i} boxSize='150px' />
-                        )
-                      })
-                      }
-                    </Box>
-                    <Box display='flex' mt='2' alignItems='center'>
-                      {Array(5)
-                        .fill('')
-                        .map((_, i) => (
-                          <StarIcon
-                            key={i}
-                            color={i < holidayCard.rating ? 'teal.500' : 'gray.300'}
-                          />
-                        ))
-                      }
-                    </Box>
-                    <Button mt={3} value={holidayCard._id} onClick={deleteCard} colorScheme='red'>Delete</Button>
-                  </Box>
-                </Center>
-              )
-            })
-            :
-            <Center>
-              <Heading as='h3' size='l' mb={4} mt={4}>Tell us what you got up to on holiday...</Heading>
-            </Center>
+                  </Center>
+                )
+              })
+              :
+              <Center>
+                <Heading as='h3' size='l' mb={4} mt={4}>Tell us what you got up to on holiday...</Heading>
+              </Center>
 
-          }
+            }
+          </div>
 
           <div className="add-holiday-card">
             <Center>
@@ -292,7 +294,7 @@ const AddHolidayCard = () => {
                     </FormControl>
 
                     <FormControl isRequired isInvalid={formError.location}>
-                      <FormLabel htmlFor='location'>Location, Location, Location!</FormLabel>
+                      <FormLabel mt={5} htmlFor='location'>Location, Location, Location!</FormLabel>
                       <Input
                         placeholder='Search'
                         size='md'
@@ -317,7 +319,7 @@ const AddHolidayCard = () => {
                     </FormControl>
 
                     <FormControl isInvalid={formError.link}>
-                      <FormLabel htmlFor='link'>Add a Related Link...</FormLabel>
+                      <FormLabel mt={5} htmlFor='link'>Add a Related Link...</FormLabel>
                       <Input
                         id='link'
                         type='url'
@@ -328,19 +330,13 @@ const AddHolidayCard = () => {
                     </FormControl>
 
                     <FormControl isRequired isInvalid={formError.description}>
-                      <FormLabel htmlFor='description'>Add a short description...</FormLabel>
-                      <Input
-                        id='description'
-                        type='text'
-                        placeholder='Give us a short description of your activity'
-                        defaultValue={holidayCardInfo.description}
-                        onChange={handleChange}
-                      />
-                      {formError.description && <FormErrorMessage>try keeping the text below 500 characters! we dont want your life story</FormErrorMessage>}
+                      <FormLabel mt={5} htmlFor='description'>Add a short description...</FormLabel>
+                      <Textarea defaultValue={holidayCardInfo.description} id='description' onChange={handleChange} placeholder='Give us a short description of your activity' />
+                      {formError.description && <FormErrorMessage>Try keeping the text below 500 characters! we dont want your life story</FormErrorMessage>}
                     </FormControl>
 
                     <FormControl isInvalid={formError.vibeTag}>
-                      <FormLabel htmlFor='vibeTag'>Add some vibes...</FormLabel>
+                      <FormLabel mt={5} htmlFor='vibeTag'>Add some vibes...</FormLabel>
                       <CreatableSelect
                         id='vibeTag'
                         isMulti
@@ -349,7 +345,7 @@ const AddHolidayCard = () => {
                     </FormControl>
 
                     <FormControl isRequired isInvalid={formError.description}>
-                      <FormLabel htmlFor='rating'>Rate from out of 5...</FormLabel>
+                      <FormLabel mt={5} htmlFor='rating'>Rate from out of 5...</FormLabel>
                       <NumberInput defaultValue={5} min={1} max={5} onChange={handleRating}>
                         <NumberInputField />
                         <NumberInputStepper>
@@ -359,12 +355,12 @@ const AddHolidayCard = () => {
                       </NumberInput>
                     </FormControl>
 
-                    <FormControl>
+                    <FormControl mt={5}>
                       <ImageUpload value={holidayCardInfo.photo} name="photo" handleImageURL={handleImageURL} />
                     </FormControl>
 
                     {/* <ModalFooter> */}
-                    <Button type='submit' colorScheme='blue' mr={3} onSubmit={() => {
+                    <Button mt={5} mb={5} type='submit' colorScheme='blue' mr={3} onSubmit={() => {
                       handleSubmit()
                     }}>
                       Add Card!

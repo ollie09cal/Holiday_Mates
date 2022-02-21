@@ -98,11 +98,11 @@ button{
 
 .holiday-container {
   background-color: #FFBCBC;
-  // height: 100vh;
+  //height: 100vh;
 }
 .holiday-card-container {
   background-color: #FFBCBC;
-  // height: 100vh;
+  height: 100vh;
 }
 .holiday-add-container{
   background-color: #FFBCBC;
@@ -112,6 +112,7 @@ button{
   background-color: #FFBCBC;
   height: 100vh;
 }
+
 
 .bold{
   font-weight: 600;
@@ -139,4 +140,17 @@ button{
     }
   }
   
+}
+@media only screen and (min-width: 1000px){
+  .holidaytype-input-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    height: 100vh;
+  }
+  .holidayCard{
+    display: flex;
+    align-items: flex-start;
+  }
 }
