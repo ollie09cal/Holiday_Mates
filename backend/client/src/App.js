@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, } from 'react-router-dom'
 import NavigationBar from './components/NavigationBar'
 import { ChakraProvider } from '@chakra-ui/react'
 
@@ -35,7 +35,7 @@ function App() {
           <Route path='/addholidaycard/:holidayid' element={<AddHolidayCard />} />
           <Route path='/mates' element={<MatesMap />} />
           <Route path={'/mate/:mateId'} element={<MateProfile  />} />
-          <Route path={'/matestiles'} element={<MatesTiles  />} />
+          <Route path={'/matestiles'} element={<MatesTiles />} />
         </Routes >
       </BrowserRouter >
     </ChakraProvider >
