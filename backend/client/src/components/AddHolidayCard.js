@@ -110,7 +110,6 @@ const AddHolidayCard = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    // vibes.forEach(vibe => {holidayCardInfo.vibeTag.push(vibe)})
     setHolidayCardInfo({ ...holidayCardInfo, vibeTag: vibes })
     try {
       const { data } = await axios.post(`/api/holidays/${id.holidayid}`, holidayCardInfo, {
@@ -125,6 +124,18 @@ const AddHolidayCard = () => {
       })
       onClose()
       setCardUpdated(true)
+      setHolidayCardInfo({
+        type: '', //required, dropdown
+        location: '', //required
+        longitude: 0, //input from this end
+        latitude: 0, //input from this end
+        link: '', //not required
+        photo: '', //not required
+        description: '', //max length of 500 required
+        vibeTag: [], //not required
+        rating: 5 //required
+      })
+    
     } catch (err) {
       setFormError({ ...formError, ...err.response.data.errors })
     }
@@ -161,7 +172,7 @@ const AddHolidayCard = () => {
   }
 
   const handleImageURL = (url) => {
-    setHolidayCardInfo({ ...holidayCardInfo, image: url })
+    setHolidayCardInfo({ ...holidayCardInfo, photo: url })
   }
   const deleteCard = async (e) => {
     try {
