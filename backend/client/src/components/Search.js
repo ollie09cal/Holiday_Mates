@@ -77,7 +77,7 @@ const Search = () => {
     if (searchValues.search) {
       const getResultsOptions = async () => {
         try {
-          const { data } = await axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${searchValues.search}.json?access_token=pk.eyJ1IjoianZpY2tlcnMiLCJhIjoiY2t6bGFuZTNoMHl3MDJza2Vvd2U2Mm84cSJ9.nYy2TJv3ChiUdpl4CLtYJA`)
+          const { data } = await axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${searchValues.search}.json?access_token=${REACT_APP_MAPBOX_ACCESS_TOKEN}`)
           const results = data.features
           setResultsOptions(results)
         } catch (err) {
