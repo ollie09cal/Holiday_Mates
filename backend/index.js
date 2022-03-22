@@ -18,7 +18,7 @@ const app = express()
 //server setup
 const startServer = async () => {
   try {
-    await mongoose.connect(process.env.DBURI)
+    await mongoose.connect(process.env.DB_URI)
     console.log('✅ mongoDB server connected ✅')
 
     //JSON parser
