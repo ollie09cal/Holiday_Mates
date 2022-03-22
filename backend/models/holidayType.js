@@ -6,7 +6,7 @@ const { Schema } = mongoose
 
 const commentsSchema = new Schema({
   text: { type: String, required: true, maxlength: 300 },
-  owner: { type: mongoose.Schema.ObjectId, ref: 'User', required: true }
+  owner: { type: mongoose.Schema.ObjectId, ref: 'User', required: true },
 }, {
   timestamps: true,
 })

@@ -15,7 +15,7 @@ const holidaySchema = new Schema({
   description: { type: String, maxLength: 500 },
   image: { type: String },
   private: { type: Boolean },
-  holidayTypes: [{ type: mongoose.Schema.ObjectId, ref: 'HolidayType' }]
+  holidayTypes: [{ type: mongoose.Schema.ObjectId, ref: 'HolidayType' }],
 })
 
 holidaySchema.virtual('avgRating')
@@ -29,7 +29,7 @@ holidaySchema.virtual('avgRating')
   })
 
 holidaySchema.set('toJSON', {
-  virtuals: true
+  virtuals: true,
 })
 
 holidaySchema.plugin(uniqueValidator)

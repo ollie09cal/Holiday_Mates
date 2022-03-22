@@ -1,7 +1,7 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import router from './config/routes.js'
-import { port, dbURI } from './config/enviroment.js'
+// import { port, dbURI } from './config/enviroment.js'
 
 //deployment additions
 import 'dotenv/config' // only needs to be added if it doesn't already exist
@@ -18,7 +18,7 @@ const app = express()
 //server setup
 const startServer = async () => {
   try {
-    await mongoose.connect(dbURI)
+    await mongoose.connect(process.env.DBURI)
     console.log('✅ mongoDB server connected ✅')
 
     //JSON parser
@@ -42,10 +42,10 @@ const startServer = async () => {
 
     //CATCH all
     app.use((_req, res) => {
-      return res.status(404).json({ message: "route not found" })
+      return res.status(404).json({ message: 'route not found' })
     })
 
-    app.listen(port, () => console.log(`server is listening on port ${port}`))
+    app.listen(process.env.PORT, () => console.log(`server is listening on port ${process.env.PORT}`))
 
   } catch (err) {
     console.log(err)
