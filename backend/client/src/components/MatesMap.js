@@ -15,7 +15,7 @@ import {
   Center
 } from '@chakra-ui/react'
 import ReactMapGl, { Marker, Popup } from 'react-map-gl'
-import { REACT_APP_MAPBOX_ACCESS_TOKEN } from '../enviroment/env'
+// import { REACT_APP_MAPBOX_ACCESS_TOKEN } from '../enviroment/env'
 import axios from 'axios'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { useNavigate, } from 'react-router-dom'
@@ -156,7 +156,7 @@ const MatesMap = () => {
       </Center>
       <div className='mates-map'>
         <ReactMapGl
-          mapboxAccessToken={REACT_APP_MAPBOX_ACCESS_TOKEN}
+          mapboxAccessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}
           mapStyle="mapbox://styles/mapbox/streets-v9"
           {...viewPort}
           onMove={e => setViewPort(e.viewState)}

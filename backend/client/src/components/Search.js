@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import ReactMapGl, { Marker, Popup } from 'react-map-gl'
-import { REACT_APP_MAPBOX_ACCESS_TOKEN } from '../enviroment/env'
+// import { REACT_APP_MAPBOX_ACCESS_TOKEN } from '../enviroment/env'
 import axios from 'axios'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { Avatar, Center, Spinner, Image, useDisclosure, Input, Button, Text, FormControl, Select, FormLabel, Box, VStack, Menu, Modal, ModalFooter, ModalBody, ModalHeader, ModalOverlay, ModalContent, ModalCloseButton, Heading, Checkbox, HStack } from '@chakra-ui/react'
@@ -77,7 +77,7 @@ const Search = () => {
     if (searchValues.search) {
       const getResultsOptions = async () => {
         try {
-          const { data } = await axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${searchValues.search}.json?access_token=${REACT_APP_MAPBOX_ACCESS_TOKEN}`)
+          const { data } = await axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${searchValues.search}.json?access_token=${process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}`)
           const results = data.features
           setResultsOptions(results)
         } catch (err) {
@@ -245,7 +245,7 @@ const Search = () => {
               onMove={e => setViewPort(e.viewState)}
               style={{ width: '100%', height: '100%' }}
               mapStyle="mapbox://styles/mapbox/streets-v9"
-              mapboxAccessToken={REACT_APP_MAPBOX_ACCESS_TOKEN}
+              mapboxAccessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}
             >
               {!!data.length & filteredData[0] !== 'noResults' &&
                 (filteredData.length ? filteredData : data).map((holiday) => (

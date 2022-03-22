@@ -277,7 +277,7 @@ export default [
     vibeTag: ['active', 'fish&chips', 'beers', 'swimming'],
     rating: 5,
     private: false,
-    holidayId: 'Camping Trip To Norfolk'
+    holidayId: 'Camping Trip To Norfolk',
   },
   {
     type: 'Activity',
@@ -291,7 +291,7 @@ export default [
     vibeTag: ['active', 'running', 'photoOp', 'greatViews'],
     rating: 4,
     private: false,
-    holidayId: 'Camping Trip To Norfolk'
+    holidayId: 'Camping Trip To Norfolk',
   },
   {
     type: 'Stay',
@@ -305,7 +305,7 @@ export default [
     vibeTag: ['camping', 'animals', 'stay', 'location'],
     rating: 4,
     private: false,
-    holidayId: 'Camping Trip To Norfolk'
+    holidayId: 'Camping Trip To Norfolk',
   },
   {
     type: 'Walk',
@@ -319,7 +319,7 @@ export default [
     vibeTag: ['culture', 'views', 'awayfromcity'],
     rating: 5,
     private: false,
-    holidayId: 'Trip to Hong-Kong'
+    holidayId: 'Trip to Hong-Kong',
   },
   {
     type: 'Landmark',
@@ -333,7 +333,7 @@ export default [
     vibeTag: ['culture', 'history', 'learning', 'chill'],
     rating: 5,
     private: false,
-    holidayId: 'Trip to Hong-Kong'
+    holidayId: 'Trip to Hong-Kong',
   },
   {
     type: 'Activity',
@@ -347,6 +347,6 @@ export default [
     vibeTag: ['active', 'money', 'buildings', 'vibrant'],
     rating: 4,
     private: false,
-    holidayId: 'Trip to Hong-Kong'
+    holidayId: 'Trip to Hong-Kong',
   }
 ]

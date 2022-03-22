@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import ReactMapGl, { Marker } from 'react-map-gl'
-import { REACT_APP_MAPBOX_ACCESS_TOKEN } from '../enviroment/env'
+// import { REACT_APP_MAPBOX_ACCESS_TOKEN } from '../enviroment/env'
 import { useNavigate } from 'react-router-dom'
 import { Box, Spinner, Stack, Heading, Image, HStack, Tag, Button, Center } from '@chakra-ui/react'
 import { useParams } from 'react-router-dom'
@@ -81,7 +81,7 @@ const ViewHolidayCard = () => {
               </Heading>
               <Box width="100%" height={32}>
                 <ReactMapGl
-                  mapboxAccessToken={REACT_APP_MAPBOX_ACCESS_TOKEN}
+                  mapboxAccessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}
                   height='100%'
                   width='100%'
                   mapStyle="mapbox://styles/mapbox/streets-v9"
