@@ -11,5 +11,3 @@ import App from './App'
 // const __dirname = dirname(__filename)
 
 ReactDOM.render(<App />, document.getElementById('root'))
-
-// unnecessary comment
