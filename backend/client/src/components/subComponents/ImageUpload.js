@@ -13,8 +13,8 @@ export const ImageUpload = (props) => {  //needs value = url, name = htmlFor&id,
     data.append('file', e.target.files[0])
     data.append('api_key', process.env.REACT_APP_API_KEY)
     data.append('timestamp', timestamp)
-    data.append('upload_preset', process.env.UPLOAD_PRESET)
-    const res = await axios.post(process.env.UPLOAD_URL, data)
+    data.append('upload_preset', process.env.REACT_APP_UPLOAD_PRESET)
+    const res = await axios.post(process.env.REACT_APP_UPLOAD_URL, data)
     console.log(res.data.url)
     handleImageURL(res.data.url)
   }
