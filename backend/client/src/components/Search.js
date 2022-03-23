@@ -3,9 +3,14 @@ import ReactMapGl, { Marker, Popup } from 'react-map-gl'
 // import { REACT_APP_MAPBOX_ACCESS_TOKEN } from '../enviroment/env'
 import axios from 'axios'
 import 'mapbox-gl/dist/mapbox-gl.css'
+import mapboxgl from 'mapbox-gl'
+import MapboxWorker from 'worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker';
 import { Avatar, Center, Spinner, Image, useDisclosure, Input, Button, Text, FormControl, Select, FormLabel, Box, VStack, Menu, Modal, ModalFooter, ModalBody, ModalHeader, ModalOverlay, ModalContent, ModalCloseButton, Heading, Checkbox, HStack } from '@chakra-ui/react'
 import { getTokenFromLocal } from '../enviroment/helpers/auth'
 import { useNavigate } from 'react-router-dom'
+
+mapboxgl.workerClass = MapboxWorker; 
+
 
 const Search = () => {
   const navigate = useNavigate()

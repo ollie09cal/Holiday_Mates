@@ -15,7 +15,7 @@ const userSchema = new Schema({
   matesRequests: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
   requestsSent: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
   mates: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
-  personalToken: { type: String, required: true, unique: true, minLength: 10, maxlength: 20 }
+  personalToken: { type: String, required: true, unique: true, minLength: 10, maxlength: 20 },
 })
 
 //fields for tying holiday cards to user 
@@ -30,7 +30,7 @@ userSchema.set('toJSON', {
   transform(_doc, json){
     delete json.password
     return json
-  }
+  },
 })
 
 userSchema

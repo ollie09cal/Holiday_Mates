@@ -16,9 +16,14 @@ import {
 } from '@chakra-ui/react'
 import ReactMapGl, { Marker, Popup } from 'react-map-gl'
 // import { REACT_APP_MAPBOX_ACCESS_TOKEN } from '../enviroment/env'
+import mapboxgl from 'mapbox-gl'
+import MapboxWorker from 'worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker';
 import axios from 'axios'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { useNavigate, } from 'react-router-dom'
+
+mapboxgl.workerClass = MapboxWorker; 
+
 
 
 const MatesMap = () => {
