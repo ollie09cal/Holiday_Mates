@@ -34,7 +34,6 @@
 
 
 @media screen and (min-width: 850px) {
-  
   .profile-container {
     display: flex;
     height: 100%;
@@ -56,13 +55,14 @@
       }
     }
     .header-mates-container {
+      min-height: 100vh;
       .profile-header-container {
         position: sticky;
-        top: 20%;
+        top: 80px;
       }
       .box {
         position: sticky;
-        top: 65%;
+        top: 400px;
       }
     }
   }
